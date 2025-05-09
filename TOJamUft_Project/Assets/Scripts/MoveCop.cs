@@ -36,7 +36,11 @@ public class MoveCop : MonoBehaviour
         Vector3 _direction = Diff.normalized;
         Quaternion _angle = Quaternion.LookRotation(_direction);
 
-        Debug.DrawRay(this.transform.position, Diff, Color.blue);
+        Debug.DrawRay(_transform.position, _transform.forward * 10, Color.blue);
+
+        Debug.DrawRay(_transform.position, _rigidbody.linearVelocity, Color.blue);
+
+        Debug.DrawRay(this.transform.position, Diff, Color.orange);
 
         //_rigidbody.AddForce(Diff * 5, ForceMode.Force);
         //_rigidbody.AddForce(_transform.forward * _translationInput * _translateScale, ForceMode.Force);

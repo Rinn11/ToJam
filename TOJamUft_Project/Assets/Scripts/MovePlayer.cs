@@ -35,11 +35,9 @@ public class MovePB : MonoBehaviour
 
         _rigidbody.AddTorque(_transform.up * _rotationInput * _rotateScale, ForceMode.Force);
 
-        Vector3 forward = _transform.forward * 10;
-        Debug.DrawRay(_transform.position, forward, Color.green);
+        Debug.DrawRay(_transform.position, _transform.forward * 10, Color.green);
 
-        Vector3 velforward = _rigidbody.linearVelocity;
-        Debug.DrawRay(_transform.position, velforward, Color.green);
+        Debug.DrawRay(_transform.position, _rigidbody.linearVelocity, Color.green);
 
         if (_userJumped)
         {
