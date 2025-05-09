@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4760366603447764493
+--- !u!1 &4832727586174995042
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,29 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5927291269105501581}
+  - component: {fileID: 2568024540638469456}
+  - component: {fileID: 9080637599303893105}
   m_Layer: 0
-  m_Name: NewTileSpawnPoint
+  m_Name: RoadTileSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5927291269105501581
+--- !u!4 &2568024540638469456
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4760366603447764493}
+  m_GameObject: {fileID: 4832727586174995042}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2699780383375564112}
+  m_Children:
+  - {fileID: 2699780383375564112}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9080637599303893105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4832727586174995042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c38c6d2c43e093458d4b95485f26499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileSection: {fileID: 6617149462844546193, guid: 65255f754ba57824db92278d99ac1661, type: 3}
+  tilePassedCount: 1
+  tileSpawnAmount: 1
 --- !u!1 &5021235806974409133
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,9 +114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9976502d631e5774ea8f8177f45cd15f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileManager: {fileID: 9080637599303893105, guid: 6ef84c01bd25bee4ab0595bb6f10f713, type: 3}
+  tileManager: {fileID: 9080637599303893105}
   sectionSpawnOffset: 30
-  tileSpawnPoint: {fileID: 4760366603447764493}
 --- !u!1 &6617149462844546193
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,13 +146,12 @@ Transform:
   m_GameObject: {fileID: 6617149462844546193}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 18.0064, y: 0, z: 12.67648}
   m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5300998086929028470}
-  - {fileID: 5927291269105501581}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2568024540638469456}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2247754380397201232
 MonoBehaviour:
@@ -830,7 +845,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 6736
+  m_VersionIndex: 6760
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
