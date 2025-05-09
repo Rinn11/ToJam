@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class player_move : MonoBehaviour
 {
+    private AlcoholManager _alcoholManager;
     private float _playerInput;
     private float _rotationInput;
     private Vector3 _userRot;
-    private bool _userJumped;
 
     private const float _inputScale = 0.5f;
+    
+    private const float _maxVelocity = 10f;
 
     private Transform _transform;
     private Rigidbody _rigidbody;
@@ -17,6 +19,16 @@ public class player_move : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _transform = GetComponent<Transform>();
+
+        GameObject alcoholGameObject = GameObject.Find("Alcohol");
+        if (alcoholGameObject != null)
+        {
+            _alcoholManager = alcoholGameObject.GetComponent<AlcoholManager>();
+        }
+        else
+        {
+            Debug.LogError("GameObject 'Alcohol' not found!");
+        }
     }
 
     // Update is called once per frame
@@ -32,13 +44,9 @@ public class player_move : MonoBehaviour
         _userRot = _transform.rotation.eulerAngles;
         _userRot += new Vector3(0, _rotationInput, 0);
         _transform.rotation = Quaternion.Euler(_userRot);
-        _rigidbody.linearVelocity += _transform.forward * _playerInput * _inputScale;
-
-        // if (_userJumped)
-        // {
-        //     _rigidbody.AddForce(Vector3.up, ForceMode.VelocityChange);
-        //     _userJumped = false;
-        // }
+        _rigidbody.linearVelocity = Vector3.ClampMagnitude(
+            _rigidbody.linearVelocity + _transform.forward *_playerInput * _inputScale,
+            _maxVelocity * _alcoholManager.GetAlcoholMultiplier());
     }
 }
 
