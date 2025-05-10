@@ -3,49 +3,63 @@ using UnityEngine.UI;
 
 public class MoveCop : MonoBehaviour
 {
+    public PIDController RotationPID = new PIDController(1f, 0f, 0.1f, 0.1f);
+
+    public MoveCar MoveCar;
     public GameObject Target;
 
-    private const float _translateScale = 30f;
-    private const float _rotateScale = 10f;
+    public Text DistText;
+    public Text AngText;
 
-    private Transform _transform;
+    public Text VInputText;
+    public Text HInputText;
+
+    public Text VIntegralText;
+
+    public Text SpeedText;
+
     private Rigidbody _rigidbody;
-
-    public Text distanceText;
-    public Text angleText;
+    private Rigidbody _targetRigidbody;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _transform = GetComponent<Transform>();
+        _targetRigidbody = Target.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
     }
 
     private void FixedUpdate()
     {
-        Vector3 Diff = Target.transform.position - this.transform.position;
+        float dt = Time.fixedDeltaTime;
 
-        distanceText.text = "Dist Error: " + Mathf.Round(Diff.magnitude * 100) / 100;
-        angleText.text = "Ang Error: " + Mathf.Round(Diff.magnitude * 100) / 100;
+        Vector3 InitDiff = Target.transform.position - transform.position;
+        float distDiff = InitDiff.magnitude;
 
-        Vector3 _direction = Diff.normalized;
-        Quaternion _angle = Quaternion.LookRotation(_direction);
+        float speed = Mathf.Max(_rigidbody.linearVelocity.magnitude, 1);
 
-        Debug.DrawRay(_transform.position, _transform.forward * 10, Color.blue);
+        Vector3 TarPos = Target.transform.position;
+        Vector3 TarVel = _targetRigidbody.linearVelocity;
+        Vector3 Intercept = TarPos + TarVel * distDiff / speed;
 
-        Debug.DrawRay(_transform.position, _rigidbody.linearVelocity, Color.blue);
+        Vector3 Diff = Intercept - transform.position;
+        Debug.DrawRay(transform.position, Diff, Color.red);
 
-        Debug.DrawRay(this.transform.position, Diff, Color.orange);
+        float angDiff = Vector3.SignedAngle(transform.forward, Diff, Vector3.up);
+        float rotation = Mathf.Clamp(RotationPID.Process(angDiff, dt), -1, 1);
+        float translation = 1f; // No brakes...
 
-        //_rigidbody.AddForce(Diff * 5, ForceMode.Force);
-        //_rigidbody.AddForce(_transform.forward * _translationInput * _translateScale, ForceMode.Force);
-
-        //_rigidbody.AddForce(_transform.forward * 100);
-        //_rigidbody.AddTorque(_transform.up * -_angle.eulerAngles.y * 10, ForceMode.Force);
+        VIntegralText.text = "INT: " + RotationPID._integral;
+        
+        DistText.text = "Dist Error: " + Diff.magnitude;
+        AngText.text = "Ang Error: " + angDiff;
+        VInputText.text = "V: " + translation;
+        HInputText.text = "H: " + rotation;
+        MoveCar.ProcessInput(translation, rotation);
     }
 }
