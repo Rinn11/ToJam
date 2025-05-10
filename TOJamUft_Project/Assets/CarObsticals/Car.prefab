@@ -160,7 +160,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 2}
+  m_LocalScale: {x: 5, y: 5, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2816714175873415109}
@@ -254,7 +254,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a94f358fafe11e4e846ea67b49be402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Speed: 5
+  m_Speed: 20
+  tileSpawner: {fileID: 0}
+  _FrountTile: {fileID: 0}
+  _BackTile: {fileID: 0}
+  controlPoint: 0
+  targetChildPosition: 0
 --- !u!54 &5443351820323490594
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -289,19 +294,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2624520138224426251}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5cc4068bac3aa0c44b0196f2841427b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  route: {fileID: 0}
   routes:
   - {fileID: 0}
 --- !u!1 &6408820207092327306

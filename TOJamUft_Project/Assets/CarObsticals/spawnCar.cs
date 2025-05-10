@@ -24,7 +24,7 @@ public class spawnCar : MonoBehaviour
         {
             // Get the tiles
             GameObject _BackTile = tileSpawner.transform.GetChild(0).gameObject;
-            GameObject _FrontTile = tileSpawner.transform.GetChild(tileSpawner.transform.childCount - 1).gameObject; 
+            GameObject _FrontTile = tileSpawner.transform.GetChild(tileSpawner.transform.childCount - 1).gameObject;
 
             // Get their "Routes" children
             Transform backRoutes = _BackTile.transform.Find("Routes");
@@ -41,7 +41,7 @@ public class spawnCar : MonoBehaviour
 
             List<int> usedIndices = new List<int>();
 
-            int numToSpawn = Random.Range(1, controlPoints.Length - 1);
+            int numToSpawn = Random.Range(1, controlPoints.Length - 2);
 
             for (int i = 0; i < numToSpawn; i++)
             {
@@ -54,7 +54,8 @@ public class spawnCar : MonoBehaviour
                 usedIndices.Add(index);
 
                 Transform spawnPoint = controlPoints[index];
-                Instantiate(cars, spawnPoint.position, Quaternion.Euler(spawnPoint.eulerAngles), this.gameObject.transform);
+                GameObject vehicle = Instantiate(cars, spawnPoint.position, Quaternion.Euler(spawnPoint.eulerAngles), this.gameObject.transform);
+                vehicle.GetComponent<forward>().getTargetChild(index);
             }
 
             _SpawnCar = false;
@@ -64,7 +65,7 @@ public class spawnCar : MonoBehaviour
     private IEnumerator _SpawnCarTimer()
     {
         // rantom time to spawn
-        yield return new WaitForSeconds(Random.Range(0.5f, 3));
+        yield return new WaitForSeconds(Random.Range(0.2f, 1));
         _SpawnCar = true;
     }
 }
