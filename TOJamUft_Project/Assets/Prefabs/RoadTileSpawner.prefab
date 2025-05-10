@@ -54,3 +54,4 @@ MonoBehaviour:
   tileSpawnAmount: 3
   tileDeleteAmount: 2
   tileScale: 6
+  downwardOffset: 0.01
