@@ -1,44 +1,60 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class player_move : MonoBehaviour
+public class SimpleCarController : MonoBehaviour
 {
-    private float _playerInput;
-    private float _rotationInput;
-    private Vector3 _userRot;
-    private bool _userJumped;
+    public float accelerationForce = 1f;
+    public float brakeForce = 1f;
+    public float turnTorque = 1f;
+    public float maxSpeed = 100f; // Optional: to limit car speed
 
-    private const float _inputScale = 0.5f;
+    private Rigidbody rb;
 
-    private Transform _transform;
-    private Rigidbody _rigidbody;
+    InputAction moveInput;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _transform = GetComponent<Transform>();
+        rb = GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody component not found on this GameObject. Please add one.");
+            enabled = false; // Disable the script if no Rigidbody is found
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        _playerInput = Input.GetAxis("Vertical");
-        _rotationInput = Input.GetAxis("Horizontal");
-        // _userJumped = Input.GetButton("Jump");
-    }
+        if (rb == null) return;
 
-    private void FixedUpdate()
-    {
-        _userRot = _transform.rotation.eulerAngles;
-        _userRot += new Vector3(0, _rotationInput, 0);
-        _transform.rotation = Quaternion.Euler(_userRot);
-        _rigidbody.linearVelocity += _transform.forward * _playerInput * _inputScale;
+        rb.maxLinearVelocity = 30f;
 
-        // if (_userJumped)
-        // {
-        //     _rigidbody.AddForce(Vector3.up, ForceMode.VelocityChange);
-        //     _userJumped = false;
-        // }
+        moveInput = InputSystem.actions.FindAction("Move");
+        Vector2 moveValue = moveInput.ReadValue<Vector2>();
+
+        // --- Acceleration and Braking ---
+        if (moveValue.y > 0)
+        {
+            if (rb.linearVelocity.magnitude < maxSpeed)
+            {
+                rb.AddRelativeForce(Vector3.forward * moveValue.y * accelerationForce);
+            }
+        }
+        else if (moveValue.y < 0)
+        {
+            // If moving forward, apply brake force. If moving backward or stationary, apply reverse force.
+            if (Vector3.Dot(rb.linearVelocity, transform.forward) > 0.1f) // Check if moving forward
+            {
+                 rb.AddRelativeForce(Vector3.forward * moveValue.y * brakeForce);
+            }
+            else
+            {
+                 rb.AddRelativeForce(Vector3.forward * moveValue.y * accelerationForce * 0.7f); // reverse is 70% of forward
+            }
+        }
+
+        // --- Steering ---
+        // Apply torque for turning
+        // The ForceMode can be adjusted (e.g., ForceMode.VelocityChange for more instant turns, ForceMode.Acceleration for smoother)
+        rb.AddRelativeTorque(Vector3.up * moveValue.x * turnTorque, ForceMode.Acceleration);
     }
 }
-
