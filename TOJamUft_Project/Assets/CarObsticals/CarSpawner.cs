@@ -1,52 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-
-// WIP not in use
+using UnityEngine.XR;
 
 public class CarSpawner : MonoBehaviour
 {
-    float _speed;
+    //float _speed;
 
-    public List<Vector3> points = new List<Vector3>();
-    Vector3 spawnPoint;
+    //public List<Vector3> points = new List<Vector3>();
+    //Vector3 spawnPoint;
 
     [SerializeField]
+    private GameObject route;
     private Transform[] controlPoints;
 
     private Vector3 gizmosPosition;
 
+    private void Awake()
+    {
+        route = GameObject.Find("ControlPoints");
+    }
+
     private void OnDrawGizmos()
     {
+        if (controlPoints == null || controlPoints.Length < 2)
+            return;
+
         for (float t = 0; t <= 1; t += 0.05f)
         {
-            gizmosPosition = Mathf.Pow(1 - t, 3) * controlPoints[0].position + 3 * Mathf.Pow(1 - t, 2) * t * controlPoints[1].position + 3 * (1 - t) * Mathf.Pow(t, 2) * controlPoints[2].position + Mathf.Pow(t, 3) * controlPoints[3].position;
-
+            gizmosPosition = CalculateBezierPoint(t, controlPoints);
             Gizmos.DrawSphere(gizmosPosition, 0.25f);
         }
 
-        Gizmos.DrawLine(new Vector3(controlPoints[0].position.x, controlPoints[0].position.y, controlPoints[0].position.z), new Vector3(controlPoints[1].position.x, controlPoints[1].position.y, controlPoints[1].position.z));
-        Gizmos.DrawLine(new Vector3(controlPoints[2].position.x, controlPoints[2].position.y, controlPoints[2].position.z), new Vector3(controlPoints[3].position.x, controlPoints[3].position.y, controlPoints[3].position.z));
-
+        for (int i = 0; i < controlPoints.Length - 1; i++)
+        {
+            Gizmos.DrawLine(controlPoints[i].position, controlPoints[i + 1].position);
+        }
     }
-
-
 
     [SerializeField]
     private Transform[] routes;
 
     private int routeToGo;
-
     private float tParam;
-
     private Vector3 objectPosition;
-
     private float speedModifier;
-
     private bool coroutineAllowed;
 
-    // Start is called before the first frame update
     void Start()
     {
         routeToGo = 0;
@@ -55,7 +55,6 @@ public class CarSpawner : MonoBehaviour
         coroutineAllowed = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (coroutineAllowed)
@@ -68,39 +67,35 @@ public class CarSpawner : MonoBehaviour
     {
         coroutineAllowed = false;
 
-        //Vector3[] points;
+        Transform route = routes[routeNum];
+        int pointCount = route.childCount;
 
-        Vector3 p0 = routes[routeNum].GetChild(0).position;
-        Vector3 p1 = routes[routeNum].GetChild(1).position;
-        Vector3 p2 = routes[routeNum].GetChild(2).position;
-        Vector3 p3 = routes[routeNum].GetChild(3).position;
-
-        for (int j = 0; j < routeNum; j++)
+        if (pointCount < 2)
         {
-            points.Add(routes[routeNum].GetChild(j).position);
+            Debug.LogWarning("Route has fewer than 2 points.");
+            yield break;
+        }
+
+        Transform[] dynamicControlPoints = new Transform[pointCount];
+        for (int i = 0; i < pointCount; i++)
+        {
+            dynamicControlPoints[i] = route.GetChild(i);
         }
 
         while (tParam < 1)
         {
             tParam += Time.deltaTime * speedModifier;
-            
-            // current
-            objectPosition = Mathf.Pow(1 - tParam, 3) * p0 + 3 * Mathf.Pow(1 - tParam, 2) * tParam * p1 + 3 * (1 - tParam) * Mathf.Pow(tParam, 2) * p2 + Mathf.Pow(tParam, 3) * p3;
-            
-            // new modular
-            for (int j = 0; j < routeNum; j++) {
-                objectPosition = Mathf.Pow(1 - tParam, 3) * routes[routeNum].GetChild(j).position;
-            }
 
-            transform.position = objectPosition;
-            transform.position = new Vector3(transform.position.x, transform.position.y + transform.localScale.y / 2, transform.position.z);
+            objectPosition = CalculateBezierPoint(tParam, dynamicControlPoints);
+
+            transform.position = objectPosition + new Vector3(0, transform.localScale.y / 2, 0);
 
             yield return new WaitForEndOfFrame();
         }
 
         tParam = 0;
-        speedModifier = speedModifier * 0.90f;
-        routeToGo += 1;
+        speedModifier *= 0.90f;
+        routeToGo++;
 
         if (routeToGo > routes.Length - 1)
         {
@@ -108,6 +103,34 @@ public class CarSpawner : MonoBehaviour
         }
 
         coroutineAllowed = true;
+    }
 
+    private Vector3 CalculateBezierPoint(float t, Transform[] controlPoints)
+    {
+        int n = controlPoints.Length - 1;
+        Vector3 point = Vector3.zero;
+
+        float[] binomials = GetBinomialCoefficients(n);
+
+        for (int i = 0; i <= n; i++)
+        {
+            float coefficient = binomials[i] * Mathf.Pow(1 - t, n - i) * Mathf.Pow(t, i);
+            point += coefficient * controlPoints[i].position;
+        }
+
+        return point;
+    }
+
+    private float[] GetBinomialCoefficients(int n)
+    {
+        float[] coeffs = new float[n + 1];
+        coeffs[0] = 1;
+
+        for (int i = 1; i <= n; i++)
+        {
+            coeffs[i] = coeffs[i - 1] * (n - i + 1) / i;
+        }
+
+        return coeffs;
     }
 }
