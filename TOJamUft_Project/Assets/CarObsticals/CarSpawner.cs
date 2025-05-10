@@ -18,7 +18,7 @@ public class CarSpawner : MonoBehaviour
 
     private void Awake()
     {
-        route = GameObject.Find("ControlPoints");
+        //route = GameObject.Find("ControlPoints");
     }
 
     private void OnDrawGizmos()
