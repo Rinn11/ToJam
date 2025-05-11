@@ -98,18 +98,18 @@ public class PlayerMove : MonoBehaviour
 
     if (moveValue.y > 0)
     {
-      rb.AddForce(-transform.up * moveValue.y * useAccelerationForce);
+      rb.AddForce(transform.forward * moveValue.y * useAccelerationForce);
     }
     else if (moveValue.y < 0)
     {
       // If moving forward, apply brake force. If moving backward or stationary, apply reverse force.
       if (Vector3.Dot(rb.linearVelocity, -transform.up) > 0.1f) // Check if moving forward
       {
-        rb.AddForce(-transform.up * moveValue.y * useBrakeForce);
+        rb.AddForce(transform.forward * moveValue.y * useBrakeForce);
       }
       else
       {
-        rb.AddForce(-transform.up * moveValue.y * useAccelerationForce * 0.7f); // reverse is 70% of forward
+        rb.AddForce(transform.forward * moveValue.y * useAccelerationForce * 0.7f); // reverse is 70% of forward
       }
     }
   }
