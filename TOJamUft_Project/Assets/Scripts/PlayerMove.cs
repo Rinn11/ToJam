@@ -52,23 +52,26 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    void Update()
+    public void ProcessInputs(float x, float y)
     {
         if (rb == null) return;
 
-        moveValue = InputSystem.actions.FindAction("Move").ReadValue<Vector2>();
+        moveValue.x = x;
+        moveValue.y = y;
 
         float isMoving = rb.linearVelocity.magnitude != 0 ? 1.0f : 0.0f;
 
         float alcoholMultiplier = _alcoholManager.GetAlcoholMultiplier();
         rb.maxLinearVelocity = maxSpeed * (alcoholMultiplier * 2); // note maxSpeed is a constant.
-        
-        
+
+
         float useTurnTorque = turnTorque * (float)Math.Pow(1.6, alcoholMultiplier) * (alcoholMultiplier / 2);  // sensitivity increases with alcohol
-        UnityEngine.Quaternion rot = Quaternion.Euler(transform.rotation.eulerAngles + 
+        UnityEngine.Quaternion rot = Quaternion.Euler(transform.rotation.eulerAngles +
                                               new Vector3(0f, moveValue.x * useTurnTorque * Time.deltaTime * isMoving, 0f));
         transform.rotation = rot;
         // wheel.transform.rotation.z = transform.rotation.eulerAngles.z;
+
+        
     }
 
     public void startGame()
