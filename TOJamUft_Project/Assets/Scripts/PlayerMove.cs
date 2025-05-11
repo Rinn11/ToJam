@@ -9,6 +9,8 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody rb;
     private Vector2 moveValue;
     private GameObject speedUI;
+
+    public GameObject titleScreen;
     
     private AlcoholManager _alcoholManager;
     private GameObject wheel;
@@ -17,7 +19,8 @@ public class PlayerMove : MonoBehaviour
         
     void Start()
     {
-        //Time.timeScale = 0;
+        Time.timeScale = 0;
+        titleScreen.SetActive(true);
 
         rb = GetComponent<Rigidbody>();
         if (rb == null)
@@ -32,7 +35,6 @@ public class PlayerMove : MonoBehaviour
         
         speedUI = GameObject.Find("SpeedUI");
         
-        
         GameObject alcoholGameObject = GameObject.Find("Alcohol");
         if (alcoholGameObject != null)
         {
@@ -44,6 +46,7 @@ public class PlayerMove : MonoBehaviour
         }
         
         wheel = GameObject.Find("M_CarWheel");
+        titleScreen = GameObject.Find("TitleScreen");
         
         audioSources = GetComponents<AudioSource>();
         if (audioSources.Length < 2)
@@ -54,6 +57,16 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Time.timeScale = 1;
+                audioSources[3].Play();
+                titleScreen.SetActive(false);
+            }
+        }
+        
         if (rb == null) return;
 
         moveValue = InputSystem.actions.FindAction("Move").ReadValue<Vector2>();
@@ -130,7 +143,7 @@ public class PlayerMove : MonoBehaviour
         else
         {
             audioSources[0].Stop();
-            if (!audioSources[1].isPlaying)
+            if (!audioSources[1].isPlaying && Time.timeScale != 0)
             {
                 audioSources[1].Play();
             }
