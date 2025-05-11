@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class bumpers : MonoBehaviour
 {
-    public AudioSource slowPlay;
-    
+    public AudioClip slowPlay;
+    private AudioSource slowPlaySource;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player")) {
-            slowPlay.Play();
+            
+            //slowPlay.Play();
             StartCoroutine(slowTime());
         }
         //slow players speed with Ienumer to max
