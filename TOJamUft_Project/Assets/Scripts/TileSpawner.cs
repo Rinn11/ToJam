@@ -43,7 +43,7 @@ public class TileSpawner : MonoBehaviour
         // Use the counter to check if we need to spawn the tileSpawnAmount of tiles
         if (tileSpawnPassedCounter >= tileSpawnPassedCount) {
             tileSpawnPassedCounter = 0;
-            
+
             // Grab the most recent tile section (usually the last child of the tile manager)
             GameObject lastTileSection = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject;
             GameObject chosenTileSection = tileSections[UnityEngine.Random.Range(0, tileSections.Length)];
@@ -51,6 +51,9 @@ public class TileSpawner : MonoBehaviour
             newSection.GetComponentInChildren<SectionTrigger>().tileManager = this;
             newSection.transform.localScale = new Vector3(tileScale, tileScale, tileScale);
             for (int i = 0; i < tileSpawnAmount - 1; i++) {
+                spawnCar spawnCar = FindAnyObjectByType<spawnCar>();
+                spawnCar.SpawnCarsRandomlyAcrossTiles(5);
+
                 // Utilize the object's forward vector to make tile spawning invariant to the rotation it's facing.
                 chosenTileSection = tileSections[UnityEngine.Random.Range(0, tileSections.Length)];
                 newSection = Instantiate(chosenTileSection, newSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.position, newSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.rotation, gameObject.transform);

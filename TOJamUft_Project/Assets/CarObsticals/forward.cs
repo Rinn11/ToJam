@@ -29,15 +29,16 @@ public class forward : MonoBehaviour
         getControlPoint();
     }
 
-    public void getTargetChild(int _targetedChild)
+    public void getTargetChild(int _targetedChild, int currentControlPoint)
     {
         targetChildPosition = _targetedChild;
+        controlPoint = currentControlPoint;
     }
 
     public void getControlPoint()
     {
-        int backIndex = 0 + controlPoint;
-        int frontIndex = tileSpawner.transform.childCount - 1 - controlPoint;
+        int backIndex = controlPoint;
+        int frontIndex = (tileSpawner.transform.childCount - 1) - controlPoint;
 
         // Validate indices before accessing
         if (backIndex >= tileSpawner.transform.childCount || frontIndex < 0)
@@ -68,7 +69,7 @@ public class forward : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (targetPosition == null) { getControlPoint(); }
+       if (targetPosition == null) { getControlPoint(); }
         m_Rigidbody.MovePosition(Vector3.MoveTowards(this.gameObject.transform.position, targetPosition.position, Time.fixedDeltaTime * m_Speed));
         transform.LookAt(targetPosition);
 

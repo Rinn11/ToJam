@@ -1,74 +1,141 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class spawnCar : MonoBehaviour
 {
     public GameObject cars;
+
     public GameObject tileSpawner;
+    public GameObject _FrountTile;
+    public GameObject _BackTile;
 
-    public float waveIntervalMin = 1f;
-    public float waveIntervalMax = 2f;
-    public int initialCarCount = 3;
+    public Transform[] currentRoutes;
 
-    private void Start()
+    //public Transform[] controlPoints;
+    private bool _SpawnCar = true;
+
+    
+    // Update is called once per frame
+    void Update()
     {
-        // Spawn a few cars at game start
-        SpawnInitialCars();
-
-        // Begin the infinite spawn loop
-        StartCoroutine(SpawnCarWaves());
-    }
-
-    private void SpawnInitialCars()
-    {
-        List<Transform> allPoints = GetAllControlPoints();
-
-        for (int i = 0; i < initialCarCount; i++)
+        //spawns cars after a 1-3 secounds randomly between 3 points
+        if (_SpawnCar && !_SpawnCar)
         {
-            if (allPoints.Count == 0) break;
+            Debug.Log("spawnCar");
 
-            Transform spawnPoint = allPoints[Random.Range(0, allPoints.Count)];
-            SpawnCarAtPoint(spawnPoint);
-        }
-    }
+            // Get the tiles
+            GameObject _BackTile = tileSpawner.transform.GetChild(0).gameObject;
+            GameObject _FrontTile = tileSpawner.transform.GetChild(tileSpawner.transform.childCount - 1).gameObject;
 
-    private IEnumerator SpawnCarWaves()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(Random.Range(waveIntervalMin, waveIntervalMax));
+            // Get their "Routes" children
+            Transform backRoutes = _BackTile.transform.Find("Routes");
+            Transform frontRoutes = _FrontTile.transform.Find("Routes");
 
-            List<Transform> allPoints = GetAllControlPoints();
-            if (allPoints.Count == 0) continue;
+            // Assign control points: [0, 1] from backRoutes, [2, 3] from frontRoutes
+            Transform[] controlPoints = new Transform[4];
+            controlPoints[0] = backRoutes.GetChild(0);
+            controlPoints[1] = backRoutes.GetChild(1);
+            controlPoints[2] = frontRoutes.GetChild(2);
+            controlPoints[3] = frontRoutes.GetChild(3);
 
-            Transform spawnPoint = allPoints[Random.Range(0, allPoints.Count)];
-            SpawnCarAtPoint(spawnPoint);
-        }
-    }
+            
 
-    private void SpawnCarAtPoint(Transform point)
-    {
-        GameObject vehicle = Instantiate(cars, point.position, Quaternion.Euler(point.eulerAngles), this.transform);
-        vehicle.GetComponent<forward>().getTargetChild(point.GetSiblingIndex());
-    }
+            List<int> usedIndices = new List<int>();
 
-    private List<Transform> GetAllControlPoints()
-    {
-        List<Transform> points = new List<Transform>();
+            int numToSpawn = Random.Range(1, controlPoints.Length);
 
-        foreach (Transform tile in tileSpawner.transform)
-        {
-            Transform routes = tile.Find("Routes");
-            if (routes != null)
+            int index;
+            do
             {
-                foreach (Transform child in routes)
-                {
-                    points.Add(child);
-                }
-            }
-        }
+                index = Random.Range(0, controlPoints.Length);
+            } while (usedIndices.Contains(index));
 
-        return points;
+            usedIndices.Add(index);
+
+            Transform spawnPoint = controlPoints[index];
+            GameObject vehicle = Instantiate(cars, spawnPoint.position, Quaternion.Euler(spawnPoint.eulerAngles), this.gameObject.transform);
+            vehicle.GetComponent<forward>().getTargetChild(index);
+
+            /*for (int i = 0; i < 1; i++)
+            {
+                int index;
+                do
+                {
+                    index = Random.Range(0, controlPoints.Length);
+                } while (usedIndices.Contains(index));
+
+                usedIndices.Add(index);
+
+                Transform spawnPoint = controlPoints[index];
+                GameObject vehicle = Instantiate(cars, spawnPoint.position, Quaternion.Euler(spawnPoint.eulerAngles), this.gameObject.transform);
+                vehicle.GetComponent<forward>().getTargetChild(index);
+            }*/
+
+            _SpawnCar = false;
+
+            StartCoroutine(_SpawnCarTimer());
+        }
     }
+    
+    private IEnumerator _SpawnCarTimer()
+    {
+        //SpawnCarsRandomlyAcrossTiles(3);
+        // rantom time to spawn
+        yield return new WaitForSeconds(Random.Range(3, 5));
+        _SpawnCar = true;
+    }
+
+    public void SpawnCarsRandomlyAcrossTiles(int amount)
+    {
+        Debug.Log("spawnCar");
+
+        // Get the tiles
+        GameObject _BackTile = tileSpawner.transform.GetChild(tileSpawner.transform.childCount - 1).gameObject;
+        GameObject _FrontTile = tileSpawner.transform.GetChild(tileSpawner.transform.childCount - 3).gameObject;
+
+        // Get their "Routes" children
+        Transform backRoutes = _BackTile.transform.Find("Routes");
+        Transform frontRoutes = _FrontTile.transform.Find("Routes");
+
+        // Assign control points: [0, 1] from backRoutes, [2, 3] from frontRoutes
+        Transform[] controlPoints = new Transform[4];
+        controlPoints[0] = backRoutes.GetChild(0);
+        controlPoints[1] = backRoutes.GetChild(1);
+        controlPoints[2] = frontRoutes.GetChild(2);
+        controlPoints[3] = frontRoutes.GetChild(3);
+
+        List<int> usedIndices = new List<int>();
+
+        int index;
+        do
+        {
+            index = Random.Range(0, controlPoints.Length);
+        } while (usedIndices.Contains(index));
+
+        usedIndices.Add(index);
+
+        Transform spawnPoint = controlPoints[index];
+        GameObject vehicle = Instantiate(cars, spawnPoint.position, Quaternion.Euler(spawnPoint.eulerAngles), this.gameObject.transform);
+        vehicle.GetComponent<forward>().getTargetChild(index, controlPoints[index]);
+
+        /*for (int i = 0; i < 1; i++)
+        {
+            int index;
+            do
+            {
+                index = Random.Range(0, controlPoints.Length);
+            } while (usedIndices.Contains(index));
+
+            usedIndices.Add(index);
+
+            Transform spawnPoint = controlPoints[index];
+            GameObject vehicle = Instantiate(cars, spawnPoint.position, Quaternion.Euler(spawnPoint.eulerAngles), this.gameObject.transform);
+            vehicle.GetComponent<forward>().getTargetChild(index);
+        }*/
+
+        _SpawnCar = false;
+    }
+
 }
