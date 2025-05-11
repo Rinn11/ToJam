@@ -20,8 +20,8 @@ public class bumpers : MonoBehaviour
         //SpawnCarsRandomlyAcrossTiles(3);
         // rantom time to spawn
 
-        Time.timeScale = 0.5f;
-        yield return new WaitForSeconds(0.5f);
+        Time.timeScale = 0.1f;
+        yield return new WaitForSeconds(0.05f);
         Time.timeScale = 1;
 
     }
