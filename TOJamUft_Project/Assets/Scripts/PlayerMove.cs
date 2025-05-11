@@ -8,10 +8,13 @@ public class PlayerMove : MonoBehaviour
     // recommended default 50, 50, 100, 20
     private Rigidbody rb;
     private Vector2 moveValue;
+    private GameObject speedUI;
     
     private AlcoholManager _alcoholManager;
     private GameObject wheel;
-
+    
+    public AudioSource[] audioSources;
+        
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -25,6 +28,8 @@ public class PlayerMove : MonoBehaviour
             rb.maxLinearVelocity = maxSpeed;
         }
         
+        speedUI = GameObject.Find("SpeedUI");
+        
         
         GameObject alcoholGameObject = GameObject.Find("Alcohol");
         if (alcoholGameObject != null)
@@ -37,6 +42,12 @@ public class PlayerMove : MonoBehaviour
         }
         
         wheel = GameObject.Find("M_CarWheel");
+        
+        audioSources = GetComponents<AudioSource>();
+        if (audioSources.Length < 2)
+        {
+            Debug.LogError("Add at least two AudioSource components to this GameObject.");
+        }
     }
 
     void Update()
@@ -71,10 +82,26 @@ public class PlayerMove : MonoBehaviour
         float useAccelerationForce = accelerationForce * (alcoholMultiplier * 2);
         float useBrakeForce = brakeForce * (alcoholMultiplier);
         
+        if (speedUI != null)
+        {
+            // Assuming the alcoholCounterUI has a Text component
+            var textComponent = speedUI.GetComponent<UnityEngine.UI.Text>();
+            if (textComponent != null)
+            {
+                textComponent.text = "Speed: " + Math.Round(rb.linearVelocity.magnitude, 2) + " km/h";
+            }
+        }
         
         if (moveValue.y > 0)
         {
             rb.AddForce(transform.forward * moveValue.y * useAccelerationForce);
+
+            if (!audioSources[0].isPlaying)
+            {
+                audioSources[0].Play();    
+            }
+            
+            
         }
         else if (moveValue.y < 0)
         {
@@ -82,10 +109,26 @@ public class PlayerMove : MonoBehaviour
             if (Vector3.Dot(rb.linearVelocity, transform.forward) > 0.1f) // Check if moving forward
             {
                 rb.AddForce(transform.forward * moveValue.y * useBrakeForce);
+                if (!audioSources[2].isPlaying)
+                {
+                    audioSources[2].Play();    
+                }
             }
             else
             {
                 rb.AddForce(transform.forward * moveValue.y * useAccelerationForce * 0.7f); // reverse is 70% of forward
+                if (!audioSources[0].isPlaying)
+                {
+                    audioSources[0].Play();    
+                }
+            }
+        }
+        else
+        {
+            audioSources[0].Stop();
+            if (!audioSources[1].isPlaying)
+            {
+                audioSources[1].Play();
             }
         }
     }
