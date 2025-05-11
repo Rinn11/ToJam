@@ -10,6 +10,7 @@ public class PlayerMove : MonoBehaviour
     private Vector2 moveValue;
     
     private AlcoholManager _alcoholManager;
+    private GameObject wheel;
 
     void Start()
     {
@@ -34,6 +35,8 @@ public class PlayerMove : MonoBehaviour
         {
             Debug.LogError("GameObject 'Alcohol' not found!");
         }
+        
+        wheel = GameObject.Find("M_CarWheel");
     }
 
     void Update()
@@ -49,10 +52,13 @@ public class PlayerMove : MonoBehaviour
         
         
         float useTurnTorque = turnTorque * (float)Math.Pow(1.6, alcoholMultiplier) * (alcoholMultiplier / 2);  // sensitivity increases with alcohol
-        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + 
+        UnityEngine.Quaternion rot = Quaternion.Euler(transform.rotation.eulerAngles + 
                                               new Vector3(0f, moveValue.x * useTurnTorque * Time.deltaTime * isMoving, 0f));
-
+        transform.rotation = rot;
+        // wheel.transform.rotation.z = transform.rotation.eulerAngles.z;
+        
         transform.position = rb.transform.position;
+        
     }
 
     void FixedUpdate()
