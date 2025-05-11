@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TileSpawner : MonoBehaviour
 {
+    spawnCar _spawnCar;
 
     public GameObject[] tileSections;
     public int initialTileAmount;
@@ -20,6 +21,8 @@ public class TileSpawner : MonoBehaviour
     private void Start() {
         initialTileAmount = Math.Max(1, initialTileAmount);
         tileSpawnPassedCount = Math.Max(1, tileSpawnPassedCount);
+
+        _spawnCar = FindAnyObjectByType<spawnCar>();
 
         // You need a initial child to spawn the rest of the files in the correct position and rotation
         GameObject chosenTileSection = tileSections[UnityEngine.Random.Range(0, tileSections.Length)];
@@ -40,6 +43,8 @@ public class TileSpawner : MonoBehaviour
         // Once we cross a section trigger, we increment the counter
         tileSpawnPassedCounter++;
         tileDeletePassedCounter++;
+
+        _spawnCar.SpawnCarsRandomlyAcrossTiles(5);
 
         // Use the counter to check if we need to spawn the tileSpawnAmount of tiles
         if (tileSpawnPassedCounter >= tileSpawnPassedCount) {
