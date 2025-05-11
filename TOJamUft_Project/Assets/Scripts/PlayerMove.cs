@@ -22,11 +22,12 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    void Update()
+    public void ProcessInputs(float translate, float rotate)
     {
         if (rb == null) return;
 
-        moveValue = InputSystem.actions.FindAction("Move").ReadValue<Vector2>();
+        moveValue.x = translate;
+        moveValue.y = rotate;
 
         float isMoving = rb.linearVelocity.magnitude != 0 ? 1.0f : 0.0f;
 
