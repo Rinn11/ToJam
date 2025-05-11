@@ -582,7 +582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9080637599303893105, guid: 6ef84c01bd25bee4ab0595bb6f10f713, type: 3}
       propertyPath: tileScale
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 9080637599303893105, guid: 6ef84c01bd25bee4ab0595bb6f10f713, type: 3}
       propertyPath: tileLifeTime

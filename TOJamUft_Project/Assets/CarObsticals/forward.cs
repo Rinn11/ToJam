@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using static UnityEngine.GraphicsBuffer;
@@ -35,9 +36,20 @@ public class forward : MonoBehaviour
 
     public void getControlPoint()
     {
-        // Get the tiles
-        _BackTile = tileSpawner.transform.GetChild(0+controlPoint).gameObject;
-        _FrountTile = tileSpawner.transform.GetChild(tileSpawner.transform.childCount - 1 - controlPoint).gameObject;
+        int backIndex = 0 + controlPoint;
+        int frontIndex = tileSpawner.transform.childCount - 1 - controlPoint;
+
+        // Validate indices before accessing
+        if (backIndex >= tileSpawner.transform.childCount || frontIndex < 0)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        // Get the tiles safely
+        _BackTile = tileSpawner.transform.GetChild(backIndex).gameObject;
+        _FrountTile = tileSpawner.transform.GetChild(frontIndex).gameObject;
+
 
         // Get their "Routes" children
         Transform backRoutes = _BackTile.transform.Find("Routes");
@@ -56,7 +68,7 @@ public class forward : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (targetPosition == null) Destroy(this.gameObject);
+        if (targetPosition == null) { getControlPoint(); }
         m_Rigidbody.MovePosition(Vector3.MoveTowards(this.gameObject.transform.position, targetPosition.position, Time.fixedDeltaTime * m_Speed));
         transform.LookAt(targetPosition);
 
