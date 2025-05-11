@@ -23,8 +23,6 @@ public class forward : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody>();
 
         tileSpawner = FindAnyObjectByType<TileSpawner>().gameObject;
-        _BackTile = tileSpawner.transform.GetChild(0).gameObject;
-        _FrountTile = tileSpawner.transform.GetChild(tileSpawner.transform.childCount - 1).gameObject;
 
         getControlPoint();
     }

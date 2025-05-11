@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class spawnCar : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class spawnCar : MonoBehaviour
 
     public Transform[] currentRoutes;
 
+    public int objectPosition;
+
     //public Transform[] controlPoints;
     private bool _SpawnCar = true;
 
@@ -21,7 +24,7 @@ public class spawnCar : MonoBehaviour
     void Update()
     {
         //spawns cars after a 1-3 secounds randomly between 3 points
-        if (_SpawnCar && !_SpawnCar)
+        if (_SpawnCar )
         {
             Debug.Log("spawnCar");
 
@@ -40,23 +43,20 @@ public class spawnCar : MonoBehaviour
             controlPoints[2] = frontRoutes.GetChild(2);
             controlPoints[3] = frontRoutes.GetChild(3);
 
-            
-
             List<int> usedIndices = new List<int>();
-
-            int numToSpawn = Random.Range(1, controlPoints.Length);
 
             int index;
             do
             {
                 index = Random.Range(0, controlPoints.Length);
             } while (usedIndices.Contains(index));
-
             usedIndices.Add(index);
+
+            if (index < 2) { objectPosition = 0; } else { objectPosition = tileSpawner.transform.childCount - 1; }
 
             Transform spawnPoint = controlPoints[index];
             GameObject vehicle = Instantiate(cars, spawnPoint.position, Quaternion.Euler(spawnPoint.eulerAngles), this.gameObject.transform);
-            vehicle.GetComponent<forward>().getTargetChild(index);
+            vehicle.GetComponent<forward>().getTargetChild(index, objectPosition);
 
             /*for (int i = 0; i < 1; i++)
             {
@@ -83,7 +83,7 @@ public class spawnCar : MonoBehaviour
     {
         //SpawnCarsRandomlyAcrossTiles(3);
         // rantom time to spawn
-        yield return new WaitForSeconds(Random.Range(3, 5));
+        yield return new WaitForSeconds(Random.Range(1, 3));
         _SpawnCar = true;
     }
 
@@ -113,12 +113,13 @@ public class spawnCar : MonoBehaviour
         {
             index = Random.Range(0, controlPoints.Length);
         } while (usedIndices.Contains(index));
-
         usedIndices.Add(index);
+
+        if (index <2) { objectPosition = tileSpawner.transform.childCount - 1;  } else { objectPosition = tileSpawner.transform.childCount - 3; }
 
         Transform spawnPoint = controlPoints[index];
         GameObject vehicle = Instantiate(cars, spawnPoint.position, Quaternion.Euler(spawnPoint.eulerAngles), this.gameObject.transform);
-        vehicle.GetComponent<forward>().getTargetChild(index, controlPoints[index]);
+        vehicle.GetComponent<forward>().getTargetChild(index, objectPosition);
 
         /*for (int i = 0; i < 1; i++)
         {

@@ -594,11 +594,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9080637599303893105, guid: 6ef84c01bd25bee4ab0595bb6f10f713, type: 3}
       propertyPath: tileSpawnAmount
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9080637599303893105, guid: 6ef84c01bd25bee4ab0595bb6f10f713, type: 3}
       propertyPath: tileDeleteAmount
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9080637599303893105, guid: 6ef84c01bd25bee4ab0595bb6f10f713, type: 3}
       propertyPath: initialTileAmount
