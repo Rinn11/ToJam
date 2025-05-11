@@ -6,8 +6,11 @@ public class bumpers : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Player")) {
+            StartCoroutine(slowTime());
+        }
         //slow players speed with Ienumer to max
-        StartCoroutine(slowTime());
+        
 
         //other.gameObject.GetComponent<Material>().SetColor("_Color", Color.blue);
     }

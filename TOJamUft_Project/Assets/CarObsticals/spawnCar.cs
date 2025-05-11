@@ -19,7 +19,6 @@ public class spawnCar : MonoBehaviour
     //public Transform[] controlPoints;
     private bool _SpawnCar = true;
 
-    
     // Update is called once per frame
     void Update()
     {

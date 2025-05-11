@@ -17,12 +17,16 @@ public class forward : MonoBehaviour
     private Transform targetPosition;
     public int targetChildPosition;
 
+    public GameObject carModelParent;
+
     void Start()
     {
         //Fetch the Rigidbody from the GameObject with this script attached
         m_Rigidbody = GetComponent<Rigidbody>();
 
         tileSpawner = FindAnyObjectByType<TileSpawner>().gameObject;
+
+        carModelParent.transform.GetChild(Random.Range(1, carModelParent.transform.childCount)).gameObject.SetActive(true);
 
         getControlPoint();
     }
