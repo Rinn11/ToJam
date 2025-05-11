@@ -1,52 +1,56 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class player_move : MonoBehaviour
+public class SimpleCarController : MonoBehaviour
 {
-    private AlcoholManager _alcoholManager;
-    private float _playerInput;
-    private float _rotationInput;
-    private Vector3 _userRot;
+  public float accelerationForce, brakeForce, turnTorque, maxSpeed;
 
-    private const float _inputScale = 0.5f;
-    
-    private const float _maxVelocity = 10f;
+  private Rigidbody rb;
+  private Vector2 moveInput;
 
-    private Transform _transform;
-    private Rigidbody _rigidbody;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+  void Start()
+  {
+    rb = GetComponent<Rigidbody>();
+    if (rb == null)
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _transform = GetComponent<Transform>();
-
-        GameObject alcoholGameObject = GameObject.Find("Alcohol");
-        if (alcoholGameObject != null)
-        {
-            _alcoholManager = alcoholGameObject.GetComponent<AlcoholManager>();
-        }
-        else
-        {
-            Debug.LogError("GameObject 'Alcohol' not found!");
-        }
+      Debug.LogError("Rigidbody component not found on this GameObject. Please add one.");
+      enabled = false; // Disable the script if no Rigidbody is found
     }
-
-    // Update is called once per frame
-    void Update()
+    else
     {
-        _playerInput = Input.GetAxis("Vertical");
-        _rotationInput = Input.GetAxis("Horizontal");
-        // _userJumped = Input.GetButton("Jump");
+      rb.maxLinearVelocity = maxSpeed;
     }
+  }
 
-    private void FixedUpdate()
+  void Update()
+  {
+    if (rb == null) return;
+
+    moveInput = InputSystem.actions.FindAction("Move").ReadValue<Vector2>();
+
+    transform.position = rb.transform.position;
+
+    float isMoving = rb.linearVelocity.magnitude != 0 ? 1.0f : 0f;
+    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, moveInput.x * turnTorque * Time.deltaTime * isMoving, 0f));
+  }
+
+  void FixedUpdate()
+  {
+    if (moveInput.y > 0)
     {
-        _userRot = _transform.rotation.eulerAngles;
-        _userRot += new Vector3(0, _rotationInput, 0);
-        _transform.rotation = Quaternion.Euler(_userRot);
-        _rigidbody.linearVelocity = Vector3.ClampMagnitude(
-            _rigidbody.linearVelocity + _transform.forward *_playerInput * _inputScale,
-            _maxVelocity * _alcoholManager.GetAlcoholMultiplier());
+      rb.AddForce(transform.forward * moveInput.y * accelerationForce);
     }
+    else if (moveInput.y < 0)
+    {
+      // If moving forward, apply brake force. If moving backward or stationary, apply reverse force.
+      if (Vector3.Dot(rb.linearVelocity, transform.forward) > 0.1f) // Check if moving forward
+      {
+        rb.AddForce(transform.forward * moveInput.y * brakeForce);
+      }
+      else
+      {
+        rb.AddForce(transform.forward * moveInput.y * accelerationForce * 0.7f); // reverse is 70% of forward
+      }
+    }
+  }
 }
-
