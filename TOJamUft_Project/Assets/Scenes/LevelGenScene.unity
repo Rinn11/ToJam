@@ -1340,14 +1340,7 @@ RectTransform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 705507995}
-  - {fileID: 439019601}
-<<<<<<< Updated upstream
-  - {fileID: 509149363}
-  - {fileID: 1386648295}
-=======
-  - {fileID: 909863784}
->>>>>>> Stashed changes
-  - {fileID: 1477368334}
-  - {fileID: 1681574491}
-  - {fileID: 2115746794}
+  {fileID: 909863784}
+  {fileID: 1477368334}
+  {fileID: 1681574491}
+  {fileID: 2115746794}
