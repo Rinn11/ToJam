@@ -7,12 +7,14 @@ using UnityEngine;
 
 public class AlcoholManager : MonoBehaviour
 {
-    public GameObject blackoutPanel; 
-    private int alcoholCount = 1;
+    public GameObject blackoutPanel;
+    public GameObject blurryPanel;
+    private int alcoholCount;
     // blackout gui panel gameobject
     //private GameObject blackoutPanel;
     private GameObject alcoholCounterUI;
     private CanvasGroup blackoutCanvasGroup;
+    private CanvasGroup blurryCanvasGroup;
     
     private AudioSource[] audioSources;
 
@@ -34,6 +36,7 @@ public class AlcoholManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        alcoholCount = 1;
         //blackoutPanel = GameObject.Find("blackoutPanel");
         if (blackoutPanel != null)
         {
@@ -51,6 +54,24 @@ public class AlcoholManager : MonoBehaviour
         {
             Debug.LogError("blackoutPanel not found in the scene!");
         }
+        
+        if (blurryPanel != null)
+        {
+            Debug.Log("blurryPanel found.");
+            blurryCanvasGroup = blurryPanel.GetComponent<CanvasGroup>();
+            if (blurryCanvasGroup == null)
+            {
+                Debug.Log("CanvasGroup not found, adding one.");
+                blurryCanvasGroup = blurryPanel.AddComponent<CanvasGroup>();
+            }
+
+            blurryCanvasGroup.alpha = 0;
+        }
+        else
+        {
+            Debug.LogError("blackoutPanel not found in the scene!");
+        }
+        
         
         alcoholCounterUI = GameObject.Find("AlcoholCounter");
         audioSources = GetComponents<AudioSource>();
@@ -88,6 +109,10 @@ public class AlcoholManager : MonoBehaviour
         alcoholCount++;
         // do other stuff like animate drinking, play sound, increase ui text 
         
+        // increase blurriness
+        CanvasGroup panel = blurryPanel.GetComponent<CanvasGroup>();
+        panel.alpha = MathF.Min(0.8f, (GetAlcoholMultiplier() - 1) / 10);
+        
         if (alcoholCounterUI != null)
         {
             // Assuming the alcoholCounterUI has a Text component
@@ -101,13 +126,16 @@ public class AlcoholManager : MonoBehaviour
         
         // chance to black out for a split second
         
-        if (alcoholCount > 5 && UnityEngine.Random.Range(0, 100) < 10 + (Math.Pow(2, GetAlcoholMultiplier())))
+        if (alcoholCount > 5 && UnityEngine.Random.Range(0, 100) < 40 + (Math.Pow(2, GetAlcoholMultiplier())))
         {
             TriggerBlackout();
         }
         else
-        {   
-            yield return StartCoroutine(PlayAndWaitForSoundToFinish(audioSources[1]));
+        {
+            if (UnityEngine.Random.Range(0, 100) < 25)
+            {
+                yield return StartCoroutine(PlayAndWaitForSoundToFinish(audioSources[1]));
+            }
             canDrink = true;
         }
        
