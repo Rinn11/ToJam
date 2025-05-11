@@ -39,7 +39,7 @@ public class AlcoholManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        alcoholCount = 0;
+        alcoholCount = 1;
         //blackoutPanel = GameObject.Find("blackoutPanel");
         if (blackoutPanel != null)
         {
