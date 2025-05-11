@@ -69,9 +69,6 @@ public class PlayerMove : MonoBehaviour
                                               new Vector3(0f, moveValue.x * useTurnTorque * Time.deltaTime * isMoving, 0f));
         transform.rotation = rot;
         // wheel.transform.rotation.z = transform.rotation.eulerAngles.z;
-        
-        transform.position = rb.transform.position;
-        
     }
 
     public void startGame()
