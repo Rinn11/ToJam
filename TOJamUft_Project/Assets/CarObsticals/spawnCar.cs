@@ -83,7 +83,7 @@ public class spawnCar : MonoBehaviour
     {
         //SpawnCarsRandomlyAcrossTiles(3);
         // rantom time to spawn
-        yield return new WaitForSeconds(Random.Range(1, 3));
+        yield return new WaitForSeconds(Random.Range(0.5f, 2));
         _SpawnCar = true;
     }
 
