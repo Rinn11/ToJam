@@ -74,7 +74,10 @@ public class AlcoholManager : MonoBehaviour
         {
             Debug.LogError("blackoutPanel not found in the scene!");
         }
-        
+
+        bottlex = 140f;
+        bottley = -15f;
+        bottlez = 0f;
         
         alcoholCounterUI = GameObject.Find("AlcoholCounter");
         audioSources = GetComponents<AudioSource>();
