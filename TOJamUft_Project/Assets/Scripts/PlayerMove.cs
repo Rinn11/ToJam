@@ -14,6 +14,8 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
+        //Time.timeScale = 0;
+
         rb = GetComponent<Rigidbody>();
         if (rb == null)
         {
@@ -59,6 +61,11 @@ public class PlayerMove : MonoBehaviour
         
         transform.position = rb.transform.position;
         
+    }
+
+    public void startGame()
+    {
+        Time.timeScale = 1.0f;
     }
 
     void FixedUpdate()
