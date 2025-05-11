@@ -12,6 +12,7 @@ public class TileSpawner : MonoBehaviour
     public int tileSpawnAmount;
     public int tileDeleteAmount;
     public float tileScale;
+    public float downwardOffset; // This is to offset the next generated tile so that we can elimnate some seams on the floor despite all tiles existing on the value on the y axis.
 
     private int tileSpawnPassedCounter = 0;    
     private int tileDeletePassedCounter = 0;
@@ -29,7 +30,7 @@ public class TileSpawner : MonoBehaviour
         // Spawn the initial amount of tiles
         for (int i = 0; i < initialTileAmount - 1; i++) {
             chosenTileSection = tileSections[UnityEngine.Random.Range(0, tileSections.Length)];
-            newSection = Instantiate(chosenTileSection, newSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.position, newSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.rotation, gameObject.transform);
+            newSection = Instantiate(chosenTileSection, newSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.position - new Vector3(0, downwardOffset, 0), newSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.rotation, gameObject.transform);
             newSection.GetComponentInChildren<SectionTrigger>().tileManager = this;
             newSection.transform.localScale = new Vector3(tileScale, tileScale, tileScale);
         }
@@ -47,7 +48,7 @@ public class TileSpawner : MonoBehaviour
             // Grab the most recent tile section (usually the last child of the tile manager)
             GameObject lastTileSection = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject;
             GameObject chosenTileSection = tileSections[UnityEngine.Random.Range(0, tileSections.Length)];
-            GameObject newSection = Instantiate(chosenTileSection, lastTileSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.position, lastTileSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.rotation, gameObject.transform);
+            GameObject newSection = Instantiate(chosenTileSection, lastTileSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.position  - new Vector3(0, downwardOffset, 0), lastTileSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.rotation, gameObject.transform);
             newSection.GetComponentInChildren<SectionTrigger>().tileManager = this;
             newSection.transform.localScale = new Vector3(tileScale, tileScale, tileScale);
             for (int i = 0; i < tileSpawnAmount - 1; i++) {
@@ -56,7 +57,7 @@ public class TileSpawner : MonoBehaviour
 
                 // Utilize the object's forward vector to make tile spawning invariant to the rotation it's facing.
                 chosenTileSection = tileSections[UnityEngine.Random.Range(0, tileSections.Length)];
-                newSection = Instantiate(chosenTileSection, newSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.position, newSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.rotation, gameObject.transform);
+                newSection = Instantiate(chosenTileSection, newSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.position  - new Vector3(0, downwardOffset, 0), newSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.rotation, gameObject.transform);
                 newSection.GetComponentInChildren<SectionTrigger>().tileManager = this;
                 newSection.transform.localScale = new Vector3(tileScale, tileScale, tileScale);
             }
