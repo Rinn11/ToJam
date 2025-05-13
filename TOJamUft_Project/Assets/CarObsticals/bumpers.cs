@@ -9,7 +9,7 @@ public class bumpers : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player")) {
-            slowPlay.Play();
+            // slowPlay.Play();
             StartCoroutine(slowTime());
         }
         //slow players speed with Ienumer to max

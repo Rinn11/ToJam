@@ -16,8 +16,9 @@ public class EndScreenBehavior : MonoBehaviour
     
     // Reload the Scene and play again
     public void playAgain() {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
+        // Reload the current scene
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
 
     // Quit the game
