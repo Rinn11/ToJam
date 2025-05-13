@@ -18,22 +18,23 @@ public class TileSpawner : MonoBehaviour
     private int tileDeletePassedCounter = 0;
 
     private void Start() {
-        initialTileAmount = Math.Max(1, initialTileAmount);
         tileSpawnPassedCount = Math.Max(1, tileSpawnPassedCount);
-
-        // You need a initial child to spawn the rest of the files in the correct position and rotation
-        GameObject chosenTileSection = tileSections[UnityEngine.Random.Range(0, tileSections.Length)];
-        GameObject newSection = Instantiate(chosenTileSection, gameObject.transform.position, gameObject.transform.rotation, gameObject.transform);
-        newSection.GetComponentInChildren<SectionTrigger>().tileManager = this;
-        newSection.transform.localScale = new Vector3(tileScale, tileScale, tileScale);
-
-        // Spawn the initial amount of tiles
-        for (int i = 0; i < initialTileAmount - 1; i++) {
-            chosenTileSection = tileSections[UnityEngine.Random.Range(0, tileSections.Length)];
-            newSection = Instantiate(chosenTileSection, newSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.position - new Vector3(0, downwardOffset, 0), newSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.rotation, gameObject.transform);
+        if (initialTileAmount > 0) {
+            
+            // You need a initial child to spawn the rest of the files in the correct position and rotation
+            GameObject chosenTileSection = tileSections[UnityEngine.Random.Range(0, tileSections.Length)];
+            GameObject newSection = Instantiate(chosenTileSection, gameObject.transform.position, gameObject.transform.rotation, gameObject.transform);
             newSection.GetComponentInChildren<SectionTrigger>().tileManager = this;
             newSection.transform.localScale = new Vector3(tileScale, tileScale, tileScale);
-        }
+
+            // Spawn the initial amount of tiles
+            for (int i = 0; i < initialTileAmount - 1; i++) {
+                chosenTileSection = tileSections[UnityEngine.Random.Range(0, tileSections.Length)];
+                newSection = Instantiate(chosenTileSection, newSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.position - new Vector3(0, downwardOffset, 0), newSection.GetComponentInChildren<SectionTrigger>().tileEndPoint.transform.rotation, gameObject.transform);
+                newSection.GetComponentInChildren<SectionTrigger>().tileManager = this;
+                newSection.transform.localScale = new Vector3(tileScale, tileScale, tileScale);
+            }
+        }        
     }
 
     public void crossed() {
