@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 public class spawnCar : MonoBehaviour
 {
     public GameObject eui;
+    public GameObject alcoholUI;
     public GameObject cars;
 
     public GameObject tileSpawner;
@@ -57,6 +58,7 @@ public class spawnCar : MonoBehaviour
             Transform spawnPoint = controlPoints[index];
             GameObject vehicle = Instantiate(cars, spawnPoint.position, Quaternion.Euler(spawnPoint.eulerAngles), this.gameObject.transform);
             vehicle.GetComponentInChildren<Heads>().endScreenUI = eui;
+            vehicle.GetComponentInChildren<Heads>().alcoholUI = alcoholUI;
             vehicle.GetComponent<forward>().getTargetChild(index, objectPosition);
 
             /*for (int i = 0; i < 1; i++)
@@ -121,6 +123,7 @@ public class spawnCar : MonoBehaviour
         Transform spawnPoint = controlPoints[index];
         GameObject vehicle = Instantiate(cars, spawnPoint.position, Quaternion.Euler(spawnPoint.eulerAngles), this.gameObject.transform);
         vehicle.GetComponentInChildren<Heads>().endScreenUI = eui;
+        vehicle.GetComponentInChildren<Heads>().alcoholUI = alcoholUI;
         vehicle.GetComponent<forward>().getTargetChild(index, objectPosition);
 
         /*for (int i = 0; i < 1; i++)
