@@ -4,7 +4,6 @@ public class Heads : MonoBehaviour
 {
 
     public AudioSource crashSource;
-    public AudioSource arrestSource;
     public GameObject endScreenUI;
     public GameObject alcoholUI;
 
@@ -16,9 +15,9 @@ public class Heads : MonoBehaviour
         {
             // This is cursed af lmao
             crashSource.Play();
-            arrestSource.Play();
             endScreenUI.SetActive(true);
             alcoholUI.SetActive(false);
+            
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             other.gameObject.SetActive(false);            
