@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,6 +20,8 @@ public class forward : MonoBehaviour
 
     public GameObject carModelParent;
 
+    Transform[] controlPoints = new Transform[4];
+
     void Start()
     {
         //Fetch the Rigidbody from the GameObject with this script attached
@@ -29,6 +32,11 @@ public class forward : MonoBehaviour
         carModelParent.transform.GetChild(Random.Range(1, carModelParent.transform.childCount)).gameObject.SetActive(true);
 
         getControlPoint();
+
+        CarDestruction();
+
+        // Assign control points: [0, 1] from backRoutes, [2, 3] from frontRoutes
+        //controlPoints = new Transform[4];
     }
 
     public void getTargetChild(int _targetedChild, int currentControlPoint)
@@ -48,20 +56,17 @@ public class forward : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-
-        // Get the tiles safely
-        _BackTile = tileSpawner.transform.GetChild(backIndex).gameObject;
-        _FrountTile = tileSpawner.transform.GetChild(frontIndex).gameObject;
-
-
-        // Get their "Routes" children
-        Transform backRoutes = _BackTile.transform.Find("Routes");
-        Transform frontRoutes = _FrountTile.transform.Find("Routes");
-
-        // Assign control points: [0, 1] from backRoutes, [2, 3] from frontRoutes
-        Transform[] controlPoints = new Transform[4];
-        if (targetChildPosition <  2) { controlPoints[targetChildPosition] = backRoutes.GetChild(targetChildPosition); }
-        else { controlPoints[targetChildPosition] = frontRoutes.GetChild(targetChildPosition); }
+        
+        if (targetChildPosition <  2) {
+            _BackTile = tileSpawner.transform.GetChild(backIndex).gameObject;
+            Transform backRoutes = _BackTile.transform.Find("Routes");
+            controlPoints[targetChildPosition] = backRoutes.GetChild(targetChildPosition); 
+        }
+        else {
+            _FrountTile = tileSpawner.transform.GetChild(frontIndex).gameObject;
+            Transform frontRoutes = _FrountTile.transform.Find("Routes");
+            controlPoints[targetChildPosition] = frontRoutes.GetChild(targetChildPosition); 
+        }
 
         
         targetPosition = controlPoints[targetChildPosition];
@@ -80,5 +85,12 @@ public class forward : MonoBehaviour
         { 
             getControlPoint();
         }
+    }
+
+    IEnumerator CarDestruction()
+    {
+        yield return new WaitForSeconds(30);
+        Destroy(this.gameObject);
+
     }
 }
