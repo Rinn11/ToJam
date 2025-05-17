@@ -1359,6 +1359,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 500
+  mouseXField: Mouse X
+  mouseYField: Mouse Y
 --- !u!81 &642403182
 AudioListener:
   m_ObjectHideFlags: 0
