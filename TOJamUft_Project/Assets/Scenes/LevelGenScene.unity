@@ -3552,7 +3552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1949901a4bc42f29e83d4db5575d847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 0
+  mouseSensitivity: 500
   mouseXField: Mouse X2
   mouseYField: Mouse Y2
 --- !u!1 &1634046098
