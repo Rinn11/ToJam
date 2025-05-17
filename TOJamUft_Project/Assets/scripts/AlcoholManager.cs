@@ -142,6 +142,7 @@ public class AlcoholManager : MonoBehaviour
     {
       TriggerBlackout();
       // yield return StartCoroutine(AlcoholReturnLocal(originalLocalPos, originalLocalRot));
+      canDrink = true;
     }
     else
     {
@@ -150,6 +151,7 @@ public class AlcoholManager : MonoBehaviour
         yield return StartCoroutine(PlayAndWaitForSoundToFinish(audioSources[1]));
       }
       // yield return StartCoroutine(AlcoholReturnLocal(originalLocalPos, originalLocalRot));
+      canDrink = true;
     }
   }
 
