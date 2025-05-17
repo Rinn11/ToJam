@@ -239,11 +239,10 @@ GameObject:
   - component: {fileID: 7420721411950668447}
   - component: {fileID: 1279913211817327693}
   - component: {fileID: 6225609621459858998}
-  - component: {fileID: 5028133465726437726}
   - component: {fileID: 5443351820323490594}
-  - component: {fileID: 1375013941103181020}
+  - component: {fileID: -7195673455696265994}
   m_Layer: 0
-  m_Name: Car
+  m_Name: CarUpdatedModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -342,25 +341,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.63037497, y: 0.7497653, z: 1}
   m_Center: {x: 0.012126535, y: -0.12511735, z: 0}
---- !u!114 &5028133465726437726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2624520138224426251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a94f358fafe11e4e846ea67b49be402, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Speed: 20
-  tileSpawner: {fileID: 0}
-  _FrountTile: {fileID: 0}
-  _BackTile: {fileID: 0}
-  controlPoint: 0
-  targetChildPosition: 0
-  carModelParent: {fileID: 4219070725946866443}
 --- !u!54 &5443351820323490594
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -388,21 +368,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
---- !u!114 &1375013941103181020
+--- !u!114 &-7195673455696265994
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2624520138224426251}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cc4068bac3aa0c44b0196f2841427b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 87e97e1e259b90a43941861e007baada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  route: {fileID: 0}
-  routes:
-  - {fileID: 0}
+  carSpeed: 10
 --- !u!1 &4219070725946866443
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,6 +390,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3704742040446270738}
+  - component: {fileID: 7243591346718679819}
   m_Layer: 0
   m_Name: CarsModels
   m_TagString: Untagged
@@ -438,6 +417,18 @@ Transform:
   - {fileID: 6072079971212063327}
   m_Father: {fileID: 4562930995527676133}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7243591346718679819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4219070725946866443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4e72a849240a68499628bb32b5720e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6408820207092327306
 GameObject:
   m_ObjectHideFlags: 0
