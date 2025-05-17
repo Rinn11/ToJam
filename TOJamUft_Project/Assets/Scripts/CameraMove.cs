@@ -4,6 +4,8 @@ using UnityEngine.InputSystem; // Required for the new Input System
 public class MouseLook : MonoBehaviour
 {
   public float mouseSensitivity;
+  [SerializeField] private string mouseXField;
+  [SerializeField] private string mouseYField;
 
   private Vector2 lookAction;
 
@@ -26,7 +28,7 @@ public class MouseLook : MonoBehaviour
     }
     lookAction.Enable();
         */
-    lookAction = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+    lookAction = new Vector2(Input.GetAxis(mouseXField), Input.GetAxis(mouseYField));
     }
 
     /* This is Unity's new Input System code. it won't work anymore so it will be commented out and removed later.
