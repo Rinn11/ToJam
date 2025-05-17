@@ -52,7 +52,7 @@ public class MouseLook : MonoBehaviour
 
   void Update()
   {
-        lookAction = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        lookAction = new Vector2(Input.GetAxis(mouseXField), Input.GetAxis(mouseYField));
         Vector2 mouseDelta = lookAction * mouseSensitivity * Time.deltaTime;
 
     // --- Vertical Look (Pitch) ---
