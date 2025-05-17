@@ -7,7 +7,7 @@ public class MouseLook : MonoBehaviour
 
   private InputAction lookAction;
 
-  private float xRotation = 0f, yRotation = 0f; // Stores the current rotation of the camera
+  private float yRotation = 0f; // Stores the current rotation of the camera
 
   void Awake()
   {

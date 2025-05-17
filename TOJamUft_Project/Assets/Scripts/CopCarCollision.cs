@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Heads : MonoBehaviour
+public class CopCarCollision : MonoBehaviour
 {
 
   public AudioSource crashSource;
