@@ -5,12 +5,13 @@ public class MouseLook : MonoBehaviour
 {
   public float mouseSensitivity;
 
-  private InputAction lookAction;
+  private Vector2 lookAction;
 
   private float xRotation = 0f, yRotation = 0f; // Stores the current rotation of the camera
 
   void Awake()
   {
+        /*
     var inputActionAsset = InputSystem.actions;
     if (inputActionAsset != null)
     {
@@ -24,8 +25,11 @@ public class MouseLook : MonoBehaviour
       return;
     }
     lookAction.Enable();
-  }
+        */
+    lookAction = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+    }
 
+    /* This is Unity's new Input System code. it won't work anymore so it will be commented out and removed later.
   void OnEnable()
   {
     lookAction.Enable();
@@ -34,7 +38,7 @@ public class MouseLook : MonoBehaviour
   void OnDisable()
   {
     lookAction.Disable();
-  }
+  } */
 
   void Start()
   {
@@ -46,7 +50,8 @@ public class MouseLook : MonoBehaviour
 
   void Update()
   {
-    Vector2 mouseDelta = lookAction.ReadValue<Vector2>() * mouseSensitivity * Time.deltaTime;
+        lookAction = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        Vector2 mouseDelta = lookAction * mouseSensitivity * Time.deltaTime;
 
     // --- Vertical Look (Pitch) ---
     // Adjust the xRotation based on mouse Y input
