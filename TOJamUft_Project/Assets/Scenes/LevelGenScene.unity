@@ -1095,6 +1095,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerMove: {fileID: 509149365}
+  _horizontalAxis: Horizontal
+  _verticalAxis: Vertical
 --- !u!1 &635674393
 GameObject:
   m_ObjectHideFlags: 0
@@ -1211,7 +1213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7259213b13e1ed94eb30426fc9450cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleScreen: {fileID: 0}
+  titleScreen: {fileID: 635674393}
   audioSources: []
 --- !u!82 &635674399
 AudioSource:
