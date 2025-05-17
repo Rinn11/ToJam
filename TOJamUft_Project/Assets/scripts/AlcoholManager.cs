@@ -91,7 +91,7 @@ public class AlcoholManager : MonoBehaviour
     void Update()
     {
         // press space to initiate drink alcohol routine
-        if (canDrink && Input.GetAxis("Jump") > 0)
+        if (canDrink && Input.GetAxis("Jump1") > 0)
         {
             StartCoroutine(DrinkAlcohol());
         }
