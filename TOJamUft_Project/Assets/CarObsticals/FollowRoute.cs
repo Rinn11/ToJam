@@ -1,79 +1,129 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class FollowRoute : MonoBehaviour
 {
     [SerializeField] private float carSpeed = 10f;
 
-    public List<Transform> totalRoads = new List<Transform>();
-
-    private int route;
+    private List<Transform> orderedRoadGroups = new List<Transform>();
+    private int route; // 0 = left, 1 = middle, 2 = right
     private Transform targetPosition;
-    
-    private int currentRoadPosition=0;
+    private int currentRoadIndex = 0;
+    private bool firstMove = true;
 
-    Rigidbody rb;
+    private Rigidbody rb;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    public void setTarget()
+    public void setRoute(int currentRoute, Transform roadsContainer, Transform spawnPosition)
     {
-        if (route < 2)
+        orderedRoadGroups.Clear();
+        route = -1;
+
+        // Gather ordered groups
+        for (int i = 0; i < roadsContainer.childCount; i++)
         {
-            currentRoadPosition++;
+            orderedRoadGroups.Add(roadsContainer.GetChild(i));
         }
-        else
+
+        // Find which group and lane the spawnPosition belongs to
+        for (int groupIndex = 0; groupIndex < orderedRoadGroups.Count; groupIndex++)
         {
-            currentRoadPosition--;
+            Transform group = orderedRoadGroups[groupIndex];
+            for (int laneIndex = 0; laneIndex < group.childCount; laneIndex++)
+            {
+                if (group.GetChild(laneIndex) == spawnPosition)
+                {
+                    currentRoadIndex = groupIndex;
+                    route = laneIndex;
+                    targetPosition = spawnPosition;
+                    Debug.Log($"Spawned at group {group.name} (index {groupIndex}), lane {laneIndex}");
+                    return;
+                }
+            }
         }
 
-        if (currentRoadPosition >= totalRoads.Count || currentRoadPosition <= 0) { Destroy(this.gameObject); }
-
-        targetPosition = totalRoads[currentRoadPosition].GetChild(route);
-
-        transform.LookAt(targetPosition);
+        Debug.LogError("Spawn position not found in any road group!");
     }
 
-    // Update is called once per frame
+    private void setTarget()
+    {
+        if (firstMove)
+        {
+            firstMove = false;
+            return; // Stay at the spawnPosition on first call
+        }
+
+        // Advance based on route direction
+        if (route < 2)
+            currentRoadIndex++;
+        else
+            currentRoadIndex--;
+
+        // End of route
+        if (currentRoadIndex >= orderedRoadGroups.Count || currentRoadIndex < 0)
+        {
+            Debug.Log("Route complete. Destroying car.");
+            Destroy(gameObject);
+            return;
+        }
+
+        Transform group = orderedRoadGroups[currentRoadIndex];
+
+        if (route >= group.childCount)
+        {
+            Debug.LogWarning("Route index out of range for group: " + group.name);
+            Destroy(gameObject);
+            return;
+        }
+
+        targetPosition = group.GetChild(route);
+        Debug.Log("New Target: " + targetPosition.name);
+    }
+
     void FixedUpdate()
     {
-        rb.MovePosition(Vector3.MoveTowards(this.gameObject.transform.position, targetPosition.position, Time.fixedDeltaTime * carSpeed));
-    }
+        if (targetPosition == null) return;
 
-    public void setRoute(int currentRoute, Transform roads)
-    {
-        route = currentRoute;
+        rb.MovePosition(Vector3.MoveTowards(transform.position, targetPosition.position, Time.fixedDeltaTime * carSpeed));
+        transform.LookAt(targetPosition);
 
-        for (int i = 0; i < roads.childCount; i++)
-        {
-            Debug.Log(totalRoads);
-            totalRoads.Add(roads.GetChild(i));
-        }
-
-        if (route < 2)
-        {
-            currentRoadPosition = 0;
-        }
-        else
-        {
-            currentRoadPosition = roads.childCount;
-        }
-
-        setTarget();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("ControlPoint"))
+        if (Vector3.Distance(transform.position, targetPosition.position) < 0.5f)
         {
             setTarget();
-
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        if (targetPosition != null)
+        {
+            // Change line color based on route
+            switch (route)
+            {
+                case 0:
+                    Gizmos.color = Color.blue;
+                    break;
+                case 1:
+                    Gizmos.color = Color.yellow;
+                    break;
+                case 2:
+                    Gizmos.color = Color.magenta;
+                    break;
+                default:
+                    Gizmos.color = Color.white;
+                    break;
+            }
+
+            // Draw line from car to target
+            Gizmos.DrawLine(transform.position, targetPosition.position);
+
+            // Draw sphere at target
+            Gizmos.DrawSphere(targetPosition.position, 0.3f);
+        }
+    }
+
 }

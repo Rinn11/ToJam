@@ -25,25 +25,29 @@ public class SpawnCarOnRoute : MonoBehaviour
     }
 
     // Update is called once per frame
-    void SpawnCar() { 
-            // Get the road the cars are spawning on
-            roadSpawnTo = roads.GetChild(Random.Range(0, roads.transform.childCount));
+    void SpawnCar()
+    {
+        // Pick a random road group (FRouteA, BRouteB, etc.)
+        roadSpawnTo = roads.GetChild(Random.Range(0, roads.transform.childCount));
 
-            // gets which spawner to place the cars at
-            currentRoute = Random.Range(0, roadSpawnTo.transform.childCount);
+        // Pick a random lane (child of the road group)
+        currentRoute = Random.Range(0, roadSpawnTo.transform.childCount);
 
-            // Get their "Routes" children
-            routeSpawnTo = roadSpawnTo.GetChild(currentRoute);
+        // This is the actual Transform where the car spawns
+        routeSpawnTo = roadSpawnTo.GetChild(currentRoute);
 
-            //Transform spawnPoint = controlPoints[index];
-            FollowRoute currentCar = Instantiate(carToSpawn, routeSpawnTo.position, Quaternion.Euler(routeSpawnTo.eulerAngles), this.gameObject.transform);
-            currentCar.setRoute(currentRoute, roads);
+        // Spawn the car at that position/rotation
+        FollowRoute currentCar = Instantiate(
+            carToSpawn,
+            routeSpawnTo.position,
+            Quaternion.Euler(routeSpawnTo.eulerAngles),
+            this.transform
+        );
 
-            // vehicle.GetComponentInChildren<Heads>().endScreenUI = eui;
-            // vehicle.GetComponentInChildren<Heads>().alcoholUI = alcoholUI;
-            //vehicle.GetComponent<forward>().getTargetChild(index, objectPosition);
-
+        // Tell the car which route and position it starts from
+        currentCar.setRoute(currentRoute, roads, routeSpawnTo);
     }
+
 
     private IEnumerator SpawnCarTimer()
     {
