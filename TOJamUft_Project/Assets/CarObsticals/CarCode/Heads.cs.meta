@@ -1,2 +1,14 @@
 fileFormatVersion: 2
 guid: 36c418bd82cef8c47b5327972229c131
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - crashSource: {instanceID: 0}
+  - endScreenUI: {fileID: 3169229796910521371, guid: fa44ea35a72c1d44792b25333a46a575, type: 3}
+  - alcoholUI: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

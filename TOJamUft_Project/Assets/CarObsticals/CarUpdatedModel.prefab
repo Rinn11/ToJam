@@ -576,7 +576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crashSource: {fileID: 7802458900289443093}
-  endScreenUI: {fileID: 0}
+  endScreenUI: {fileID: 3169229796910521371, guid: fa44ea35a72c1d44792b25333a46a575, type: 3}
   alcoholUI: {fileID: 0}
 --- !u!65 &2656813227805049771
 BoxCollider:

@@ -16,7 +16,7 @@ public class StartGame : MonoBehaviour
     {
         Time.timeScale = 0;
         
-        titleScreen = GameObject.Find("TitleScreenUI");
+        //titleScreen = GameObject.Find("TitleScreenUI");
         titleScreen.SetActive(true);
         
         audioSources = GetComponents<AudioSource>();
