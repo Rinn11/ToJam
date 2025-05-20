@@ -1,25 +1,32 @@
+/*
+ * Manages the effects of alcohol:
+ * - Applies a blackout effect
+ * - Applies a blurring effect
+ * - Updates an alcohol counter component
+ * Also animates the bottle being drank.
+ */
+
 using System;
 using System.Collections;
 using UnityEngine;
 
+// TODO: Fix bottle drinking animation (It seems like AlcoholMove is not used?)
 // TODO: cooldown timer for swigs of drink. UI icon should be a bottle of alcohol refilling to show cooldown restoring
 
 
 public class AlcoholManager : MonoBehaviour
 {
-  public GameObject blackoutPanel;
-  public GameObject blurryPanel;
-  public GameObject bottle;
-  private int alcoholCount;
-  // blackout gui panel gameobject
-  //private GameObject blackoutPanel;
-  private GameObject alcoholCounterUI;
-  private CanvasGroup blackoutCanvasGroup;
-  private CanvasGroup blurryCanvasGroup;
+  public GameObject blackoutPanel;          // The panel used to simulate a blackout
+  public GameObject blurryPanel;            // The panel used to simulate a blurring effect
+  public GameObject bottle;                 // The alcohol bottle
+  private int alcoholCount;                 // The number of alcohol bottles 
+  private GameObject alcoholCounterUI;      // UI element containing the alcohol counter
+  private CanvasGroup blackoutCanvasGroup;  // A reference to control every object in the same canvas as the blackout panel
+  private CanvasGroup blurryCanvasGroup;    // A reference to control every object in the same canvas as the blurry panel
 
-  private AudioSource[] audioSources;
+    private AudioSource[] audioSources;
 
-  public float bottlex, bottley, bottlez;
+  public float bottlex, bottley, bottlez;   // Controls the angle the bottle is tilted to during the drinking animations
 
 
   private bool canDrink = true;  // when blacking out, you can't drink

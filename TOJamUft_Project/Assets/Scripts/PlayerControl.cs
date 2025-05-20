@@ -1,3 +1,10 @@
+/*
+ * Passes input from the controller to the PlayerMove script
+ */
+
+// TODO: Originally was used because Cop AI used the same movement model (PlayerMove) that the player used.
+// Since the cop is now another player, this may not be needed anymore.
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 

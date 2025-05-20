@@ -1,3 +1,9 @@
+/*
+ * Simulates the movement of a player's car.
+ */
+
+// TODO: remove coupling with alcohol Manager
+
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;

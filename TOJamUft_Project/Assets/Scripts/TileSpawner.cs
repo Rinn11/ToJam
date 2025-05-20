@@ -1,6 +1,12 @@
+/*
+ * Handles instantiating road tiles for a procedurally generated level.
+ */
+
 using System;
 using System.Globalization;
 using UnityEngine;
+
+// TODO: Determine if we still use this
 
 public class TileSpawner : MonoBehaviour
 {

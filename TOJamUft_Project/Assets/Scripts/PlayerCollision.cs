@@ -1,3 +1,10 @@
+/*
+ * Handles collision between the player and and anything except the cop car (e.g. terrain).
+ * On collision with the cop, checks their relative magnitudes. If full damage is applied, shows the end screen and other end effects.
+ */
+
+// TODO: Maybe this should use the game ending functions in EndScreenBehaviour?
+
 using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour

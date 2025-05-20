@@ -1,3 +1,10 @@
+/*
+ * When started, hides the mouse and locks the cursor.
+ * When updating, allows the player to rotate the camera using their mouse to look around.
+ */
+
+// TODO: Maybe remove the unused commented out code if applicable
+
 using UnityEngine;
 using UnityEngine.InputSystem; // Required for the new Input System
 

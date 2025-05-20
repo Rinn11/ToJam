@@ -1,3 +1,14 @@
+/*
+ * Handles the collision between the player and the cop. On collision:
+ * - Plays a crash sound
+ * - Shows the end screen UI
+ * - Stops the alcohol UI
+ * - Unlocks and Shows the cursor
+ * - Deactivates the other car
+ */
+
+// TODO: Maybe this should use the game ending functions in EndScreenBehaviour?
+
 using UnityEngine;
 
 public class CopCarCollision : MonoBehaviour

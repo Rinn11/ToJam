@@ -1,18 +1,21 @@
+/*
+ * Plays the AudioClip loopClip, on Audiosource audioSource.
+ * Change audioSource to change how it is played.
+*/
+
+// TODO: Determine if this is redundant (AudioManager, AudioPlayer, MusicPlayer)
+
 using UnityEngine;
 
 public class MusicPlayer : MonoBehaviour
 {
     public AudioClip loopClip;
 
-    void Update()
+    void Start()
     {
         AudioSource audioSource = GetComponent<AudioSource>();
-
-        if (!audioSource.isPlaying) {
-            audioSource.clip = loopClip;
-            audioSource.loop = true;
-            audioSource.Play();
-        }
+        audioSource.clip = loopClip;
+        audioSource.loop = true;
+        audioSource.Play();
     }
-
 }

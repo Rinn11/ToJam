@@ -1,3 +1,9 @@
+/*
+ * This script causes its object to ignore collisions with the player
+ */
+
+// TODO: Determine if we still use this
+
 using Unity.VisualScripting;
 using UnityEngine;
 

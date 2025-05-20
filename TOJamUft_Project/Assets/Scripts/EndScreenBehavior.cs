@@ -1,3 +1,9 @@
+/*
+ * Handles the end of the game.
+ */
+
+// TODO: Maybe updateScore should not be a concern of the end game? Shouldn't that be in FineManager anyways?
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;

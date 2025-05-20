@@ -1,3 +1,7 @@
+/*
+ * Simulates the behaviour of the police car siren
+ */
+
 using UnityEngine;
 
 public class proximitySiren : MonoBehaviour

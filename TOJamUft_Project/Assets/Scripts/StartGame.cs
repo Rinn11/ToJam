@@ -1,3 +1,9 @@
+/*
+ * Handles starting the game. when the player presses space:
+ * - Unpauses the game
+ * - Hides the title screen
+ */
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,7 +29,7 @@ public class StartGame : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Time.timeScale = 1;
-                audioSources[0].Play();
+                audioSources[0].Play();         // TODO: audioSources doesn't seem to be used?
                 titleScreen.SetActive(false);
             }
         }
