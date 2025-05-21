@@ -1002,6 +1002,7 @@ GameObject:
   - component: {fileID: 509149367}
   - component: {fileID: 509149368}
   - component: {fileID: 509149369}
+  - component: {fileID: 509149370}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Player
@@ -1028,8 +1029,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.8438546, y: 2.4860725, z: 1.1992211}
+  m_Center: {x: -0.00000015894572, y: 0.74303627, z: 0.0040380955}
 --- !u!23 &509149361
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1452,6 +1453,21 @@ MonoBehaviour:
   PlayerMove: {fileID: 509149365}
   _horizontalAxis: Horizontal1
   _verticalAxis: Vertical1
+--- !u!114 &509149370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509149359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ab9f77adbfdec44becb4c80e34f0ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crashSource: {fileID: 804027054}
+  endScreenUI: {fileID: 1428650622}
+  alcoholUI: {fileID: 357555600}
 --- !u!4 &512518384 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 62c66ae72912f97488b34abd771bf659, type: 3}
@@ -4931,7 +4947,7 @@ GameObject:
   - component: {fileID: 1620153154}
   m_Layer: 0
   m_Name: Player2
-  m_TagString: Untagged
+  m_TagString: CopCar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5302,8 +5318,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.83121747, y: 2.5843925, z: 1.1919246}
+  m_Center: {x: -0.0027224224, y: 0.7921963, z: 0.0034031074}
 --- !u!23 &1620153151
 MeshRenderer:
   m_ObjectHideFlags: 0
