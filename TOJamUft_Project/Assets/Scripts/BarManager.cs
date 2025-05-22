@@ -37,7 +37,6 @@ public class BarManager : MonoBehaviour
 
         bar.SetClosed();
         open.Remove(bar);
-        closed.Add(bar);
         
         //play sound (use audio source)
         collectSound.Play();
@@ -45,6 +44,7 @@ public class BarManager : MonoBehaviour
         alcoholManager.changeAlcoholSupply(1);  // increase alcohol supply by 1
 
         AssignReplacementBar();
+        closed.Add(bar);
     }
 
     /* ---------- internal helpers ---------- */

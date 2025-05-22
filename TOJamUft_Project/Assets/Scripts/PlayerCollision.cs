@@ -11,8 +11,9 @@ public class PlayerCollision : MonoBehaviour
 {
 
   public AudioSource crashSource;
+  public AudioSource damageSource;
   public GameObject endScreenUI;
-  public GameObject alcoholUI;
+  public GameObject textUI;
 
   float damage = 100f;
   float timeSinceLastCollision = 0f, lastCollisionExitTime = 0f;
@@ -23,18 +24,20 @@ public class PlayerCollision : MonoBehaviour
     {
       timeSinceLastCollision = Time.time - lastCollisionExitTime;
     }
-    if (!collision.gameObject.CompareTag("CopCar") && timeSinceLastCollision > 0.05)
-    {
-      float relativeSpeed = new Vector2(collision.relativeVelocity.x, collision.relativeVelocity.z).magnitude;
-      damage = Mathf.Max(0f, damage - relativeSpeed);
-      Debug.Log(damage);
-    }
+    // TODO: make damage only apply if player is hitting a car? do we want wall damage?
+    // if (!collision.gameObject.CompareTag("CopCar") && timeSinceLastCollision > 0.05)
+    // {
+    //   float relativeSpeed = new Vector2(collision.relativeVelocity.x, collision.relativeVelocity.z).magnitude;
+    //   damage = Mathf.Max(0f, damage - relativeSpeed);
+    //   Debug.Log(damage);
+    //   damageSource.Play();
+    // }
 
     if (damage == 0f || collision.gameObject.CompareTag("CopCar"))
     {
       crashSource.Play();
       endScreenUI.SetActive(true);
-      alcoholUI.SetActive(false);
+      textUI.SetActive(false);
 
       Cursor.lockState = CursorLockMode.None;
       Cursor.visible = true;
