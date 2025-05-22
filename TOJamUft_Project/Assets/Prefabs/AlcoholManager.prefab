@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1583056629764623017}
   - component: {fileID: 7827123238498018388}
   m_Layer: 0
-  m_Name: Alcohol
+  m_Name: AlcoholManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,3 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blackoutPanel: {fileID: 0}
+  blurryPanel: {fileID: 0}
+  bottle: {fileID: 0}
+  alcoholCountUItext: {fileID: 0}
+  alcoholSupplyUItext: {fileID: 0}
+  initialAlcoholCount: 0
+  initialAlcoholSupply: 1
+  bottlex: 0
+  bottley: 0
+  bottlez: 0
