@@ -1056,8 +1056,8 @@ Rigidbody:
   m_GameObject: {fileID: 509149359}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 1
+  m_LinearDamping: 0.4
+  m_AngularDamping: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1088,7 +1088,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accelerationForce: 50
   brakeForce: 50
-  turnTorque: 40
+  turnTorque: 30
   maxSpeed: 20
   speedUI: {fileID: 1634046100}
   AlcoholManager: {fileID: 357555600}
@@ -5449,7 +5449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accelerationForce: 50
   brakeForce: 50
-  turnTorque: 40
+  turnTorque: 30
   maxSpeed: 20
   speedUI: {fileID: 1634046100}
   AlcoholManager: {fileID: 357555600}
@@ -5463,8 +5463,8 @@ Rigidbody:
   m_GameObject: {fileID: 1620153143}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 1
+  m_LinearDamping: 0.4
+  m_AngularDamping: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
