@@ -6,32 +6,35 @@
 using System;
 using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FineManagerBehavior : MonoBehaviour
 {
     public float fine;
     public AlcoholManager am;
-    private GameObject fineUI;
+    private AlcoholManager alcoholManager;
+    public Text fineUI;
 
     void Start()
     {
-        fineUI = GameObject.Find("Fine");
+        fine = 0.0f;
+        alcoholManager = am.GetComponent<AlcoholManager>();
     }
     
-    // Update is called once per frame
-    void Update()
+    public void increaseFine(int amount)
     {
-        fine += Time.deltaTime * am.GetAlcoholMultiplier() * 10;
+        fine += amount;
         fine = (float) Math.Round(fine, 2);
-        
+
         if (fineUI != null)
         {
-            // Assuming the alcoholCounterUI has a Text component
-            var textComponent = fineUI.GetComponent<UnityEngine.UI.Text>(); // TODO: Optimize by caching (bad idea to do this every frame)
-            if (textComponent != null)
-            {
-                textComponent.text = "Fine: $" + fine;
-            }
+            fineUI.text = $"Fine: ${fine}";
         }
     }
+    
+    // // Update is called once per frame
+    // void Update()
+    // {
+    //
+    // }
 }

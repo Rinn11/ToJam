@@ -9,9 +9,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
-
-// TODO: Fix bottle drinking animation (It seems like AlcoholMove is not used?)
-// TODO: cooldown timer for swigs of drink. UI icon should be a bottle of alcohol refilling to show cooldown restoring
+using UnityEngine.UI;
 
 
 public class AlcoholManager : MonoBehaviour
@@ -19,35 +17,44 @@ public class AlcoholManager : MonoBehaviour
   public GameObject blackoutPanel;          // The panel used to simulate a blackout
   public GameObject blurryPanel;            // The panel used to simulate a blurring effect
   public GameObject bottle;                 // The alcohol bottle
+  
+  //UI text
+  public Text alcoholCountUI;
+  public Text alcoholSupplyUI;
+  
+  public int initialAlcoholCount;
+  public int initialAlcoholSupply;
+  
+  public GameObject FineManager;
+  private FineManagerBehavior fineManager;
+  
   private int alcoholCount;                 // The number of alcohol bottles 
-  private GameObject alcoholCounterUI;      // UI element containing the alcohol counter
+  private int alcoholSupply;              // The number of alcohol bottles available
+  
   private CanvasGroup blackoutCanvasGroup;  // A reference to control every object in the same canvas as the blackout panel
   private CanvasGroup blurryCanvasGroup;    // A reference to control every object in the same canvas as the blurry panel
 
-    private AudioSource[] audioSources;
+  private AudioSource[] audioSources;
 
   public float bottlex, bottley, bottlez;   // Controls the angle the bottle is tilted to during the drinking animations
 
 
   private bool canDrink = true;  // when blacking out, you can't drink
-
-  // public function that returns alcoholMultiplier and alcoholCount
-  public int GetAlcoholCount()
-  {
-    return alcoholCount;
-  }
-  public float GetAlcoholMultiplier()
-  {
-    // alcohol multiplier is ((alcoholCount - 1) / 10) + 1
-    return ((alcoholCount - 1) / 10f) + 1;
-  }
+  
 
 
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   {
-    alcoholCount = 1;
-    //blackoutPanel = GameObject.Find("blackoutPanel");
+    alcoholSupply = initialAlcoholSupply;
+    alcoholCount = initialAlcoholCount;
+    
+    if (FineManager == null)
+    {
+      Debug.LogError("FineManager not found!");
+    }
+    fineManager = FineManager.GetComponent<FineManagerBehavior>();
+    
     if (blackoutPanel != null)
     {
       Debug.Log("blackoutPanel found.");
@@ -86,7 +93,6 @@ public class AlcoholManager : MonoBehaviour
     bottley = -15f;
     bottlez = 0f;
 
-    alcoholCounterUI = GameObject.Find("AlcoholCounter");
     audioSources = GetComponents<AudioSource>();
     if (audioSources.Length < 2)
     {
@@ -94,13 +100,67 @@ public class AlcoholManager : MonoBehaviour
     }
   }
 
+  public int GetAlcoholCount()
+  {
+    return alcoholCount;
+  }
+  public void increaseAlcoholCount(int amount = 1)
+  {
+    alcoholCount += amount;
+    fineManager.increaseFine(100);  // 100 dollar fine per bottle - TODO: fix this from being "magic num"
+    
+    if (alcoholCountUI != null)
+    {
+      alcoholCountUI.text = "Alcohol Count: " + alcoholCount;
+    }
+    else
+    {
+      Debug.LogError("AlcoholCounterUI not found!");
+    }
+  }
+  
+  public float GetAlcoholMultiplier()
+  {
+    // alcohol multiplier is ((alcoholCount - 1) / 10) + 1
+    return ((alcoholCount - 1) / 10f) + 1;
+  }
+  public int GetAlcoholSupply()
+  {
+    return alcoholSupply;
+  }
+
+  public void changeAlcoholSupply(int amount = 1) // use -1 to decrease
+  {
+    alcoholSupply += amount;
+    
+    if (alcoholSupply < 0)
+    {
+      alcoholSupply = 0;
+    }
+    
+    // update text
+    if (alcoholSupplyUI != null)
+    {
+      alcoholSupplyUI.text = "Alcohol Supply: " + alcoholSupply;
+    }
+  }
+  
+  
   // Update is called once per frame
   void Update()
   {
     // press space to initiate drink alcohol routine
-    if (canDrink && Input.GetKeyDown(KeyCode.Space))
+    if (alcoholSupply > 0 && canDrink && Input.GetKeyDown(KeyCode.Space))
     {
       StartCoroutine(DrinkAlcohol());
+    }
+    else if (alcoholSupply <= 0)
+    {
+      Debug.Log("No alcohol supply left!");
+    }
+    else if (!canDrink)
+    {
+      Debug.Log("Can't drink while blacking out!");
     }
   }
 
@@ -115,40 +175,27 @@ public class AlcoholManager : MonoBehaviour
     canDrink = false;
 
     // grab bottle animation, drink animation + gulp sfx, then increase alcoholCount
-    // Transform bottleTransform = bottle.transform;
+    Transform bottleTransform = bottle.transform;
 
     // // Record bottle's original position and rotation
-    // Vector3 originalLocalPos = bottleTransform.localPosition;
-    // Quaternion originalLocalRot = bottleTransform.localRotation;
-    // yield return StartCoroutine(AlcoholMove());
-
+    Vector3 originalLocalPos = bottleTransform.localPosition;
+    Quaternion originalLocalRot = bottleTransform.localRotation;
+    yield return StartCoroutine(AlcoholMove());
     yield return StartCoroutine(PlayAndWaitForSoundToFinish(audioSources[0]));
-
-    // if alcoholCount is less than 10, increase alcoholCount by 1
-    alcoholCount++;
-    // do other stuff like animate drinking, play sound, increase ui text 
+    
+    // drink increase same as supply decrease
+    increaseAlcoholCount(1);
+    changeAlcoholSupply(-1);
 
     // increase blurriness
     CanvasGroup panel = blurryPanel.GetComponent<CanvasGroup>();
     panel.alpha = MathF.Min(0.8f, (GetAlcoholMultiplier() - 1) / 10);
 
-    if (alcoholCounterUI != null)
-    {
-      // Assuming the alcoholCounterUI has a Text component
-      var textComponent = alcoholCounterUI.GetComponent<UnityEngine.UI.Text>();
-      if (textComponent != null)
-      {
-        textComponent.text = "Alcohol Count: " + alcoholCount;
-      }
-    }
-
-
     // chance to black out for a split second
-
     if (alcoholCount > 5 && UnityEngine.Random.Range(0, 100) < 40 + (Math.Pow(2, GetAlcoholMultiplier())))
     {
       TriggerBlackout();
-      // yield return StartCoroutine(AlcoholReturnLocal(originalLocalPos, originalLocalRot));
+      yield return StartCoroutine(AlcoholReturnLocal(originalLocalPos, originalLocalRot));
       canDrink = true;
     }
     else
@@ -157,7 +204,7 @@ public class AlcoholManager : MonoBehaviour
       {
         yield return StartCoroutine(PlayAndWaitForSoundToFinish(audioSources[1]));
       }
-      // yield return StartCoroutine(AlcoholReturnLocal(originalLocalPos, originalLocalRot));
+      yield return StartCoroutine(AlcoholReturnLocal(originalLocalPos, originalLocalRot));
       canDrink = true;
     }
   }

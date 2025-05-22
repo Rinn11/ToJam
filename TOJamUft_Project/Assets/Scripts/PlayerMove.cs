@@ -7,18 +7,19 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {
   public float accelerationForce, brakeForce, turnTorque, maxSpeed;
-  // recommended default 50, 50, 100, 20
+  // recommended default 50, 50, 40, 20
   private Rigidbody rb;
   private Vector2 moveValue;
-  private GameObject speedUI;
-
-  private AlcoholManager _alcoholManager;
-  private GameObject wheel;
-
+  
+  public Text speedUI;
+  public GameObject AlcoholManager;
+  private AlcoholManager alcoholManager;
+  
   public AudioSource[] audioSources;
 
   void Start()
@@ -35,22 +36,13 @@ public class PlayerMove : MonoBehaviour
     {
       rb.maxLinearVelocity = maxSpeed;
     }
-
-    speedUI = GameObject.Find("SpeedUI");
-
-
-    GameObject alcoholGameObject = GameObject.Find("Alcohol");
-    if (alcoholGameObject != null)
+    
+    if (AlcoholManager == null)
     {
-      _alcoholManager = alcoholGameObject.GetComponent<AlcoholManager>();
+      Debug.LogError("AlcoholManager not found!");
     }
-    else
-    {
-      Debug.LogError("GameObject 'Alcohol' not found!");
-    }
-
-    wheel = GameObject.Find("M_CarWheel");
-
+    alcoholManager = AlcoholManager.GetComponent<AlcoholManager>();
+    
     audioSources = GetComponents<AudioSource>();
     if (audioSources.Length < 2)
     {
@@ -76,31 +68,28 @@ public class PlayerMove : MonoBehaviour
     if (rb == null) return;
 
     // --- Acceleration and Braking ---
-    float alcoholMultiplier = _alcoholManager.GetAlcoholMultiplier();
+    float alcoholMultiplier = alcoholManager.GetAlcoholMultiplier();
 
     float useAccelerationForce = accelerationForce * (alcoholMultiplier * 2);
     float useBrakeForce = brakeForce * (alcoholMultiplier);
 
     if (speedUI != null)
     {
-      // Assuming the alcoholCounterUI has a Text component
-      var textComponent = speedUI.GetComponent<UnityEngine.UI.Text>();
-      if (textComponent != null)
-      {
-        textComponent.text = "Speed: " + Math.Round(rb.linearVelocity.magnitude, 2) + " km/h";
-      }
+      float speed = rb.linearVelocity.magnitude;
+      speedUI.text = $"Speed: {Mathf.RoundToInt(speed)} km/h";
     }
-
-    if (Mathf.Abs(moveValue.x) > 1e-8)
+    
+    if (Mathf.Abs(moveValue.x) > 0)
     {
       float isMoving = rb.linearVelocity.magnitude != 0 ? 1.0f : 0.0f;
 
-      rb.maxLinearVelocity = maxSpeed * (alcoholMultiplier * 2); // note maxSpeed is a constant.
-
       float useTurnTorque = turnTorque * (float)Math.Pow(1.6, alcoholMultiplier) * (alcoholMultiplier / 2);  // sensitivity increases with alcohol
       rb.AddTorque(Vector3.up * useTurnTorque * isMoving * moveValue.x);
+      // transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + 
+      // new Vector3(0f, moveValue.x * useTurnTorque * Time.deltaTime * isMoving, 0f));
     }
-
+    
+    rb.maxLinearVelocity = maxSpeed * (alcoholMultiplier * 2); // note maxSpeed is a constant.
     if (moveValue.y > 0)
     {
       rb.AddForce(transform.forward * moveValue.y * useAccelerationForce);
