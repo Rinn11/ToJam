@@ -20,7 +20,7 @@ public class PlayerMove : MonoBehaviour
     private Vector2 moveValue;
 
     public Text speedUI;
-    public GameObject AlcoholManager;
+    public GameObject MovementManager;
     private IMovementModifier movementModifier;
 
     [Header("Audio Events")]
@@ -41,11 +41,11 @@ public class PlayerMove : MonoBehaviour
             rb.maxLinearVelocity = maxSpeed;
         }
 
-        if (AlcoholManager == null)
+        if (MovementManager == null)
         {
-            Debug.LogError("AlcoholManager not found!");
+            Debug.LogError("MovementManager not found!");
         }
-        movementModifier = AlcoholManager.GetComponent<IMovementModifier>();
+        movementModifier = MovementManager.GetComponent<IMovementModifier>();
     }
 
     public void ProcessInputs(float x, float y)
