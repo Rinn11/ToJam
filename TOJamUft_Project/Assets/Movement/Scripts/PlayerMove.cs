@@ -30,8 +30,6 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
-        //Time.timeScale = 0;
-
         rb = GetComponent<Rigidbody>();
         if (rb == null)
         {
@@ -58,21 +56,16 @@ public class PlayerMove : MonoBehaviour
         moveValue.y = y;
     }
 
-    public void startGame()
-    {
-        Time.timeScale = 1.0f;
-    }
-
     void FixedUpdate()
     {
         if (rb == null) return;
 
         // --- Acceleration and Braking ---
-        float alcoholMultiplier = alcoholManager.GetAlcoholMultiplier();
+        float alcoholMultiplier = alcoholManager.GetAlcoholMultiplier(); // TODO: Change to use IMovementInterface
+        float useAccelerationForce = accelerationForce * (alcoholMultiplier * 2); // TODO: This logic should be in the manager instead?
+        float useBrakeForce = brakeForce * (alcoholMultiplier); // TODO: This logic should be in the manager instead?
 
-        float useAccelerationForce = accelerationForce * (alcoholMultiplier * 2);
-        float useBrakeForce = brakeForce * (alcoholMultiplier);
-
+        // Coupled but atleast speedUI being unspecified won't break the script.
         if (speedUI != null)
         {
             float speed = rb.linearVelocity.magnitude;
@@ -81,12 +74,12 @@ public class PlayerMove : MonoBehaviour
 
         if (Mathf.Abs(moveValue.x) > 0)
         {
-            float isMoving = rb.linearVelocity.magnitude != 0 ? 1.0f : 0.0f;
+            float isMoving = rb.linearVelocity.magnitude != 0 ? 1.0f : 0.0f; // Only apply turning if we're already moving
             float useTurnTorque = turnTorque * (float)Math.Pow(1.6, alcoholMultiplier) * (alcoholMultiplier / 2);  // sensitivity increases with alcohol
             rb.AddTorque(Vector3.up * useTurnTorque * isMoving * moveValue.x);
         }
 
-        rb.maxLinearVelocity = maxSpeed * (alcoholMultiplier * 2); // note maxSpeed is a constant.
+        rb.maxLinearVelocity = maxSpeed * (alcoholMultiplier * 2); // TODO: This logic should be in the manager instead?
         if (moveValue.y > 0)
         {
             rb.AddForce(transform.forward * moveValue.y * useAccelerationForce);
