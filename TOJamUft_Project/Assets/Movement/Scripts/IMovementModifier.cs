@@ -1,5 +1,6 @@
 /*
- * Interface for affecting the statistics of a car
+ * Interface that PlayerMove uses to determine its statistics
+ * See: AlcoholManager.cs and CopManager.cs
  */
 
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine;
 public interface IMovementModifier
 {
     float GetAccelerationMultiplier();
-    float GetReverseAccelerationMultiplier();
+    float GetReverseMultiplier();
     float GetBrakeMultiplier();
     float GetTurnMultiplier();
     float GetMaxSpeedMultiplier();

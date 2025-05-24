@@ -21,7 +21,7 @@ public class PlayerMove : MonoBehaviour
 
     public Text speedUI;
     public GameObject AlcoholManager;
-    private AlcoholManager alcoholManager;
+    private IMovementModifier movementModifier;
 
     [Header("Audio Events")]
     public UnityEvent onAccelerate;
@@ -45,7 +45,7 @@ public class PlayerMove : MonoBehaviour
         {
             Debug.LogError("AlcoholManager not found!");
         }
-        alcoholManager = AlcoholManager.GetComponent<AlcoholManager>();
+        movementModifier = AlcoholManager.GetComponent<IMovementModifier>();
     }
 
     public void ProcessInputs(float x, float y)
@@ -61,9 +61,11 @@ public class PlayerMove : MonoBehaviour
         if (rb == null) return;
 
         // --- Acceleration and Braking ---
-        float alcoholMultiplier = alcoholManager.GetAlcoholMultiplier(); // TODO: Change to use IMovementInterface
-        float useAccelerationForce = accelerationForce * (alcoholMultiplier * 2); // TODO: This logic should be in the manager instead?
-        float useBrakeForce = brakeForce * (alcoholMultiplier); // TODO: This logic should be in the manager instead?
+        float useAccelerationForce = accelerationForce * movementModifier.GetAccelerationMultiplier();
+        float useBrakeForce = brakeForce * movementModifier.GetBrakeMultiplier();
+        float useTurnTorque = turnTorque * movementModifier.GetTurnMultiplier(); // sensitivity increases with alcohol
+        float useReverseForce = accelerationForce * movementModifier.GetReverseMultiplier();
+        rb.maxLinearVelocity = maxSpeed * movementModifier.GetMaxSpeedMultiplier();
 
         // Coupled but atleast speedUI being unspecified won't break the script.
         if (speedUI != null)
@@ -75,11 +77,9 @@ public class PlayerMove : MonoBehaviour
         if (Mathf.Abs(moveValue.x) > 0)
         {
             float isMoving = rb.linearVelocity.magnitude != 0 ? 1.0f : 0.0f; // Only apply turning if we're already moving
-            float useTurnTorque = turnTorque * (float)Math.Pow(1.6, alcoholMultiplier) * (alcoholMultiplier / 2);  // sensitivity increases with alcohol
             rb.AddTorque(Vector3.up * useTurnTorque * isMoving * moveValue.x);
         }
 
-        rb.maxLinearVelocity = maxSpeed * (alcoholMultiplier * 2); // TODO: This logic should be in the manager instead?
         if (moveValue.y > 0)
         {
             rb.AddForce(transform.forward * moveValue.y * useAccelerationForce);
@@ -95,7 +95,7 @@ public class PlayerMove : MonoBehaviour
             }
             else
             {
-                rb.AddForce(transform.forward * moveValue.y * useAccelerationForce * 0.7f); // reverse is 70% of forward
+                rb.AddForce(transform.forward * moveValue.y * useReverseForce);
                 onBrake?.Invoke();
             }
         }
