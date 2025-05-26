@@ -871,6 +871,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FineManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3162117931298901466, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: m_TagString
+      value: FineManager
+      objectReference: {fileID: 0}
     - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
       propertyPath: am
       value: 
@@ -4222,7 +4226,7 @@ GameObject:
   - component: {fileID: 1191153758}
   m_Layer: 0
   m_Name: RoundManager
-  m_TagString: Untagged
+  m_TagString: RoundManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4254,7 +4258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4581e6a737bec9448b91b8787df4952d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalRounds: 2
+  numberOfGames: 1
 --- !u!43 &1229891036
 Mesh:
   m_ObjectHideFlags: 0

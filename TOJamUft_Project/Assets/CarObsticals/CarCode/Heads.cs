@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class Heads : MonoBehaviour
 {
@@ -7,15 +9,23 @@ public class Heads : MonoBehaviour
   public GameObject endScreenUI;
   // public GameObject alcoholUI;
 
+  public UnityEvent roundOverEvent;
+
+  void Start()
+  {
+    roundOverEvent.AddListener(GameObject.FindGameObjectWithTag("FineManager").GetComponent<FineManagerBehavior>().sendScoreInvoker);
+  }
+
   private void OnTriggerEnter(Collider other)
   {
     // add magnitude check
 
     if (other.gameObject.CompareTag("Player"))
     {
-      // This is cursed af lmao
+      // Use a signal to end the round
       crashSource.Play();
       endScreenUI.SetActive(true);
+      roundOverEvent.Invoke();
       // alcoholUI.SetActive(false);
 
       Cursor.lockState = CursorLockMode.None;

@@ -14,7 +14,7 @@ public class EndScreenBehavior : MonoBehaviour
     public Text scoreText;
 
     // Count and update the score.
-    public void updateScore() {
+    public void updateScoreUI() {
         if (scoreManager != null) {
             scoreText.text = $"Fine: ${scoreManager.fine}";
         }
@@ -35,6 +35,6 @@ public class EndScreenBehavior : MonoBehaviour
     // On Enabling the UI we will update the score.
     private void OnEnable() {
         Debug.Log("Enabling End Screen");
-        updateScore();
+        updateScoreUI();
     }
 }
