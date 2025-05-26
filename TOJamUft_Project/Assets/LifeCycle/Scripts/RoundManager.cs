@@ -45,8 +45,22 @@ public class RoundManager : MonoBehaviour
         if (currentRound % 2 == 0)
         {
             p2Scores.Add(score);
+
+            if (p2Scores[currentGame] > p1Scores[currentGame])
+            {
+                Debug.Log("Player 2 wins this game!");
+            }
+            else if (p2Scores[currentGame] < p1Scores[currentGame])
+            {
+                Debug.Log("Player 1 wins this game!");
+            }
+            else
+            {
+                Debug.Log("It's a tie for this game!");
+            }
+
             currentGame++;
-            
+
         }
         else
         {
