@@ -25,16 +25,14 @@ public class RoundManager : MonoBehaviour
 
     }
 
-    public void SwapPlayers()
-    {
-
-    }
-
     public void EndRound()
     {
 
     }
 
+    public void SwapPlayers()
+    {
 
+    }
 
 }
