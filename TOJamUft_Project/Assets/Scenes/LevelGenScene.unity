@@ -1604,8 +1604,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   engineAudio: {fileID: 509149366}
-  brakeAudio: {fileID: 509149367}
-  idleAudio: {fileID: 509149368}
+  brakeAudio: {fileID: 509149368}
+  idleAudio: {fileID: 509149367}
 --- !u!4 &512518384 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 62c66ae72912f97488b34abd771bf659, type: 3}
