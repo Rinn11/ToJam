@@ -25,7 +25,8 @@ public class CopCarCollision : MonoBehaviour
     if (other.gameObject.CompareTag("Player"))
     {
       // This is cursed af lmao
-      crashSource.Play();
+      crashSource
+        .Play();
       endScreenUI.SetActive(true);
       alcoholUI.SetActive(false);
 
