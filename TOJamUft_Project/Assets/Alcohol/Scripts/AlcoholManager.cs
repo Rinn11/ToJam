@@ -179,9 +179,9 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
         // drink increase same as supply decrease
         increaseAlcoholCount(1);
         changeAlcoholSupply(-1);
-
+        
         // chance to black out for a split second
-        if (alcoholCount > 5 && UnityEngine.Random.Range(0, 100) < 40 + (Math.Pow(2, GetAlcoholMultiplier())))
+        if (alcoholCount >= 3 && UnityEngine.Random.Range(0, 100) < 40 + (Math.Pow(2, GetAlcoholMultiplier())))
         {
             TriggerBlackout();
             yield return StartCoroutine(AlcoholReturnLocal(originalLocalPos, originalLocalRot));
