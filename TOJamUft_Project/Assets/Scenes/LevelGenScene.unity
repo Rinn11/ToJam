@@ -2056,6 +2056,7 @@ MonoBehaviour:
   mouseYField: Mouse Y1
   mouseXFieldOpposite: Mouse X2
   mouseYFieldOpposite: Mouse Y2
+  rectYPositionOpposite: 0
 --- !u!81 &642403182
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2710,11 +2711,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!4 &800593955 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4009641493099081683, guid: 51076d8563be6f34792aeb05ae771b12, type: 3}
-  m_PrefabInstance: {fileID: 2033943526682451464}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &804027052
 GameObject:
   m_ObjectHideFlags: 0
@@ -4268,7 +4264,62 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfGames: 1
+  scoreBoardShowDelay: 5
   SwapEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 509149369}
+        m_TargetAssemblyTypeName: PlayerControl, Assembly-CSharp
+        m_MethodName: swapControls
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1620153154}
+        m_TargetAssemblyTypeName: PlayerControl, Assembly-CSharp
+        m_MethodName: swapControls
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 642403181}
+        m_TargetAssemblyTypeName: MouseLook, Assembly-CSharp
+        m_MethodName: swapControls
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1626257988}
+        m_TargetAssemblyTypeName: MouseLook, Assembly-CSharp
+        m_MethodName: swapControls
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  NewRoundEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  showScoreBoardEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!43 &1229891036
@@ -4472,7 +4523,6 @@ Transform:
   - {fileID: 183000314}
   - {fileID: 1726063258510371512}
   - {fileID: 1191153757}
-  - {fileID: 800593955}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1244096602
@@ -6038,6 +6088,7 @@ MonoBehaviour:
   mouseYField: Mouse Y2
   mouseXFieldOpposite: Mouse X1
   mouseYFieldOpposite: Mouse Y1
+  rectYPositionOpposite: 0.5
 --- !u!43 &1633509969
 Mesh:
   m_ObjectHideFlags: 0
@@ -8524,71 +8575,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 569e765e73021f444b3cf911c06aa892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &2033943526682451464
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1230694854}
-    m_Modifications:
-    - target: {fileID: 2855041920249980847, guid: 51076d8563be6f34792aeb05ae771b12, type: 3}
-      propertyPath: persistentObjects.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2855041920249980847, guid: 51076d8563be6f34792aeb05ae771b12, type: 3}
-      propertyPath: 'persistentObjects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1191153756}
-    - target: {fileID: 4009641493099081683, guid: 51076d8563be6f34792aeb05ae771b12, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4009641493099081683, guid: 51076d8563be6f34792aeb05ae771b12, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4009641493099081683, guid: 51076d8563be6f34792aeb05ae771b12, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4009641493099081683, guid: 51076d8563be6f34792aeb05ae771b12, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4009641493099081683, guid: 51076d8563be6f34792aeb05ae771b12, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4009641493099081683, guid: 51076d8563be6f34792aeb05ae771b12, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4009641493099081683, guid: 51076d8563be6f34792aeb05ae771b12, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4009641493099081683, guid: 51076d8563be6f34792aeb05ae771b12, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4009641493099081683, guid: 51076d8563be6f34792aeb05ae771b12, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4009641493099081683, guid: 51076d8563be6f34792aeb05ae771b12, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6074055930905230567, guid: 51076d8563be6f34792aeb05ae771b12, type: 3}
-      propertyPath: m_Name
-      value: PersistenceManager
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 51076d8563be6f34792aeb05ae771b12, type: 3}
 --- !u!1001 &3123327505461181778
 PrefabInstance:
   m_ObjectHideFlags: 0

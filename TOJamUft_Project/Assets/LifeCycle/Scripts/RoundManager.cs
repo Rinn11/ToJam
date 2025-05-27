@@ -69,10 +69,12 @@ public class RoundManager : MonoBehaviour
             p1Scores.Add(score);
             isP1Driving = !isP1Driving;
 
-            // TODO: You can add logic here to make some UI show up that explains the round is over and the players are switching roles.
-            // Or for testing, don't execute the next set of lines for like 5 seconds.
-            
+            // TODO: Add logic here to stop the game. Whether that's reloading the scene, or setting the time scale to 0. but there are a few issues with either approach.
+            //  - Reloading the scene works, but using DontDestroyOnLoad on this RoundManager object will not show up in the DontDestroyOnLoad portion of the scene.
+            //  - Setting the time scale to 0 will stop the game, but it will not allow delays to work properly, so the event system will not work as expected.
 
+            // TODO: Then you can add logic here to make some UI show up that explains the round is over and the players are switching roles.
+            // Or for testing, don't execute the next set of lines for like 5 seconds.
             showScoreBoardEvent.Invoke();
             Invoke(nameof(startRound), scoreBoardShowDelay);            
         }

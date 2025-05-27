@@ -38,6 +38,8 @@ public class PlayerControl : MonoBehaviour
         Debug.Log($"Swapped controls: {_horizontalAxis}, {_verticalAxis} <-> {_horizontalAxisOpposite}, {_verticalAxisOpposite}");
     }
 
+    
+
     // Update is called once per frame
     void Update()
     {
