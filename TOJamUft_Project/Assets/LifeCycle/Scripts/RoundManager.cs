@@ -37,7 +37,7 @@ public class RoundManager : MonoBehaviour
     }
 
     // This method will be used to reset the round manager when a new game starts.
-    public void resetGameManager()
+    public void resetGame()
     { 
         currentRound = 0;
         currentGame = 0;

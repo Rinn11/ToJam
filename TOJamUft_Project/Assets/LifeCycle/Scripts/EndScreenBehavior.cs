@@ -30,7 +30,7 @@ public class EndScreenBehavior : MonoBehaviour
         SceneManager.LoadScene(currentScene.name);
 
         // Reset the game manager
-        RoundManager.Instance.resetGameManager();
+        RoundManager.Instance.resetGame();
     }
 
     // Quit the game
