@@ -13,8 +13,11 @@ public class MouseLook : MonoBehaviour
   public float mouseSensitivity;
   [SerializeField] private string mouseXField;
   [SerializeField] private string mouseYField;
+
+  // Fields for swapping controls. it's a little hacky but it works for now.
   [SerializeField] private string mouseXFieldOpposite;
   [SerializeField] private string mouseYFieldOpposite;
+  [SerializeField] private float rectYPositionOpposite;
 
   private Vector2 lookAction;
 
@@ -90,5 +93,15 @@ void OnDisable()
     mouseXFieldOpposite = tempMouseX;
     mouseYFieldOpposite = tempMouseY;
     Debug.Log($"Swapped mouse controls: {mouseXField}, {mouseYField} <-> {mouseXFieldOpposite}, {mouseYFieldOpposite}");
+
+    // Swap the rect Y position
+    Camera camera = GetComponent<Camera>();
+    Rect rect = camera.rect;
+
+    float tempRectYPosition = rect.y;
+    rect.y = rectYPositionOpposite;
+    rectYPositionOpposite = tempRectYPosition;
+
+    camera.rect = rect;
   }
 }

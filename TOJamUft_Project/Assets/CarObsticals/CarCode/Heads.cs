@@ -9,7 +9,7 @@ public class Heads : MonoBehaviour
   public GameObject endScreenUI;
   // public GameObject alcoholUI;
 
-  public UnityEvent roundOverEvent;
+  public UnityEvent roundOverEvent = new UnityEvent();
 
   void Start()
   {
@@ -28,9 +28,9 @@ public class Heads : MonoBehaviour
       roundOverEvent.Invoke();
       // alcoholUI.SetActive(false);
 
-      Cursor.lockState = CursorLockMode.None;
-      Cursor.visible = true;
-      other.gameObject.SetActive(false);
+      // Cursor.lockState = CursorLockMode.None;
+      // Cursor.visible = true;
+      // other.gameObject.SetActive(false);
     }
   }
 }

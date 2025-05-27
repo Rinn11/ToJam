@@ -10,6 +10,7 @@ public class RoundManager : MonoBehaviour
 {
     public static RoundManager Instance { get; private set; }
     public int numberOfGames;
+    public float scoreBoardShowDelay;
 
 
     private int currentRound = 0;
@@ -19,37 +20,24 @@ public class RoundManager : MonoBehaviour
     private bool isP1Driving = true; // This will track which player is currently driving the drunk driver car.
 
     public UnityEvent SwapEvent = new UnityEvent();
+    public UnityEvent NewRoundEvent = new UnityEvent();
+    public UnityEvent showScoreBoardEvent = new UnityEvent();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // Add subscribers to the SwapEvent
-        SwapEvent.AddListener(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>().swapControls);
-        SwapEvent.AddListener(GameObject.FindGameObjectWithTag("CopCar").GetComponent<PlayerControl>().swapControls);
-
-        // Add listeners to the cameras of those respective players to swap their camera controls as well.
-        SwapEvent.AddListener(GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<MouseLook>().swapControls);
-        SwapEvent.AddListener(GameObject.FindGameObjectWithTag("CopCar").GetComponentInChildren<MouseLook>().swapControls);
-
         // Checkout the scores
         Debug.Log($"RoundManager initialized. Current round: {currentRound}, Current game: {currentGame}");
         Debug.Log($"Player {(isP1Driving ? '1' : '2')} is currently driving.");
     }
 
-    // This method will be used to reset the round manager when a new game starts.
-    public void resetGame()
-    { 
-        currentRound = 0;
-        currentGame = 0;
-        p1Scores.Clear();
-        p2Scores.Clear();
-        isP1Driving = true;
-        Debug.Log("RoundManager reset for a new game.");
-    }
-
     public void startRound()
-    { 
+    {
         // Check which player is currently driving and swap controls.
+        SwapEvent.Invoke();
+        NewRoundEvent.Invoke();
+        Debug.Log($"Cleaning up, new round will start soon...");
+        
     }
 
     // This method will be called when a round ends.
@@ -83,11 +71,10 @@ public class RoundManager : MonoBehaviour
 
             // TODO: You can add logic here to make some UI show up that explains the round is over and the players are switching roles.
             // Or for testing, don't execute the next set of lines for like 5 seconds.
-
-            SwapEvent.Invoke();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
             
+
+            showScoreBoardEvent.Invoke();
+            Invoke(nameof(startRound), scoreBoardShowDelay);            
         }
 
     }
