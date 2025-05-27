@@ -6,6 +6,7 @@ public class PanelSetup : MonoBehaviour
 
     private RectTransform rectTransform;
     private Image image;
+    public PlayerSwapEventSender swapSender;
 
     void Start()
     {
@@ -31,6 +32,18 @@ public class PanelSetup : MonoBehaviour
         {
             Debug.LogError("Image component not found!");
         }
+    }
+    
+    private void OnEnable()
+    {
+        if (swapSender != null)
+            swapSender.OnBoolEvent += recievePlayerSwap;
+    }
+  
+    private void OnDisable()
+    {
+        if (swapSender != null)
+            swapSender.OnBoolEvent -= recievePlayerSwap;
     }
 
     public void recievePlayerSwap(bool isPlayer1DrunkDriver)

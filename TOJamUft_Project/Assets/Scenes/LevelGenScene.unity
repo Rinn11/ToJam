@@ -535,7 +535,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &209489291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1376,6 +1376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac1b55080d23f34cbadc7d7a70199b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swapSender: {fileID: 735250382}
   PlayerMove: {fileID: 509149365}
   _horizontalAxis: Horizontal1
   _verticalAxis: Vertical1
@@ -1982,6 +1983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1949901a4bc42f29e83d4db5575d847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swapSender: {fileID: 735250382}
   mouseSensitivity: 500
   mouseXField: Mouse X1
   mouseYField: Mouse Y1
@@ -2410,6 +2412,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &735250380
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 735250381}
+  - component: {fileID: 735250382}
+  m_Layer: 0
+  m_Name: PlayerSwapEventSender
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &735250381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735250380}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1230694854}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &735250382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735250380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 645c520207714d64a07fbb74be947f2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roundManager: {fileID: 1191153756}
 --- !u!1001 &768070900
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4195,57 +4242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfGames: 1
   scoreBoardShowDelay: 5
-  SwapEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 509149369}
-        m_TargetAssemblyTypeName: PlayerControl, Assembly-CSharp
-        m_MethodName: swapControls
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1620153154}
-        m_TargetAssemblyTypeName: PlayerControl, Assembly-CSharp
-        m_MethodName: swapControls
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 642403181}
-        m_TargetAssemblyTypeName: MouseLook, Assembly-CSharp
-        m_MethodName: swapControls
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1626257988}
-        m_TargetAssemblyTypeName: MouseLook, Assembly-CSharp
-        m_MethodName: swapControls
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  playerSwapEvent: {fileID: 735250382}
   NewRoundEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -4453,6 +4450,7 @@ Transform:
   - {fileID: 183000314}
   - {fileID: 1726063258510371512}
   - {fileID: 1191153757}
+  - {fileID: 735250381}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1244096602
@@ -5426,7 +5424,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1955873657989679312, guid: 98cebef0b16c5d948b5bbe1faa70a063, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1154352011}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3978073926607713618, guid: 98cebef0b16c5d948b5bbe1faa70a063, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1671059884}
   m_SourcePrefab: {fileID: 100100000, guid: 98cebef0b16c5d948b5bbe1faa70a063, type: 3}
 --- !u!1 &1620153143
 GameObject:
@@ -5903,6 +5904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac1b55080d23f34cbadc7d7a70199b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swapSender: {fileID: 735250382}
   PlayerMove: {fileID: 1620153148}
   _horizontalAxis: Horizontal2
   _verticalAxis: Vertical2
@@ -6013,6 +6015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1949901a4bc42f29e83d4db5575d847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swapSender: {fileID: 735250382}
   mouseSensitivity: 500
   mouseXField: Mouse X2
   mouseYField: Mouse Y2
@@ -6461,6 +6464,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3978073926607713618, guid: 98cebef0b16c5d948b5bbe1faa70a063, type: 3}
   m_PrefabInstance: {fileID: 1477368334}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1671059884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671059880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a25a4b1b96cdc0408d66942e5ffeff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swapSender: {fileID: 735250382}
 --- !u!1001 &1681574491
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6625,6 +6641,7 @@ MonoBehaviour:
   blurMaterial: {fileID: 2100000, guid: 76a0b5a2ad3117d4fb339980164ce083, type: 2}
   drunkDriverCamera: {fileID: 642403183}
   copPlayerCamera: {fileID: 1626257987}
+  swapSender: {fileID: 735250382}
   IsPlayer1DrunkDriver: 1
 --- !u!81 &1694143362
 AudioListener:

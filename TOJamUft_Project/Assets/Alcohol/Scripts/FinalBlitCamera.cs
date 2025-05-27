@@ -7,7 +7,9 @@ public class FinalBlitCamera : MonoBehaviour
     public Material blurMaterial;
     public Camera drunkDriverCamera;
     public Camera copPlayerCamera;
-
+    public PlayerSwapEventSender swapSender;
+    
+    
     // Global variable to determine the drunk driver
     public bool IsPlayer1DrunkDriver;
 
@@ -17,6 +19,11 @@ public class FinalBlitCamera : MonoBehaviour
         blurredSource = new RenderTexture(Screen.width, Screen.height / 2, 0);
         blurredSource.Create();
 
+        UpdateCameraViewports();
+    }
+
+    void UpdateCameraViewports()
+    {
         // Ensure drunk driver camera always occupies the full screen
         if (drunkDriverCamera != null)
         {
@@ -35,12 +42,6 @@ public class FinalBlitCamera : MonoBehaviour
                 copPlayerCamera.rect = new Rect(0, 0.5f, 1, 0.5f); // Top half
             }
         }
-
-        UpdateCameraViewports();
-    }
-
-    void UpdateCameraViewports()
-    {
         // Apply blur effect to the drunk driver camera
         if (drunkDriverCamera != null)
         {
@@ -93,10 +94,56 @@ public class FinalBlitCamera : MonoBehaviour
         }
     }
     
+    private void OnEnable()
+    {
+        if (swapSender != null)
+            swapSender.OnBoolEvent += recievePlayerSwap;
+    }
+  
+    private void OnDisable()
+    {
+        if (swapSender != null)
+            swapSender.OnBoolEvent -= recievePlayerSwap;
+    }
+    
     public void recievePlayerSwap(bool isPlayer1DrunkDriver)
     {
+        // Update the drunk driver flag
         IsPlayer1DrunkDriver = isPlayer1DrunkDriver;
-        UpdateCameraViewports();
+
+        // Recreate the RenderTexture
+        if (blurredSource != null)
+        {
+            blurredSource.Release();
+        }
+        blurredSource = new RenderTexture(Screen.width, Screen.height / 2, 0);
+        blurredSource.Create();
+
+        // Update the blur material with the new RenderTexture
+        if (blurMaterial != null)
+        {
+            blurMaterial.SetTexture("_MainTex", blurredSource);
+        }
+
+        // Update camera settings
+        if (drunkDriverCamera != null)
+        {
+            drunkDriverCamera.targetTexture = blurredSource;
+            drunkDriverCamera.rect = new Rect(0, 0, 1, 1); // Full screen
+            drunkDriverCamera.depth = 0; // Render after copPlayerCamera
+        }
+
+        if (copPlayerCamera != null)
+        {
+            copPlayerCamera.targetTexture = null; // Render directly to the screen
+            copPlayerCamera.depth = -1; // Render first
+
+            // Adjust viewport based on the drunk driver
+            copPlayerCamera.rect = IsPlayer1DrunkDriver
+                ? new Rect(0, 0, 1, 0.5f) // Bottom half
+                : new Rect(0, 0.5f, 1, 0.5f); // Top half
+        }
+
         Debug.Log($"Player swap received. Swapping camera positions");
     }
 }

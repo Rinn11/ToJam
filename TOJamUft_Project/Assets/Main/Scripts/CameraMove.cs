@@ -10,6 +10,8 @@ using UnityEngine.InputSystem; // Required for the new Input System
 
 public class MouseLook : MonoBehaviour
 {
+  public PlayerSwapEventSender swapSender;
+  
   public float mouseSensitivity;
   [SerializeField] private string mouseXField;
   [SerializeField] private string mouseYField;
@@ -78,6 +80,18 @@ void OnDisable()
 
     // Apply the vertical rotation to the camera itself
     transform.localRotation = Quaternion.Euler(0f, yRotation, 0f);
+  }
+
+  private void OnEnable()
+  {
+    if (swapSender != null)
+      swapSender.OnBoolEvent += recievePlayerSwap;
+  }
+  
+  private void OnDisable()
+  {
+    if (swapSender != null)
+      swapSender.OnBoolEvent -= recievePlayerSwap;
   }
 
   public void recievePlayerSwap(bool isPlayer1DrunkDriver)

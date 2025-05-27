@@ -11,6 +11,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerControl : MonoBehaviour
 {
+    public PlayerSwapEventSender swapSender;
+    
     public PlayerMove PlayerMove;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] string _horizontalAxis;
@@ -22,6 +24,18 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         
+    }
+    
+    private void OnEnable()
+    {
+        if (swapSender != null)
+            swapSender.OnBoolEvent += recievePlayerSwap;
+    }
+  
+    private void OnDisable()
+    {
+        if (swapSender != null)
+            swapSender.OnBoolEvent -= recievePlayerSwap;
     }
 
     public void recievePlayerSwap(bool isPlayer1Driving)
@@ -46,4 +60,5 @@ public class PlayerControl : MonoBehaviour
         Vector2 moveValue = new Vector2(Input.GetAxis(_horizontalAxis), Input.GetAxis(_verticalAxis));
         PlayerMove.ProcessInputs(moveValue.x, moveValue.y);
     }
+    
 }

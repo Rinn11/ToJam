@@ -5,12 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class PlayerSwapEvent : UnityEvent<bool>
-{
-    // This event will be used to swap the player controls between Player 1 and Player 2.
-    // It will pass a boolean indicating whether Player 1 is currently driving.
-};
-
 // RoundManager will be utilizing the event system to manage game rounds. It will have methods to start, end, and manage states of the round.
 // We define 1 game as 2 rounds, each round will end with a player swap once the player that is driving the cop car catches the other player.
 public class RoundManager : MonoBehaviour
@@ -25,8 +19,14 @@ public class RoundManager : MonoBehaviour
     private List<float> p2Scores = new List<float>();
 
     private bool isP1Driving = true; // This will track which player is currently driving the drunk driver car.
-
-    public PlayerSwapEvent playerSwapEvent = new PlayerSwapEvent();
+    public PlayerSwapEventSender playerSwapEvent;
+    
+    public bool toggleIsP1Driving()
+    {
+        isP1Driving = !isP1Driving;
+        Debug.Log($"Toggled driving status. Player 1 driving: {isP1Driving}");
+        return isP1Driving;
+    }
     
     public UnityEvent NewRoundEvent = new UnityEvent();
     public UnityEvent showScoreBoardEvent = new UnityEvent();
@@ -42,7 +42,7 @@ public class RoundManager : MonoBehaviour
     public void startRound()
     {
         // Check which player is currently driving and swap controls and camera positions & UI by sending this event
-        playerSwapEvent.Invoke(isP1Driving);
+        playerSwapEvent.Trigger(isP1Driving);
         
         NewRoundEvent.Invoke();
         Debug.Log($"Cleaning up, new round will start soon...");
@@ -76,7 +76,7 @@ public class RoundManager : MonoBehaviour
         else
         {
             p1Scores.Add(score);
-            isP1Driving = !isP1Driving;
+            toggleIsP1Driving();
 
             // TODO: Then you can add logic here to make some UI show up that explains the round is over and the players are switching roles.
             // Or for testing, don't execute the next set of lines for like 5 seconds.
