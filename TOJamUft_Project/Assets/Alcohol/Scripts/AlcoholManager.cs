@@ -56,7 +56,7 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     {
         alcoholSupply = initialAlcoholSupply;
         alcoholCount = initialAlcoholCount;
-        Shader.SetGlobalInt("GlobalAlcoholCount", 0);
+        Shader.SetGlobalInt("GlobalAlcoholCount", initialAlcoholCount);
 
         if (FineManager == null)
         {

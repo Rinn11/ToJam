@@ -5,6 +5,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 
+public class PlayerSwapEvent : UnityEvent<bool>
+{
+    // This event will be used to swap the player controls between Player 1 and Player 2.
+    // It will pass a boolean indicating whether Player 1 is currently driving.
+};
+
 // RoundManager will be utilizing the event system to manage game rounds. It will have methods to start, end, and manage states of the round.
 // We define 1 game as 2 rounds, each round will end with a player swap once the player that is driving the cop car catches the other player.
 public class RoundManager : MonoBehaviour
@@ -12,15 +18,16 @@ public class RoundManager : MonoBehaviour
     public static RoundManager Instance { get; private set; }
     public int numberOfGames;
     public float scoreBoardShowDelay;
-
-
+    
     private int currentRound = 0;
     private int currentGame = 0;
     private List<float> p1Scores = new List<float>();
     private List<float> p2Scores = new List<float>();
+
     private bool isP1Driving = true; // This will track which player is currently driving the drunk driver car.
 
-    public UnityEvent SwapEvent = new UnityEvent();
+    public PlayerSwapEvent playerSwapEvent = new PlayerSwapEvent();
+    
     public UnityEvent NewRoundEvent = new UnityEvent();
     public UnityEvent showScoreBoardEvent = new UnityEvent();
 
@@ -34,8 +41,9 @@ public class RoundManager : MonoBehaviour
 
     public void startRound()
     {
-        // Check which player is currently driving and swap controls.
-        SwapEvent.Invoke();
+        // Check which player is currently driving and swap controls and camera positions & UI by sending this event
+        playerSwapEvent.Invoke(isP1Driving);
+        
         NewRoundEvent.Invoke();
         Debug.Log($"Cleaning up, new round will start soon...");
 

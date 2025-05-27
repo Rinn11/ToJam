@@ -80,7 +80,7 @@ void OnDisable()
     transform.localRotation = Quaternion.Euler(0f, yRotation, 0f);
   }
 
-  public void swapControls()
+  public void recievePlayerSwap(bool isPlayer1DrunkDriver)
   {
     // Swap the mouse X and Y axes
     string tempMouseX = mouseXField;

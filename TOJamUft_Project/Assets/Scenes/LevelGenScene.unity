@@ -884,7 +884,7 @@ GameObject:
   - component: {fileID: 509149371}
   - component: {fileID: 509149373}
   m_Layer: 0
-  m_Name: Player1
+  m_Name: DrunkPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1847,7 +1847,7 @@ GameObject:
   - component: {fileID: 637747144}
   - component: {fileID: 637747143}
   m_Layer: 31
-  m_Name: Player2MinimapMarker
+  m_Name: CopPlayerMinimapMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1949,7 +1949,7 @@ GameObject:
   - component: {fileID: 642403182}
   - component: {fileID: 642403181}
   m_Layer: 0
-  m_Name: Player1 Camera
+  m_Name: DrunkPlayerCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1987,7 +1987,6 @@ MonoBehaviour:
   mouseYField: Mouse Y1
   mouseXFieldOpposite: Mouse X2
   mouseYFieldOpposite: Mouse Y2
-  rectYPositionOpposite: 0
 --- !u!81 &642403182
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2037,7 +2036,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 119
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 403e6981b14d6d1478825621dc131c5b, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -3342,7 +3341,7 @@ GameObject:
   - component: {fileID: 898802032}
   - component: {fileID: 898802031}
   m_Layer: 31
-  m_Name: Player1MinimapMarker
+  m_Name: DrunkPlayerMinimapMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5448,7 +5447,7 @@ GameObject:
   - component: {fileID: 1620153145}
   - component: {fileID: 1620153154}
   m_Layer: 0
-  m_Name: Player2
+  m_Name: CopPlayer
   m_TagString: CopCar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5922,7 +5921,7 @@ GameObject:
   - component: {fileID: 1626257986}
   - component: {fileID: 1626257988}
   m_Layer: 0
-  m_Name: Player2 Camera
+  m_Name: CopPlayerCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6019,7 +6018,6 @@ MonoBehaviour:
   mouseYField: Mouse Y2
   mouseXFieldOpposite: Mouse X1
   mouseYFieldOpposite: Mouse Y1
-  rectYPositionOpposite: 0
 --- !u!43 &1633509969
 Mesh:
   m_ObjectHideFlags: 0
@@ -6556,6 +6554,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1182994528}
     - target: {fileID: 7827123238498018388, guid: 5f580b0926ec7fd4d9a96eafe0de5b1a, type: 3}
+      propertyPath: initialAlcoholCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7827123238498018388, guid: 5f580b0926ec7fd4d9a96eafe0de5b1a, type: 3}
       propertyPath: initialAlcoholSupply
       value: 1
       objectReference: {fileID: 0}
@@ -6621,7 +6623,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blurMaterial: {fileID: 2100000, guid: 76a0b5a2ad3117d4fb339980164ce083, type: 2}
-  player1Camera: {fileID: 642403183}
+  drunkDriverCamera: {fileID: 642403183}
+  copPlayerCamera: {fileID: 1626257987}
+  IsPlayer1DrunkDriver: 1
 --- !u!81 &1694143362
 AudioListener:
   m_ObjectHideFlags: 0

@@ -24,7 +24,7 @@ public class PlayerControl : MonoBehaviour
         
     }
 
-    public void swapControls()
+    public void recievePlayerSwap(bool isPlayer1Driving)
     {
         // Swap the horizontal and vertical axes
         string tempHorizontal = _horizontalAxis;
