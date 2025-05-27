@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using System.Collections;
 using System.Collections.Generic;
 
 
@@ -37,11 +38,11 @@ public class RoundManager : MonoBehaviour
         SwapEvent.Invoke();
         NewRoundEvent.Invoke();
         Debug.Log($"Cleaning up, new round will start soon...");
-        
+
     }
 
     // This method will be called when a round ends.
-    public void endRound(float score)
+    public IEnumerator EndRound(float score)
     {
         Debug.Log($"Round ended with score: {score}. Current round: {currentRound}, Current game: {currentGame}, Next Round: {currentRound + 1}");
         currentRound++;
@@ -69,16 +70,28 @@ public class RoundManager : MonoBehaviour
             p1Scores.Add(score);
             isP1Driving = !isP1Driving;
 
-            // TODO: Add logic here to stop the game. Whether that's reloading the scene, or setting the time scale to 0. but there are a few issues with either approach.
-            //  - Reloading the scene works, but using DontDestroyOnLoad on this RoundManager object will not show up in the DontDestroyOnLoad portion of the scene.
-            //  - Setting the time scale to 0 will stop the game, but it will not allow delays to work properly, so the event system will not work as expected.
-
             // TODO: Then you can add logic here to make some UI show up that explains the round is over and the players are switching roles.
             // Or for testing, don't execute the next set of lines for like 5 seconds.
             showScoreBoardEvent.Invoke();
-            Invoke(nameof(startRound), scoreBoardShowDelay);            
+
+            // TODO: Add logic here to stop the game. Whether that's reloading the scene, or setting the time scale to 0. but there are a few issues with either approach.
+            //  - Reloading the scene works, but using DontDestroyOnLoad on this RoundManager object will not show up in the DontDestroyOnLoad portion of the scene.
+            //  - Setting the time scale to 0 will stop the game, but it will not allow delays to work properly, so the event system will not work as expected.
+            Time.timeScale = 0f; // Stop the game time, so that the player cannot move.
+
+            yield return new WaitForSecondsRealtime(scoreBoardShowDelay);
+            Time.timeScale = 1f; // Resume the game time.
+            startRound();
         }
 
+    }
+
+    public void runEndRoundCoroutine(float score)
+    { 
+        // This method is a placeholder for running a coroutine to end the round.
+        // It can be used to delay the end of the round or perform any other actions before ending the round.
+        Debug.Log("Running end round coroutine...");
+        StartCoroutine(EndRound(score));
     }
 
 }

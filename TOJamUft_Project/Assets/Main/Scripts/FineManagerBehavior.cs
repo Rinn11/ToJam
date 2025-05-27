@@ -25,7 +25,7 @@ public class FineManagerBehavior : MonoBehaviour
     {
         fine = 0.0f;
         alcoholManager = am.GetComponent<AlcoholManager>();
-        sendScoreEvent.AddListener(GameObject.FindGameObjectWithTag("RoundManager").GetComponent<RoundManager>().endRound);
+        sendScoreEvent.AddListener(GameObject.FindGameObjectWithTag("RoundManager").GetComponent<RoundManager>().runEndRoundCoroutine);
     }
 
     public void increaseFine(int amount)

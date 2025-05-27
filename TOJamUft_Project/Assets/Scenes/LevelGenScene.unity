@@ -4195,7 +4195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfGames: 1
-  scoreBoardShowDelay: 0
+  scoreBoardShowDelay: 5
   SwapEvent:
     m_PersistentCalls:
       m_Calls:
