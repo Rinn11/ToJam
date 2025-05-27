@@ -5,6 +5,7 @@
 // TODO: Originally was used because Cop AI used the same movement model (PlayerMove) that the player used.
 // Since the cop is now another player, this may not be needed anymore.
 
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,9 +16,26 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] string _horizontalAxis;
     [SerializeField] string _verticalAxis;
 
+    [SerializeField] string _horizontalAxisOpposite;
+    [SerializeField] string _verticalAxisOpposite;
+
     void Start()
     {
         
+    }
+
+    public void swapControls()
+    {
+        // Swap the horizontal and vertical axes
+        string tempHorizontal = _horizontalAxis;
+        string tempVertical = _verticalAxis;
+
+        _horizontalAxis = _horizontalAxisOpposite;
+        _verticalAxis = _verticalAxisOpposite;
+
+        _horizontalAxisOpposite = tempHorizontal;
+        _verticalAxisOpposite = tempVertical;
+        Debug.Log($"Swapped controls: {_horizontalAxis}, {_verticalAxis} <-> {_horizontalAxisOpposite}, {_verticalAxisOpposite}");
     }
 
     // Update is called once per frame
