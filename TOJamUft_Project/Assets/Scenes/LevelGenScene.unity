@@ -1379,8 +1379,8 @@ MonoBehaviour:
   PlayerMove: {fileID: 509149365}
   _horizontalAxis: Horizontal1
   _verticalAxis: Vertical1
-  _horizontalAxisOpposite: 
-  _verticalAxisOpposite: 
+  _horizontalAxisOpposite: Horizontal2
+  _verticalAxisOpposite: Vertical2
 --- !u!114 &509149370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1397,6 +1397,9 @@ MonoBehaviour:
   damageSource: {fileID: 509149371}
   endScreenUI: {fileID: 1428650622}
   textUI: {fileID: 1349087421}
+  roundOverEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &509149371
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1982,8 +1985,8 @@ MonoBehaviour:
   mouseSensitivity: 500
   mouseXField: Mouse X1
   mouseYField: Mouse Y1
-  mouseXFieldOpposite: 
-  mouseYFieldOpposite: 
+  mouseXFieldOpposite: Mouse X2
+  mouseYFieldOpposite: Mouse Y2
   rectYPositionOpposite: 0
 --- !u!81 &642403182
 AudioListener:
@@ -4192,7 +4195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfGames: 1
-  scoreBoardShowDelay: 5
+  scoreBoardShowDelay: 0
   SwapEvent:
     m_PersistentCalls:
       m_Calls:
@@ -5904,8 +5907,8 @@ MonoBehaviour:
   PlayerMove: {fileID: 1620153148}
   _horizontalAxis: Horizontal2
   _verticalAxis: Vertical2
-  _horizontalAxisOpposite: 
-  _verticalAxisOpposite: 
+  _horizontalAxisOpposite: Horizontal1
+  _verticalAxisOpposite: Vertical1
 --- !u!1 &1626257984
 GameObject:
   m_ObjectHideFlags: 0
@@ -6014,8 +6017,8 @@ MonoBehaviour:
   mouseSensitivity: 500
   mouseXField: Mouse X2
   mouseYField: Mouse Y2
-  mouseXFieldOpposite: 
-  mouseYFieldOpposite: 
+  mouseXFieldOpposite: Mouse X1
+  mouseYFieldOpposite: Mouse Y1
   rectYPositionOpposite: 0
 --- !u!43 &1633509969
 Mesh:
@@ -7019,6 +7022,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8827243818726571955, guid: fa44ea35a72c1d44792b25333a46a575, type: 3}
+      propertyPath: winnerText
+      value: 
+      objectReference: {fileID: 1728354992}
+    - target: {fileID: 8827243818726571955, guid: fa44ea35a72c1d44792b25333a46a575, type: 3}
       propertyPath: scoreManager
       value: 
       objectReference: {fileID: 1840687719}
@@ -7028,6 +7035,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa44ea35a72c1d44792b25333a46a575, type: 3}
+--- !u!114 &1728354992 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7929921162309903396, guid: fa44ea35a72c1d44792b25333a46a575, type: 3}
+  m_PrefabInstance: {fileID: 1728354991}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1730062143 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6086945796176471997, guid: 5b0893e3842624845beb1e9ef1752cde, type: 3}
