@@ -5235,8 +5235,8 @@ Rigidbody:
   m_GameObject: {fileID: 509149359}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0.4
-  m_AngularDamping: 0.5
+  m_LinearDamping: 0.5
+  m_AngularDamping: 2
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -5267,8 +5267,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accelerationForce: 50
   brakeForce: 50
-  turnTorque: 30
+  turnTorque: 50
   maxSpeed: 20
+  maxTurnSpeed: 10
   speedUI: {fileID: 1634046100}
   MovementManager: {fileID: 357555600}
   onAccelerate:
@@ -16019,19 +16020,7 @@ MonoBehaviour:
         m_CallState: 2
   hideScoreBoardEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 634783631}
-        m_TargetAssemblyTypeName: RoundScreenUIBehavior, Assembly-CSharp
-        m_MethodName: hideRoundScreenUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1001 &1196627697
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20998,8 +20987,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accelerationForce: 50
   brakeForce: 50
-  turnTorque: 30
+  turnTorque: 50
   maxSpeed: 20
+  maxTurnSpeed: 10
   speedUI: {fileID: 0}
   MovementManager: {fileID: 1726063258510371513}
   onAccelerate:
@@ -21020,8 +21010,8 @@ Rigidbody:
   m_GameObject: {fileID: 1620153143}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0.4
-  m_AngularDamping: 0.5
+  m_LinearDamping: 0.5
+  m_AngularDamping: 2
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
