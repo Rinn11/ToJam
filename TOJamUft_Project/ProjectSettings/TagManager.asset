@@ -9,6 +9,7 @@ TagManager:
   - CopCar
   - FineManager
   - RoundManager
+  - RoundScreenUI
   layers:
   - Default
   - TransparentFX

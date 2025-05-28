@@ -30,18 +30,18 @@ public class CopCarCollision : MonoBehaviour
     {
         // add magnitude check
 
-        if (other.gameObject.CompareTag("Player"))
-        {
-            // This is cursed af lmao
-            crashSource
-              .Play();
-            endScreenUI.SetActive(true);
-            alcoholUI.SetActive(false);
-            roundOverEvent.Invoke();
+    if (other.gameObject.CompareTag("Player"))
+    {
+      // This is cursed af lmao
+      crashSource
+        .Play();
+      // endScreenUI.SetActive(true);
+      // alcoholUI.SetActive(false);
+      roundOverEvent.Invoke();
 
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            // other.gameObject.SetActive(false);
-        }
+      // Cursor.lockState = CursorLockMode.None;
+      // Cursor.visible = true;
+      // other.gameObject.SetActive(false);
     }
+  }
 }

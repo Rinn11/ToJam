@@ -30,6 +30,7 @@ public class RoundManager : MonoBehaviour
     
     public UnityEvent NewRoundEvent = new UnityEvent();
     public UnityEvent showScoreBoardEvent = new UnityEvent();
+    public UnityEvent hideScoreBoardEvent = new UnityEvent();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -89,6 +90,7 @@ public class RoundManager : MonoBehaviour
 
             yield return new WaitForSecondsRealtime(scoreBoardShowDelay);
             Time.timeScale = 1f; // Resume the game time.
+            hideScoreBoardEvent.Invoke();
             startRound();
         }
 
