@@ -8,15 +8,15 @@ public class MinimapMarkerSwapper : MonoBehaviour
 
     public PlayerSwapEventSender swapSender;
 
-    private Image _p1Image;
-    private Image _p2Image;
+    private RawImage _p1Image;
+    private RawImage _p2Image;
 
-    public void Awake()
+    public void Start()
     {
         if (Player1MinimapMarkerImage != null)
-            _p1Image = Player1MinimapMarkerImage.GetComponent<Image>();
+            _p1Image = Player1MinimapMarkerImage.GetComponent<RawImage>();
         if (Player2MinimapMarkerImage != null)
-            _p2Image = Player2MinimapMarkerImage.GetComponent<Image>();
+            _p2Image = Player2MinimapMarkerImage.GetComponent<RawImage>();
     }
 
     private void OnEnable()
