@@ -47,4 +47,13 @@ public class FineManagerBehavior : MonoBehaviour
         Debug.Log("Sending score to round manager");
         sendScoreEvent.Invoke(fine);
     }
+    
+    public void ResetFines()  // invoked by round manager's reset scene event
+    {
+        fine = 0.0f;
+        if (fineUI != null)
+        {
+            fineUI.text = $"Fine: ${fine}";
+        }
+    }
 }

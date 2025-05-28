@@ -94,4 +94,18 @@ public class BarManager : MonoBehaviour
         b.SetOpen();
         open.Add(b);
     }
+    
+    public void ReassignAllBars()  // invoked by round manager's reset scene event
+    {
+        // set all bars to closed then open 2 bars
+        foreach (var bar in bars)
+        {
+            bar.SetClosed();
+        }
+        open.Clear();
+        closed.Clear();
+        CollectBars();
+        OpenInitialSet();
+        Debug.Log("Reassigned all bars.");
+    }
 }

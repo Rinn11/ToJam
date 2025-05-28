@@ -9,6 +9,8 @@ public class PlayerSwapEventSender : MonoBehaviour
 
     public GameObject roundManager;
     
+    public bool DebugMode = false;
+    
     public void Trigger(bool valueToSend)
     {
         // Invoke the event
@@ -18,13 +20,16 @@ public class PlayerSwapEventSender : MonoBehaviour
     
     public void Update() 
     {
-        // For debugging purposes, you can trigger the event with a key press of key 5
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {   
-            bool isPlayer1Driving = roundManager.GetComponent<RoundManager>().toggleIsP1Driving();
-            
-            Trigger(isPlayer1Driving);
-            Debug.Log("Player swap event triggered.");
+        if (DebugMode)
+        {
+            // For debugging purposes, you can trigger the event with a key press of key 5
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {   
+                bool isPlayer1Driving = roundManager.GetComponent<RoundManager>().toggleIsP1Driving();
+                
+                Trigger(isPlayer1Driving);
+                Debug.Log("Player swap event triggered.");
+            }
         }
     }
 };

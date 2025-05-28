@@ -332,6 +332,34 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
         // Deactivate the panel after the blackout effect
         canDrink = true;
     }
+
+    public void RefreshAlcoholManager()  // invoked by round manager's reset scene event
+    {
+        alcoholSupply = initialAlcoholSupply;
+        alcoholCount = initialAlcoholCount;
+        Shader.SetGlobalInt("GlobalAlcoholCount", initialAlcoholCount);
+        if (alcoholCountUI != null)
+        {
+            alcoholCountUI.text = "Alcohol Count: " + alcoholCount;
+        }
+        else
+        {
+            Debug.LogError("AlcoholCounterUI not found!");
+        }
+        if (alcoholSupplyUI != null)
+        {
+            alcoholSupplyUI.text = "Alcohol Supply: " + alcoholSupply;
+        }
+        else
+        {
+            Debug.LogError("AlcoholSupplyUI not found!");
+        }
+        
+        if (alcoholSupply > 0 && canDrink)  // force first drink.
+        {
+            StartCoroutine(DrinkAlcohol());
+        }
+    }
 }
 
 
