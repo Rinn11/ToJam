@@ -43,12 +43,12 @@ public class PlayerCollision : MonoBehaviour
     if (damage == 0f || collision.gameObject.CompareTag("CopCar"))
     {
       crashSource.Play();
-      endScreenUI.SetActive(true);
-      textUI.SetActive(false);
+      // endScreenUI.SetActive(true);
+      // textUI.SetActive(false);
       roundOverEvent.Invoke();
 
-      Cursor.lockState = CursorLockMode.None;
-      Cursor.visible = true;
+      // Cursor.lockState = CursorLockMode.None;
+      // Cursor.visible = true;
       // collision.gameObject.SetActive(false);
     }
   }
