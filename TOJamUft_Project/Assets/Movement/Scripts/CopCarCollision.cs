@@ -35,12 +35,12 @@ public class CopCarCollision : MonoBehaviour
       // This is cursed af lmao
       crashSource
         .Play();
-      endScreenUI.SetActive(true);
-      alcoholUI.SetActive(false);
+      // endScreenUI.SetActive(true);
+      // alcoholUI.SetActive(false);
       roundOverEvent.Invoke();
 
-      Cursor.lockState = CursorLockMode.None;
-      Cursor.visible = true;
+      // Cursor.lockState = CursorLockMode.None;
+      // Cursor.visible = true;
       // other.gameObject.SetActive(false);
     }
   }
