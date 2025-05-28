@@ -14,7 +14,7 @@ public class PlayerMove : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float accelerationForce, brakeForce, turnTorque, maxSpeed, maxTurnSpeed;
-    // recommended default 50, 50, 40, 20
+    // recommended default 50, 50, 50, 20, 10
 
     private Rigidbody rb;
     private Vector2 moveValue;
