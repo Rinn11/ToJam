@@ -7256,7 +7256,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3169229796910521371, guid: fa44ea35a72c1d44792b25333a46a575, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3169229796910521371, guid: fa44ea35a72c1d44792b25333a46a575, type: 3}
+      propertyPath: m_TagString
+      value: RoundScreenUI
       objectReference: {fileID: 0}
     - target: {fileID: 5306517114124520708, guid: fa44ea35a72c1d44792b25333a46a575, type: 3}
       propertyPath: m_Name
@@ -7264,7 +7268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5481252742176255944, guid: fa44ea35a72c1d44792b25333a46a575, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6937124229865756992, guid: fa44ea35a72c1d44792b25333a46a575, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15869,6 +15873,21 @@ MonoBehaviour:
       - m_Target: {fileID: 634783631}
         m_TargetAssemblyTypeName: RoundScreenUIBehavior, Assembly-CSharp
         m_MethodName: showRoundScreenUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  hideScoreBoardEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 634783631}
+        m_TargetAssemblyTypeName: RoundScreenUIBehavior, Assembly-CSharp
+        m_MethodName: hideRoundScreenUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -19,14 +19,17 @@ public class RoundScreenUIBehavior : MonoBehaviour
     // Show the whole round screen UI
     public void showRoundScreenUI()
     {
-        // Activate the round screen UI
-        gameObject.SetActive(true);
+        // We need to activate the canvas object under the round screen UI, the object needs to be active for the event system to work.
+        Transform child = transform.Find("Canvas");
+        child.gameObject.SetActive(true);
+        
     }
 
     // Hide the whole round screen UI
     public void hideRoundScreenUI()
     {
         // Deactivate the round screen UI
-        gameObject.SetActive(false);
+        Transform child = transform.Find("Canvas");
+        child.gameObject.SetActive(false);
     }
 }
