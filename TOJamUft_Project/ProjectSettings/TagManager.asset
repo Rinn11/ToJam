@@ -10,6 +10,7 @@ TagManager:
   - FineManager
   - RoundManager
   - RoundScreenUI
+  - MarkedCar
   layers:
   - Default
   - TransparentFX
@@ -41,7 +42,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - CopTeleporationElements
   - MinimapElements
   m_SortingLayers:
   - name: Default
