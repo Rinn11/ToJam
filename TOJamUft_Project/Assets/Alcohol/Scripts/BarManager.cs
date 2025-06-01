@@ -14,7 +14,9 @@ public class BarManager : MonoBehaviour
 
     public GameObject AlcoholManager;
     private AlcoholManager alcoholManager;
-
+    
+    public AlertCopOfDDLocationEventSender alertCopOfDDLocationEventSender;
+    
     public AudioSource collectSound;
 
     void Start()
@@ -42,6 +44,7 @@ public class BarManager : MonoBehaviour
         collectSound.Play();
         
         alcoholManager.changeAlcoholSupply(1);  // increase alcohol supply by 1
+        alertCopOfDDLocationEventSender.Trigger(new Vector2(bar.transform.position.x, bar.transform.position.z));
 
         AssignReplacementBar();
         closed.Add(bar);
