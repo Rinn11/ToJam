@@ -22,8 +22,6 @@ public class FineManagerBehavior : MonoBehaviour
 
     // Events
     public ScoreEvent sendScoreEvent;
-    
-    // public List<ScoreEvent> sendScoreListeners;
 
     void Start()
     {
