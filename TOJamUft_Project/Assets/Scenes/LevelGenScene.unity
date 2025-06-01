@@ -4068,6 +4068,118 @@ PrefabInstance:
       propertyPath: fineUI
       value: 
       objectReference: {fileID: 1730062143}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreListeners.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1191153758}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 634783631}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: runEndRoundCoroutine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: updateScoreText
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreListeners.Array.data[0].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreListeners.Array.data[1].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RoundManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: RoundScreenUIBehavior, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreListeners.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreListeners.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreListeners.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 634783631}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreListeners.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1191153758}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreListeners.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreListeners.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreListeners.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: updateScoreText
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreListeners.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: runEndRoundCoroutine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreListeners.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RoundScreenUIBehavior, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreListeners.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RoundManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreListeners.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589236814021045408, guid: 972977d963172f245804ce43295d569f, type: 3}
+      propertyPath: sendScoreListeners.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8589675648491258245, guid: 972977d963172f245804ce43295d569f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.29606

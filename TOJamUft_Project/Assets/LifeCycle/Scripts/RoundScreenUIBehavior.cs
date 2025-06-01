@@ -13,7 +13,8 @@ public class RoundScreenUIBehavior : MonoBehaviour
     // Count and update the score.
     public void updateScoreText(float score)
     {
-        scoreText.text = $"Fine: {score}";
+        Debug.Log($"Updating score text with score: {score}");
+        scoreText.text = $"Fine: ${score}";
     }
 
     // Show the whole round screen UI

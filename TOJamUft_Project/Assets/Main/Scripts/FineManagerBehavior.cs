@@ -4,12 +4,14 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class ScoreEvent : UnityEvent<float> {};
+[Serializable]
+public class ScoreEvent : UnityEvent<float> { };
 
 public class FineManagerBehavior : MonoBehaviour
 {
@@ -19,14 +21,14 @@ public class FineManagerBehavior : MonoBehaviour
     public Text fineUI;
 
     // Events
-    public ScoreEvent sendScoreEvent = new ScoreEvent();
+    public ScoreEvent sendScoreEvent;
+    
+    // public List<ScoreEvent> sendScoreListeners;
 
     void Start()
     {
         fine = 0.0f;
         alcoholManager = am.GetComponent<AlcoholManager>();
-        sendScoreEvent.AddListener(GameObject.FindGameObjectWithTag("RoundManager").GetComponent<RoundManager>().runEndRoundCoroutine);
-        sendScoreEvent.AddListener(GameObject.FindGameObjectWithTag("RoundScreenUI").GetComponent<RoundScreenUIBehavior>().updateScoreText);
     }
 
     public void increaseFine(int amount)
