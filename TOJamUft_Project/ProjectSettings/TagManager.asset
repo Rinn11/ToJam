@@ -42,7 +42,7 @@ TagManager:
   - 
   - 
   - 
-  - CopTeleporationElements
+  - CopTeleportationElements
   - MinimapElements
   m_SortingLayers:
   - name: Default

@@ -8,15 +8,18 @@ public class CopTeleporter : MonoBehaviour
 
     public GameObject CopCar;       // The cop car that is teleported
 
-    public GameObject SelectorImage;  // The selector image, which is shown/hidden as needed
-    public GameObject CopMapImage;    // The cop teleportation map image, which is shown/hidden as needed
+    public Camera CopMinimapCamera;
 
     private bool state = false;
+
+    private int teleportMask;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        int teleportLayer = LayerMask.NameToLayer("CopTeleportationElements");
+        teleportMask = 1 << teleportLayer;
+        //CopMinimapCamera.cullingMask &= ~teleportMask;
     }
 
     // Update is called once per frame
@@ -26,10 +29,13 @@ public class CopTeleporter : MonoBehaviour
             // When the key is pressed
             state = !state;
             if (state) {
-                SelectorImage.SetActive(true);
-                CopMapImage.SetActive(true);
+                // Show layer relavant to selection
+                CopMinimapCamera.cullingMask |= teleportMask;
             }
             else {
+                // Hide layer relevant to selection
+                CopMinimapCamera.cullingMask &= ~teleportMask;
+
                 // Find closest marked car
                 GameObject closestCar = null;
                 float minDist = Mathf.Infinity;
@@ -45,6 +51,7 @@ public class CopTeleporter : MonoBehaviour
                     }
                 }
 
+                // If a suitable car was found
                 if (closestCar != null) {
                     // "Stop" both entities in place
                     Rigidbody rb1 = CopCar.GetComponent<Rigidbody>();
@@ -63,9 +70,10 @@ public class CopTeleporter : MonoBehaviour
                     Quaternion tempRot = CopCar.transform.rotation;
                     CopCar.transform.rotation = closestCar.transform.rotation;
                     closestCar.transform.rotation = tempRot;
+
+                    // Set the crosshair to the new position to make it easier for next use
+                    transform.position = CopCar.transform.position;
                 }
-                SelectorImage.SetActive(false);
-                CopMapImage.SetActive(false);
             }
         }
 
