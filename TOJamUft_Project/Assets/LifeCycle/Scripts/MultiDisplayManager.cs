@@ -5,9 +5,6 @@ public class MultiDisplayManager : MonoBehaviour
     public Camera drunkDriverCamera;
     public Camera copCarCamera;
 
-    [HideInInspector]
-    public bool isSplitScreen = true;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,9 +15,10 @@ public class MultiDisplayManager : MonoBehaviour
             Display.displays[1].Activate();
             // Set the second camera to render to the second display
             copCarCamera.targetDisplay = 1;
-            isSplitScreen = false; // Set to false to use the second display as a full screen for the cop car camera
+
+            Debug.Log("MultiDisplayManager started. Number of displays: " + Display.displays.Length);
         }
-        Debug.Log("MultiDisplayManager started. Number of displays: " + Display.displays.Length);
+        
     }
 
     // Need to handle swaps between two different displays as needed.
