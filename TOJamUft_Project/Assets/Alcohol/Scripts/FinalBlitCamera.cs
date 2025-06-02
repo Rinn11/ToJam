@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
 public class FinalBlitCamera : MonoBehaviour
@@ -30,10 +31,13 @@ public class FinalBlitCamera : MonoBehaviour
 
         if (isDualMonitor)
         {
+            Debug.Log("Multi monitor setup detected. Initializing cameras for dual monitor mode.");
             UpdateCameraViewportsDualMonitor();
         }
         else
         {
+            Debug.Log("Single monitor setup detected. Initializing cameras for splitscreen mode.");
+
             // Create a new RenderTexture with the correct dimensions
             blurredSource = new RenderTexture(Screen.width, Screen.height / 2, 0);
             blurredSource.Create();
@@ -190,7 +194,7 @@ public class FinalBlitCamera : MonoBehaviour
             blurredSource.Release();
 
             UpdateCameraViewportsDualMonitor();
-            Debug.Log($"Player swap received. Swapping camera positions for dual monitor setup");
+            Debug.Log($"Player swap received. Swapping target displays for the cameras for dual monitor setup");
         }
         else
         {
