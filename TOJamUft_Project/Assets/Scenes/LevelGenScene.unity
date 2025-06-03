@@ -505,7 +505,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 180, y: 180}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &29766403
 MonoBehaviour:
@@ -1532,7 +1532,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 180, y: 180}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &108937460
 MonoBehaviour:
@@ -2730,7 +2730,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 200}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &240222236
 MonoBehaviour:
@@ -5047,7 +5047,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2149581943
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 6baf78c6423a0484d9dc82a196ec1609, type: 2}
   m_TargetDisplay: 0
@@ -8378,7 +8378,7 @@ GameObject:
   - component: {fileID: 637747145}
   - component: {fileID: 637747144}
   - component: {fileID: 637747143}
-  m_Layer: 31
+  m_Layer: 10
   m_Name: CopPlayerMinimapMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8776,12 +8776,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -10232,7 +10232,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 131.5, y: -48}
+  m_AnchoredPosition: {x: 370, y: -48}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &789188176
@@ -12527,7 +12527,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 200}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &881366112
 MonoBehaviour:
@@ -13063,7 +13063,7 @@ GameObject:
   - component: {fileID: 898802033}
   - component: {fileID: 898802032}
   - component: {fileID: 898802031}
-  m_Layer: 31
+  m_Layer: 9
   m_Name: DrunkPlayerMinimapMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13970,7 +13970,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 134.5, y: 37}
+  m_AnchoredPosition: {x: 370, y: 37}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &963933616
@@ -21063,12 +21063,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -23078,7 +23078,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2147483767
+    m_Bits: 2147484279
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 45f76eb4c50cf7c428e6781f554d6a87, type: 2}
   m_TargetDisplay: 0
@@ -27574,7 +27574,7 @@ GameObject:
   - component: {fileID: 1954152383}
   - component: {fileID: 1954152385}
   - component: {fileID: 1954152384}
-  m_Layer: 31
+  m_Layer: 9
   m_Name: Player1MinimapMarkerImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28013,7 +28013,7 @@ GameObject:
   - component: {fileID: 2003458632}
   - component: {fileID: 2003458634}
   - component: {fileID: 2003458633}
-  m_Layer: 31
+  m_Layer: 10
   m_Name: Player2MinimapMarkerImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
