@@ -9,10 +9,14 @@ public class SplitScreenUI : MonoBehaviour
 
     void Start()
     {
-        UpdatePosition();
+        if (Display.displays.Length == 1)
+        {
+            UpdatePositionSplitScreen();
+        }
+        
     }
 
-    public void UpdatePosition()
+    public void UpdatePositionSplitScreen()
     {
         float screenHeight = ((RectTransform)textGroup.parent).rect.height;
         // get width and height of textgroup
@@ -45,9 +49,12 @@ public class SplitScreenUI : MonoBehaviour
 
     public void recievePlayerSwap(bool isPlayer1DrunkDriver)
     {
-        // Update the position based on whether Player 1 is driving
-        useBottomHalf = !isPlayer1DrunkDriver;
-        UpdatePosition();
-        Debug.Log($"SplitScreenUI updated: useBottomHalf = {useBottomHalf}");
+        if (Display.displays.Length == 1)
+        { 
+            // Update the position based on whether Player 1 is driving
+            useBottomHalf = !isPlayer1DrunkDriver;
+            UpdatePositionSplitScreen();
+            Debug.Log($"SplitScreenUI updated: useBottomHalf = {useBottomHalf}");
+        }        
     }
 }
