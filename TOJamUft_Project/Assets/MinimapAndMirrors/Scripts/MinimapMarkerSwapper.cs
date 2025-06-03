@@ -33,8 +33,11 @@ public class MinimapMarkerSwapper : MonoBehaviour
 
     public void recievePlayerSwapMinimap(bool isPlayer1DrunkDriver)
     {
-        Color temp = _p1Image.color;
-        _p1Image.color = _p2Image.color;
-        _p2Image.color = temp;
+        if (Display.displays.Length == 1)
+        {
+            Color temp = _p1Image.color;
+            _p1Image.color = _p2Image.color;
+            _p2Image.color = temp;
+        }
     }
 }
