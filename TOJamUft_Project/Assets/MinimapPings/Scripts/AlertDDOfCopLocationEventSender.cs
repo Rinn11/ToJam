@@ -4,6 +4,8 @@ using System;
 // Credit to Ethan for writing this file.
 // There was a merge conflict, so I had to manually port it over.
 
+// This file defines a C# event representing the drunk driver broadcasting its location to the cop
+
 public class AlertDDOfCopLocationEventSender : MonoBehaviour
 {
     // sends location of DD to the cop. Position is sent as x and z coordinates.

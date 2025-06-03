@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// This file defines the behavior of a map ping after spawning. This makes it fade, but allows us to set some parameters too
+
 public class MinimapNotification : MonoBehaviour
 {
     public float fadeDuration = 1.5f;

@@ -1,6 +1,8 @@
 using UnityEngine;
 using static UnityEditor.FilePathAttribute;
 
+// This file is used by the MinimapManager to instantiate pings. Hooks into the events defined in the Alert*.cs files
+
 public class ReceivePingEvent : MonoBehaviour
 {
     public GameObject notificationPrefab;
