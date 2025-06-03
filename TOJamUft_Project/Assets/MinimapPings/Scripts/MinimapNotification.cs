@@ -14,10 +14,11 @@ public class MinimapNotification : MonoBehaviour
         rawImage = GetComponent<RawImage>();
     }
 
-    public void Override(float newFadeDuration, Color newStartColor)
+    public void Override(float newFadeDuration, Color newStartColor, string layerName)
     {
         fadeDuration = newFadeDuration;
         startColor = newStartColor;
+        gameObject.layer = LayerMask.NameToLayer(layerName);
 
         timer = 0f;
     }
