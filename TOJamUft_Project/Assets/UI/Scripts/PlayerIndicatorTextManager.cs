@@ -29,15 +29,18 @@ public class PlayerIndicatorTextManager : MonoBehaviour
 
     public void recievePlayerSwap(bool isPlayer1DrunkDriver)
     {
-        if (isPlayer1DrunkDriver)
-        {
-            player1indicatorText.text = "Player 1 - Drunk Driver";
-            player2indicatorText.text = "Player 2 - Cop";
-        }
-        else
-        {
-            player1indicatorText.text = "Player 1 - Cop";
-            player2indicatorText.text = "Player 2 - Drunk Driver";
-        }
+        if (Display.displays.Length == 1)
+        { 
+            if (isPlayer1DrunkDriver)
+            {
+                player1indicatorText.text = "Player 1 - Drunk Driver";
+                player2indicatorText.text = "Player 2 - Cop";
+            }
+            else
+            {
+                player1indicatorText.text = "Player 1 - Cop";
+                player2indicatorText.text = "Player 2 - Drunk Driver";
+            }
+        }        
     }
 }
