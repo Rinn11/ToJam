@@ -29941,9 +29941,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1559245538030761302, guid: 760427627f72aa94885f867843c7ced2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1726063258510371514}
-    - targetCorrespondingSourceObject: {fileID: 1559245538030761302, guid: 760427627f72aa94885f867843c7ced2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1726063258510371515}
   m_SourcePrefab: {fileID: 100100000, guid: 760427627f72aa94885f867843c7ced2, type: 3}
 --- !u!4 &1726063258510371512 stripped
 Transform:
@@ -29967,21 +29964,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 569e765e73021f444b3cf911c06aa892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1726063258510371515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1726063258510371513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 750fa47a4adf734428ec83e1edb6b89f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0.5
-  CopCar: {fileID: 0}
-  CopMinimapCamera: {fileID: 0}
 --- !u!1001 &2265567742805968359
 PrefabInstance:
   m_ObjectHideFlags: 0
