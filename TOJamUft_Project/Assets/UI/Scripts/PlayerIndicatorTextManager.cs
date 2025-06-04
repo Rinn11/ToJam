@@ -10,9 +10,6 @@ public class PlayerIndicatorTextManager : MonoBehaviour
 
     void Start()
     {
-        // Initialize the text for both players
-        player1indicatorText.text = "Player 1 - Drunk Driver";
-        player2indicatorText.text = "Player 2 - Cop";
     }
 
     private void OnEnable()
@@ -30,17 +27,16 @@ public class PlayerIndicatorTextManager : MonoBehaviour
     public void recievePlayerSwap(bool isPlayer1DrunkDriver)
     {
         if (Display.displays.Length == 1)
-        { 
-            if (isPlayer1DrunkDriver)
-            {
-                player1indicatorText.text = "Player 1 - Drunk Driver";
-                player2indicatorText.text = "Player 2 - Cop";
-            }
-            else
-            {
-                player1indicatorText.text = "Player 1 - Cop";
-                player2indicatorText.text = "Player 2 - Drunk Driver";
-            }
-        }        
+        {
+            // Swap text
+            string tmpText = player1indicatorText.text;
+            player1indicatorText.text = player2indicatorText.text;
+            player2indicatorText.text = tmpText;
+
+            // Swap colors
+            Color tmpColor = player1indicatorText.color;
+            player1indicatorText.color = player2indicatorText.color;
+            player2indicatorText.color = tmpColor;
+        }
     }
 }
