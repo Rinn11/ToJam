@@ -12,7 +12,7 @@ using UnityEngine.InputSystem;
 public class PlayerControl : MonoBehaviour
 {
     public PlayerSwapEventSender swapSender;
-    
+
     public PlayerMove PlayerMove;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] string _horizontalAxis;
@@ -21,22 +21,30 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] string _horizontalAxisOpposite;
     [SerializeField] string _verticalAxisOpposite;
 
+    private bool locked = false;
+
     void Start()
     {
-        
+
     }
-    
+
     private void OnEnable()
     {
         if (swapSender != null)
             swapSender.OnBoolEvent += recievePlayerSwap;
     }
-  
+
     private void OnDisable()
     {
         if (swapSender != null)
             swapSender.OnBoolEvent -= recievePlayerSwap;
     }
+
+    public void SetLocked(bool newLocked)
+    {
+        locked = newLocked;
+    }
+
 
     public void recievePlayerSwap(bool isPlayer1Driving)
     {
@@ -58,6 +66,10 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         Vector2 moveValue = new Vector2(Input.GetAxis(_horizontalAxis), Input.GetAxis(_verticalAxis));
+        if (locked)
+        {
+            moveValue = Vector2.zero;
+        }
         PlayerMove.ProcessInputs(moveValue.x, moveValue.y);
     }
     

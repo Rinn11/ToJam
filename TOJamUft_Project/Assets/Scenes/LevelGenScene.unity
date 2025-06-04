@@ -961,6 +961,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8550554071789319246, guid: dc12d5d793e457c45a6c8ae49d9c129e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8391222552659086748, guid: dc12d5d793e457c45a6c8ae49d9c129e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -6969076429142296547, guid: dc12d5d793e457c45a6c8ae49d9c129e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -5528065412568403995, guid: dc12d5d793e457c45a6c8ae49d9c129e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: -3903697360021392647, guid: dc12d5d793e457c45a6c8ae49d9c129e, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -968,6 +984,42 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: dc12d5d793e457c45a6c8ae49d9c129e, type: 3}
       propertyPath: m_Name
       value: car_drunk_player
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc12d5d793e457c45a6c8ae49d9c129e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2451160833565348162, guid: dc12d5d793e457c45a6c8ae49d9c129e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2800250516343163423, guid: dc12d5d793e457c45a6c8ae49d9c129e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7365496407238645392, guid: dc12d5d793e457c45a6c8ae49d9c129e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586450497779615235, guid: dc12d5d793e457c45a6c8ae49d9c129e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743042034660249099, guid: dc12d5d793e457c45a6c8ae49d9c129e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416272007918961125, guid: dc12d5d793e457c45a6c8ae49d9c129e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513859187771203891, guid: dc12d5d793e457c45a6c8ae49d9c129e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8821623529969584324, guid: dc12d5d793e457c45a6c8ae49d9c129e, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -8578,7 +8630,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 247
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -9899,7 +9951,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roundManager: {fileID: 1191153756}
-  DebugMode: 0
+  DebugMode: 1
 --- !u!4 &738076587 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 52a8ee4d0ff08d54f814214a8a1d4df2, type: 3}
@@ -10260,7 +10312,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Player 1
+  m_text: Player 1 - Drunk Driver
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10778,9 +10830,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1620153143}
     - target: {fileID: 8026216081645158780, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
+      propertyPath: swapSender
+      value: 
+      objectReference: {fileID: 735250382}
+    - target: {fileID: 8026216081645158780, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
+      propertyPath: mouseXField
+      value: Horizontal2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8026216081645158780, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
+      propertyPath: mouseYField
+      value: Vertical2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8026216081645158780, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
       propertyPath: CopMinimapCamera
       value: 
       objectReference: {fileID: 418099365}
+    - target: {fileID: 8026216081645158780, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
+      propertyPath: mouseXFieldOpposite
+      value: Horizontal1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8026216081645158780, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
+      propertyPath: mouseYFieldOpposite
+      value: Vertical1
+      objectReference: {fileID: 0}
     - target: {fileID: 8026216081645158780, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
       propertyPath: AlertDDOfCopLocationEventSender
       value: 
@@ -14001,7 +14073,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Player 2
+  m_text: Player 2 - Cop
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -22592,7 +22664,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 247
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -24104,9 +24176,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8391222552659086748, guid: 62c66ae72912f97488b34abd771bf659, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 62c66ae72912f97488b34abd771bf659, type: 3}
       propertyPath: m_Name
       value: POPO
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 62c66ae72912f97488b34abd771bf659, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -24696,7 +24776,7 @@ GameObject:
   - component: {fileID: 1754757434}
   - component: {fileID: 1754757436}
   - component: {fileID: 1754757435}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RVMiddleCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28599,8 +28679,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2032406125}
-  - component: {fileID: 2032406126}
   - component: {fileID: 2032406127}
+  - component: {fileID: 2032406128}
   m_Layer: 0
   m_Name: MinimapManager
   m_TagString: Untagged
@@ -28623,21 +28703,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1230694854}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2032406126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2032406124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcd0294c683877d42acc06ab41d820eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player1MinimapMarkerImage: {fileID: 1954152382}
-  Player2MinimapMarkerImage: {fileID: 2003458631}
-  swapSender: {fileID: 735250382}
 --- !u!114 &2032406127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28655,6 +28720,21 @@ MonoBehaviour:
   notificationHeight: 205
   AlertCopOfDDLocationEventSender: {fileID: 2011098119}
   AlertDDOfCopLocationEventSender: {fileID: 958747098}
+--- !u!114 &2032406128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032406124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc4451cfc361261469998523d2c7f841, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player1MinimapCanvas: {fileID: 881366110}
+  Player2MinimapCanvas: {fileID: 240222234}
+  swapSender: {fileID: 735250382}
 --- !u!1001 &2036234027
 PrefabInstance:
   m_ObjectHideFlags: 0

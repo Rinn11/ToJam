@@ -16,12 +16,45 @@ public class CopTeleporter : MonoBehaviour
 
     private int teleportMask;
 
+    // Swap stuff (we should refactor this later...)
+    public PlayerSwapEventSender swapSender;
+    [SerializeField] private string mouseXField;
+    [SerializeField] private string mouseYField;
+    [SerializeField] private string mouseXFieldOpposite;
+    [SerializeField] private string mouseYFieldOpposite;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         int teleportLayer = LayerMask.NameToLayer("CopTeleportationElements");
         teleportMask = 1 << teleportLayer;
         CopMinimapCamera.cullingMask &= ~teleportMask;
+    }
+
+    private void OnEnable()
+    {
+        if (swapSender != null)
+            swapSender.OnBoolEvent += recievePlayerSwap;
+    }
+
+    private void OnDisable()
+    {
+        if (swapSender != null)
+            swapSender.OnBoolEvent -= recievePlayerSwap;
+    }
+
+    public void recievePlayerSwap(bool isPlayer1DrunkDriver)
+    {
+        // Swap the mouse X and Y axes
+        string tempMouseX = mouseXField;
+        string tempMouseY = mouseYField;
+
+        mouseXField = mouseXFieldOpposite;
+        mouseYField = mouseYFieldOpposite;
+
+        mouseXFieldOpposite = tempMouseX;
+        mouseYFieldOpposite = tempMouseY;
+        Debug.Log($"Swapped mouse controls: {mouseXField}, {mouseYField} <-> {mouseXFieldOpposite}, {mouseYFieldOpposite}");
     }
 
     // Update is called once per frame
@@ -32,10 +65,12 @@ public class CopTeleporter : MonoBehaviour
             state = !state;
             if (state) {
                 // Show layer relavant to selection
+                CopCar.GetComponent<PlayerControl>().SetLocked(true); // TODO: Refactor
                 CopMinimapCamera.cullingMask |= teleportMask;
             }
             else {
                 // Hide layer relevant to selection
+                CopCar.GetComponent<PlayerControl>().SetLocked(false); // TODO: Refactor
                 CopMinimapCamera.cullingMask &= ~teleportMask;
 
                 // Find closest marked car
@@ -83,7 +118,7 @@ public class CopTeleporter : MonoBehaviour
 
         // Main loop
         if (state) {
-            Vector3 delta = new Vector3(Input.GetAxis("Horizontal1"), 0f, Input.GetAxis("Vertical1"));
+            Vector3 delta = new Vector3(Input.GetAxis(mouseXField), 0f, Input.GetAxis(mouseYField));
             transform.position += delta * speed;   
         }
     }
