@@ -10,6 +10,8 @@ public class CopTeleporter : MonoBehaviour
 
     public Camera CopMinimapCamera;
 
+    public AlertDDOfCopLocationEventSender AlertDDOfCopLocationEventSender;
+
     private bool state = false;
 
     private int teleportMask;
@@ -73,6 +75,8 @@ public class CopTeleporter : MonoBehaviour
 
                     // Set the crosshair to the new position to make it easier for next use
                     transform.position = CopCar.transform.position;
+
+                    AlertDDOfCopLocationEventSender.Trigger(new Vector2(CopCar.transform.position.x, CopCar.transform.position.z)); // Alert drunk driver of cop
                 }
             }
         }

@@ -7348,6 +7348,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 519133175}
   m_LocalEulerAnglesHint: {x: 0, y: 135, z: 0}
+--- !u!1 &573591808 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5489851403011420114, guid: 23a16898dab35674da63a5d74acdfef3, type: 3}
+  m_PrefabInstance: {fileID: 1094171596}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &582457520 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1121593196863037534, guid: cc2aaf204bfc846448c74d6c9b9f018d, type: 3}
@@ -10720,10 +10725,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 599515780116576996, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
-      propertyPath: m_Layer
-      value: 21
-      objectReference: {fileID: 0}
+    - target: {fileID: 2062682699922586489, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
+      propertyPath: CopPlayer
+      value: 
+      objectReference: {fileID: 1620153143}
     - target: {fileID: 4459300836020241365, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
       propertyPath: m_LocalPosition.x
       value: 435.9827
@@ -10764,21 +10769,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5384833057663425064, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 205
-      objectReference: {fileID: 0}
     - target: {fileID: 6934017594502498363, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
       propertyPath: m_Name
       value: TeleportationSelector
-      objectReference: {fileID: 0}
-    - target: {fileID: 6934017594502498363, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
-      propertyPath: m_Layer
-      value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 7774390287705153670, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
-      propertyPath: m_Layer
-      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 8026216081645158780, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
       propertyPath: CopCar
@@ -10788,6 +10781,10 @@ PrefabInstance:
       propertyPath: CopMinimapCamera
       value: 
       objectReference: {fileID: 418099365}
+    - target: {fileID: 8026216081645158780, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
+      propertyPath: AlertDDOfCopLocationEventSender
+      value: 
+      objectReference: {fileID: 958747098}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13936,6 +13933,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.105, y: 0.11875, z: 0.225}
   m_Center: {x: 0, y: 0.059375, z: 0}
+--- !u!114 &958747098 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2062682699922586489, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
+  m_PrefabInstance: {fileID: 797967146}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933e1522c1adc6c4fb317b01a130be89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963933614
 GameObject:
   m_ObjectHideFlags: 0
@@ -15575,6 +15583,18 @@ PrefabInstance:
       propertyPath: simultaneousOpenPercent
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 1481097000912831690, guid: 23a16898dab35674da63a5d74acdfef3, type: 3}
+      propertyPath: alertCopOfDDLocationEventSender
+      value: 
+      objectReference: {fileID: 2011098119}
+    - target: {fileID: 3931912883322272748, guid: 23a16898dab35674da63a5d74acdfef3, type: 3}
+      propertyPath: DDplayer
+      value: 
+      objectReference: {fileID: 509149359}
+    - target: {fileID: 3931912883322272748, guid: 23a16898dab35674da63a5d74acdfef3, type: 3}
+      propertyPath: debugSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: b3c279e4838de5645b6dcf0e79d7f0df, type: 2}
     - target: {fileID: 5489851403011420114, guid: 23a16898dab35674da63a5d74acdfef3, type: 3}
       propertyPath: m_Name
       value: BarManager
@@ -15634,7 +15654,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8274144019078292344, guid: 23a16898dab35674da63a5d74acdfef3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1166274966}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5489851403011420114, guid: 23a16898dab35674da63a5d74acdfef3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2011098119}
   m_SourcePrefab: {fileID: 100100000, guid: 23a16898dab35674da63a5d74acdfef3, type: 3}
 --- !u!1 &1098915634 stripped
 GameObject:
@@ -19478,6 +19501,37 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1908270690}
   m_SourcePrefab: {fileID: 100100000, guid: cc2aaf204bfc846448c74d6c9b9f018d, type: 3}
+--- !u!1 &1360784323
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1360784324}
+  m_Layer: 0
+  m_Name: MinimapPingStorage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1360784324
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360784323}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 249.94122, y: 0.10001, z: 173.65248}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1364157366 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cc2aaf204bfc846448c74d6c9b9f018d, type: 3}
@@ -28192,12 +28246,26 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1481097000912831690, guid: 23a16898dab35674da63a5d74acdfef3, type: 3}
   m_PrefabInstance: {fileID: 1094171596}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 573591808}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22c361de651b5de42ac45655ef807911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2011098119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573591808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeada7ccb68e1914384934afcc7c9eb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DDplayer: {fileID: 509149359}
+  DebugMode: 1
 --- !u!4 &2011481548 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4fa93a97d20390448b63249b71671b02, type: 3}
@@ -28532,6 +28600,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2032406125}
   - component: {fileID: 2032406126}
+  - component: {fileID: 2032406127}
   m_Layer: 0
   m_Name: MinimapManager
   m_TagString: Untagged
@@ -28569,6 +28638,23 @@ MonoBehaviour:
   Player1MinimapMarkerImage: {fileID: 1954152382}
   Player2MinimapMarkerImage: {fileID: 2003458631}
   swapSender: {fileID: 735250382}
+--- !u!114 &2032406127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032406124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd95e37557cecb34eb4554a10b6a029d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notificationPrefab: {fileID: 4106411298429028995, guid: 685ddd07257bfe742b0a215e27200c57, type: 3}
+  notificationParent: {fileID: 1360784324}
+  notificationHeight: 205
+  AlertCopOfDDLocationEventSender: {fileID: 2011098119}
+  AlertDDOfCopLocationEventSender: {fileID: 958747098}
 --- !u!1001 &2036234027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32780,3 +32866,4 @@ SceneRoots:
   - {fileID: 1525118738}
   - {fileID: 797967146}
   - {fileID: 1283028275}
+  - {fileID: 1360784324}
