@@ -32,7 +32,7 @@ public class MinimapSwapper : MonoBehaviour
             var rt1 = Player1MinimapCanvas.GetComponent<RectTransform>();
             var rt2 = Player2MinimapCanvas.GetComponent<RectTransform>();
 
-            // 1) Save each RectTransform's anchorMin, anchorMax, and pivot
+            // Swap anchors
             Vector2 aMin1 = rt1.anchorMin;
             Vector2 aMax1 = rt1.anchorMax;
             Vector2 pivot1 = rt1.pivot;
@@ -41,7 +41,6 @@ public class MinimapSwapper : MonoBehaviour
             Vector2 aMax2 = rt2.anchorMax;
             Vector2 pivot2 = rt2.pivot;
 
-            // 2) Swap anchorMin, anchorMax, and pivot
             rt1.anchorMin = aMin2;
             rt1.anchorMax = aMax2;
             rt1.pivot = pivot2;
