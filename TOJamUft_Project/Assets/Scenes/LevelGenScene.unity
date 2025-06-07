@@ -2011,7 +2011,7 @@ MonoBehaviour:
   Priority:
     Enabled: 0
     m_Value: 0
-  OutputChannel: 1
+  OutputChannel: 2
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
@@ -8904,7 +8904,7 @@ Transform:
   m_GameObject: {fileID: 642403179}
   serializedVersion: 2
   m_LocalRotation: {x: 0.15212339, y: -0.000000010435333, z: 0.0000000016061514, w: 0.98836154}
-  m_LocalPosition: {x: -25, y: 2.4056463, z: 8.728378}
+  m_LocalPosition: {x: 0, y: 2.4056463, z: -1.2716217}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8985,7 +8985,7 @@ MonoBehaviour:
   ShowCameraFrustum: 1
   IgnoreTimeScale: 0
   WorldUpOverride: {fileID: 0}
-  ChannelMask: -1
+  ChannelMask: 65531
   UpdateMethod: 2
   BlendUpdateMethod: 1
   LensModeOverride:
@@ -15511,7 +15511,7 @@ MonoBehaviour:
   Priority:
     Enabled: 0
     m_Value: 0
-  OutputChannel: 1
+  OutputChannel: 4
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
@@ -23524,7 +23524,7 @@ MonoBehaviour:
   ShowCameraFrustum: 1
   IgnoreTimeScale: 0
   WorldUpOverride: {fileID: 0}
-  ChannelMask: -1
+  ChannelMask: 65533
   UpdateMethod: 2
   BlendUpdateMethod: 1
   LensModeOverride:
