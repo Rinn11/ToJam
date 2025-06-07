@@ -29,8 +29,12 @@ public class UFOMovement : MonoBehaviour, IMovementModel
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        // Set physical limits
         rb.maxLinearVelocity = maxSpeed;
-        rb.maxAngularVelocity = maxTurnSpeed; // Adjust angular velocity to be half of linear velocity
+        rb.maxAngularVelocity = maxTurnSpeed;
+        rb.linearDamping = dragForce;
+        rb.angularDamping = angularDragForce;
 
         movementModifier = MovementManager.GetComponent<IMovementModifier>();
     }

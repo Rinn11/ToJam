@@ -5687,8 +5687,8 @@ Rigidbody:
   m_GameObject: {fileID: 509149359}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0.5
-  m_AngularDamping: 2
+  m_LinearDamping: 0
+  m_AngularDamping: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -6258,8 +6258,8 @@ MonoBehaviour:
   turnTorque: 50
   maxSpeed: 50
   maxTurnSpeed: 20
-  dragForce: 1
-  angularDragForce: 1
+  dragForce: 2
+  angularDragForce: 2
   speedUI: {fileID: 1634046100}
   MovementManager: {fileID: 357555600}
   onAccelerate:
@@ -6314,7 +6314,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 509149359}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 0c7f9241eb08be043b19f3fbbb48d5d4, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
