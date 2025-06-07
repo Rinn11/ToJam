@@ -8642,7 +8642,7 @@ GameObject:
   - component: {fileID: 642403180}
   - component: {fileID: 642403183}
   - component: {fileID: 642403182}
-  - component: {fileID: 642403181}
+  - component: {fileID: 642403184}
   m_Layer: 0
   m_Name: DrunkPlayerCamera
   m_TagString: MainCamera
@@ -8665,24 +8665,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 509149363}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &642403181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 642403179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1949901a4bc42f29e83d4db5575d847, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  swapSender: {fileID: 735250382}
-  mouseSensitivity: 500
-  mouseXField: Mouse X1
-  mouseYField: Mouse Y1
-  mouseXFieldOpposite: Mouse X2
-  mouseYFieldOpposite: Mouse Y2
 --- !u!81 &642403182
 AudioListener:
   m_ObjectHideFlags: 0
@@ -8742,6 +8724,38 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &642403184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642403179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowDebugText: 0
+  ShowCameraFrustum: 1
+  IgnoreTimeScale: 0
+  WorldUpOverride: {fileID: 0}
+  ChannelMask: -1
+  UpdateMethod: 2
+  BlendUpdateMethod: 1
+  LensModeOverride:
+    Enabled: 0
+    DefaultMode: 2
+  DefaultBlend:
+    Style: 1
+    Time: 2
+    CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  CustomBlends: {fileID: 0}
 --- !u!4 &645764719 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4fa93a97d20390448b63249b71671b02, type: 3}
@@ -23013,15 +23027,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 1626257984}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1949901a4bc42f29e83d4db5575d847, type: 3}
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swapSender: {fileID: 735250382}
-  mouseSensitivity: 500
-  mouseXField: Mouse X2
-  mouseYField: Mouse Y2
-  mouseXFieldOpposite: Mouse X1
-  mouseYFieldOpposite: Mouse Y1
+  ShowDebugText: 0
+  ShowCameraFrustum: 1
+  IgnoreTimeScale: 0
+  WorldUpOverride: {fileID: 0}
+  ChannelMask: -1
+  UpdateMethod: 2
+  BlendUpdateMethod: 1
+  LensModeOverride:
+    Enabled: 0
+    DefaultMode: 2
+  DefaultBlend:
+    Style: 1
+    Time: 2
+    CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  CustomBlends: {fileID: 0}
 --- !u!1 &1629566432 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5274862831963259048, guid: db7dd14264c24b748b0f2431b557057b, type: 3}
