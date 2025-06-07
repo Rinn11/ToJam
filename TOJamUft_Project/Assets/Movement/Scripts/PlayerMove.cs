@@ -13,8 +13,8 @@ using UnityEngine.UI;
 public class PlayerMove : MonoBehaviour
 {
     [Header("Movement Settings")]
-    public float accelerationForce, brakeForce, turnTorque, maxSpeed;
-    // recommended default 50, 50, 40, 20
+    public float accelerationForce, brakeForce, turnTorque, maxSpeed, maxTurnSpeed;
+    // recommended default 50, 50, 50, 20, 10
 
     private Rigidbody rb;
     private Vector2 moveValue;
@@ -39,6 +39,7 @@ public class PlayerMove : MonoBehaviour
         else
         {
             rb.maxLinearVelocity = maxSpeed;
+            rb.maxAngularVelocity = maxTurnSpeed; // Adjust angular velocity to be half of linear velocity
         }
 
         if (MovementManager == null)
@@ -66,7 +67,8 @@ public class PlayerMove : MonoBehaviour
         float useTurnTorque = turnTorque * movementModifier.GetTurnMultiplier(); // sensitivity increases with alcohol
         float useReverseForce = accelerationForce * movementModifier.GetReverseMultiplier();
         rb.maxLinearVelocity = maxSpeed * movementModifier.GetMaxSpeedMultiplier();
-
+        rb.maxAngularVelocity = maxTurnSpeed * movementModifier.GetMaxSpeedMultiplier(); // Adjust angular velocity to be half of linear velocity
+        
         // Coupled but atleast speedUI being unspecified won't break the script.
         if (speedUI != null)
         {

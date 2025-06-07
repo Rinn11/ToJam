@@ -8,9 +8,9 @@ TagManager:
   - ControlPoint
   - CopCar
   - FineManager
+  - RoundManager
   - RoundScreenUI
-  - Connector
-  - Straight
+  - MarkedCar
   layers:
   - Default
   - TransparentFX
@@ -19,6 +19,10 @@ TagManager:
   - Water
   - UI
   - GUI
+  - CarModels
+  - 
+  - DrunkOnly
+  - CopOnly
   - 
   - 
   - 
@@ -29,11 +33,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - CopTeleportationElements
   - 
   - 
   - 

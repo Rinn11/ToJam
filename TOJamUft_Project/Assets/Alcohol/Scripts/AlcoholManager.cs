@@ -1,7 +1,7 @@
 /*
  * Manages the effects of alcohol:
  * - Applies a blackout effect
- * - Applies a blurring effect
+ * - Applies a blurring effect (via shader texture)
  * - Updates an alcohol counter component
  * Also animates the bottle being drank.
  */
@@ -19,7 +19,6 @@ using UnityEngine.UI;
 public class AlcoholManager : MonoBehaviour, IMovementModifier
 {
     public GameObject blackoutPanel;          // The panel used to simulate a blackout
-    public GameObject blurryPanel;            // The panel used to simulate a blurring effect
     public GameObject bottle;                 // The alcohol bottle
 
     //UI text
@@ -36,7 +35,6 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     private int alcoholSupply;              // The number of alcohol bottles available
 
     private CanvasGroup blackoutCanvasGroup;  // A reference to control every object in the same canvas as the blackout panel
-    private CanvasGroup blurryCanvasGroup;    // A reference to control every object in the same canvas as the blurry panel
 
     private AudioSource[] audioSources;
 
@@ -58,6 +56,7 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     {
         alcoholSupply = initialAlcoholSupply;
         alcoholCount = initialAlcoholCount;
+        Shader.SetGlobalInt("GlobalAlcoholCount", initialAlcoholCount);
 
         if (FineManager == null)
         {
@@ -81,24 +80,7 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
         {
             Debug.LogError("blackoutPanel not found in the scene!");
         }
-
-        if (blurryPanel != null)
-        {
-            Debug.Log("blurryPanel found.");
-            blurryCanvasGroup = blurryPanel.GetComponent<CanvasGroup>();
-            if (blurryCanvasGroup == null)
-            {
-                Debug.Log("CanvasGroup not found, adding one.");
-                blurryCanvasGroup = blurryPanel.AddComponent<CanvasGroup>();
-            }
-
-            blurryCanvasGroup.alpha = 0;
-        }
-        else
-        {
-            Debug.LogError("blackoutPanel not found in the scene!");
-        }
-
+        
         bottlex = 140f;
         bottley = -15f;
         bottlez = 0f;
@@ -118,7 +100,8 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     {
         alcoholCount += amount;
         fineManager.increaseFine(100);  // 100 dollar fine per bottle - TODO: fix this from being "magic num"
-
+        Shader.SetGlobalInt("GlobalAlcoholCount", alcoholCount);
+            
         if (alcoholCountUI != null)
         {
             alcoholCountUI.text = "Alcohol Count: " + alcoholCount;
@@ -196,13 +179,9 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
         // drink increase same as supply decrease
         increaseAlcoholCount(1);
         changeAlcoholSupply(-1);
-
-        // increase blurriness
-        CanvasGroup panel = blurryPanel.GetComponent<CanvasGroup>();
-        panel.alpha = MathF.Min(0.8f, (GetAlcoholMultiplier() - 1) / 10);
-
+        
         // chance to black out for a split second
-        if (alcoholCount > 5 && UnityEngine.Random.Range(0, 100) < 40 + (Math.Pow(2, GetAlcoholMultiplier())))
+        if (alcoholCount >= 3 && UnityEngine.Random.Range(0, 100) < 40 + (Math.Pow(2, GetAlcoholMultiplier())))
         {
             TriggerBlackout();
             yield return StartCoroutine(AlcoholReturnLocal(originalLocalPos, originalLocalRot));
@@ -352,6 +331,34 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
 
         // Deactivate the panel after the blackout effect
         canDrink = true;
+    }
+
+    public void RefreshAlcoholManager()  // invoked by round manager's reset scene event
+    {
+        alcoholSupply = initialAlcoholSupply;
+        alcoholCount = initialAlcoholCount;
+        Shader.SetGlobalInt("GlobalAlcoholCount", initialAlcoholCount);
+        if (alcoholCountUI != null)
+        {
+            alcoholCountUI.text = "Alcohol Count: " + alcoholCount;
+        }
+        else
+        {
+            Debug.LogError("AlcoholCounterUI not found!");
+        }
+        if (alcoholSupplyUI != null)
+        {
+            alcoholSupplyUI.text = "Alcohol Supply: " + alcoholSupply;
+        }
+        else
+        {
+            Debug.LogError("AlcoholSupplyUI not found!");
+        }
+        
+        if (alcoholSupply > 0 && canDrink)  // force first drink.
+        {
+            StartCoroutine(DrinkAlcohol());
+        }
     }
 }
 

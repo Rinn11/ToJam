@@ -6,6 +6,7 @@
 // TODO: Maybe this should use the game ending functions in EndScreenBehaviour?
 
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerCollision : MonoBehaviour
 {
@@ -14,11 +15,17 @@ public class PlayerCollision : MonoBehaviour
   public AudioSource damageSource;
   public GameObject endScreenUI;
   public GameObject textUI;
+  public UnityEvent roundOverEvent = new UnityEvent();
 
   float damage = 100f;
   float timeSinceLastCollision = 0f, lastCollisionExitTime = 0f;
 
-  private void OnCollisionEnter(Collision collision)
+    void Start()
+    {
+        roundOverEvent.AddListener(GameObject.FindGameObjectWithTag("FineManager").GetComponent<FineManagerBehavior>().sendScoreInvoker);
+    }
+
+    private void OnCollisionEnter(Collision collision)
   {
     if (lastCollisionExitTime != 0f)
     {
@@ -36,12 +43,13 @@ public class PlayerCollision : MonoBehaviour
     if (damage == 0f || collision.gameObject.CompareTag("CopCar"))
     {
       crashSource.Play();
-      endScreenUI.SetActive(true);
-      textUI.SetActive(false);
+      // endScreenUI.SetActive(true);
+      // textUI.SetActive(false);
+      roundOverEvent.Invoke();
 
-      Cursor.lockState = CursorLockMode.None;
-      Cursor.visible = true;
-      collision.gameObject.SetActive(false);
+      // Cursor.lockState = CursorLockMode.None;
+      // Cursor.visible = true;
+      // collision.gameObject.SetActive(false);
     }
   }
 

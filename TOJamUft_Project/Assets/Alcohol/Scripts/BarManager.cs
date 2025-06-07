@@ -15,6 +15,8 @@ public class BarManager : MonoBehaviour
     public GameObject AlcoholManager;
     private AlcoholManager alcoholManager;
 
+    public AlertCopOfDDLocationEventSender alertCopOfDDLocationEventSender;
+
     public AudioSource collectSound;
 
     void Start()
@@ -42,6 +44,7 @@ public class BarManager : MonoBehaviour
         collectSound.Play();
         
         alcoholManager.changeAlcoholSupply(1);  // increase alcohol supply by 1
+        alertCopOfDDLocationEventSender.Trigger(new Vector2(bar.transform.position.x, bar.transform.position.z)); // Alert cop of drunk driver
 
         AssignReplacementBar();
         closed.Add(bar);
@@ -93,5 +96,19 @@ public class BarManager : MonoBehaviour
 
         b.SetOpen();
         open.Add(b);
+    }
+    
+    public void ReassignAllBars()  // invoked by round manager's reset scene event
+    {
+        // set all bars to closed then open 2 bars
+        foreach (var bar in bars)
+        {
+            bar.SetClosed();
+        }
+        open.Clear();
+        closed.Clear();
+        CollectBars();
+        OpenInitialSet();
+        Debug.Log("Reassigned all bars.");
     }
 }
