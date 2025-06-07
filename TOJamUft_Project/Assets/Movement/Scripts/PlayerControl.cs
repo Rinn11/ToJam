@@ -13,7 +13,9 @@ public class PlayerControl : MonoBehaviour
 {
     public PlayerSwapEventSender swapSender;
 
-    public PlayerMove PlayerMove;
+    public MonoBehaviour movementScript;    // So we can drag anything in
+    private IMovementModel movementModel;   // But we still need a class to run methods
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] string _horizontalAxis;
     [SerializeField] string _verticalAxis;
@@ -25,7 +27,7 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
-
+        movementModel = movementScript as IMovementModel;
     }
 
     private void OnEnable()
@@ -70,7 +72,7 @@ public class PlayerControl : MonoBehaviour
         {
             moveValue = Vector2.zero;
         }
-        PlayerMove.ProcessInputs(moveValue.x, moveValue.y);
+        movementModel.ProcessInputs(moveValue.x, moveValue.y);
     }
     
 }
