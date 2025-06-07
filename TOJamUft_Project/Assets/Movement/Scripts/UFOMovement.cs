@@ -10,11 +10,10 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class PlayerMove : MonoBehaviour, IMovementModel
+public class UFOMovement : MonoBehaviour, IMovementModel
 {
-    [Header("Movement Settings")]
-    public float accelerationForce, brakeForce, turnTorque, maxSpeed, maxTurnSpeed;
-    // recommended default 50, 50, 50, 20, 10
+    public float accelerationForce, turnTorque, maxSpeed, maxTurnSpeed;
+    public float dragForce, angularDragForce;
 
     private Rigidbody rb;
     private Vector2 moveValue;
@@ -23,7 +22,6 @@ public class PlayerMove : MonoBehaviour, IMovementModel
     public GameObject MovementManager;
     private IMovementModifier movementModifier;
 
-    [Header("Audio Events")]
     public UnityEvent onAccelerate;
     public UnityEvent onBrake;
     public UnityEvent onIdle;
@@ -31,21 +29,9 @@ public class PlayerMove : MonoBehaviour, IMovementModel
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        if (rb == null)
-        {
-            Debug.LogError("Rigidbody component not found on this GameObject. Please add one.");
-            enabled = false; // Disable the script if no Rigidbody is found
-        }
-        else
-        {
-            rb.maxLinearVelocity = maxSpeed;
-            rb.maxAngularVelocity = maxTurnSpeed; // Adjust angular velocity to be half of linear velocity
-        }
+        rb.maxLinearVelocity = maxSpeed;
+        rb.maxAngularVelocity = maxTurnSpeed; // Adjust angular velocity to be half of linear velocity
 
-        if (MovementManager == null)
-        {
-            Debug.LogError("MovementManager not found!");
-        }
         movementModifier = MovementManager.GetComponent<IMovementModifier>();
     }
 
@@ -63,12 +49,11 @@ public class PlayerMove : MonoBehaviour, IMovementModel
 
         // --- Acceleration and Braking ---
         float useAccelerationForce = accelerationForce * movementModifier.GetAccelerationMultiplier();
-        float useBrakeForce = brakeForce * movementModifier.GetBrakeMultiplier();
         float useTurnTorque = turnTorque * movementModifier.GetTurnMultiplier(); // sensitivity increases with alcohol
         float useReverseForce = accelerationForce * movementModifier.GetReverseMultiplier();
         rb.maxLinearVelocity = maxSpeed * movementModifier.GetMaxSpeedMultiplier();
         rb.maxAngularVelocity = maxTurnSpeed * movementModifier.GetMaxSpeedMultiplier(); // Adjust angular velocity to be half of linear velocity
-        
+
         // Coupled but atleast speedUI being unspecified won't break the script.
         if (speedUI != null)
         {
@@ -76,34 +61,15 @@ public class PlayerMove : MonoBehaviour, IMovementModel
             speedUI.text = $"Speed: {Mathf.RoundToInt(speed)} km/h";
         }
 
-        if (Mathf.Abs(moveValue.x) > 0)
+        if (moveValue.x != 0)
         {
-            float isMoving = rb.linearVelocity.magnitude != 0 ? 1.0f : 0.0f; // Only apply turning if we're already moving
-            rb.AddTorque(Vector3.up * useTurnTorque * isMoving * moveValue.x);
+            rb.AddTorque(Vector3.up * useTurnTorque * moveValue.x);
         }
 
-        if (moveValue.y > 0)
+        if (moveValue.y != 0)
         {
             rb.AddForce(transform.forward * moveValue.y * useAccelerationForce);
-            onAccelerate?.Invoke();
         }
-        else if (moveValue.y < 0)
-        {
-            // If moving forward, apply brake force. If moving backward or stationary, apply reverse force.
-            if (Vector3.Dot(rb.linearVelocity, transform.forward) > 0.1f) // Check if moving forward
-            {
-                rb.AddForce(transform.forward * moveValue.y * useBrakeForce);
-                onBrake?.Invoke();
-            }
-            else
-            {
-                rb.AddForce(transform.forward * moveValue.y * useReverseForce);
-                onBrake?.Invoke();
-            }
-        }
-        else
-        {
-            onIdle?.Invoke();
-        }
+        
     }
 }
