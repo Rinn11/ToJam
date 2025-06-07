@@ -11,6 +11,7 @@ public class Heads : MonoBehaviour
   {
     // add magnitude check
 
+    /*
     if (other.gameObject.CompareTag("Player"))
     {
       // This is cursed af lmao
@@ -22,5 +23,6 @@ public class Heads : MonoBehaviour
       Cursor.visible = true;
       other.gameObject.SetActive(false);
     }
+    */
   }
 }

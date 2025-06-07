@@ -7,6 +7,10 @@ TagManager:
   - CarSpawner
   - ControlPoint
   - CopCar
+  - FineManager
+  - RoundScreenUI
+  - Connector
+  - Straight
   layers:
   - Default
   - TransparentFX

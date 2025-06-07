@@ -239,9 +239,8 @@ GameObject:
   - component: {fileID: 7420721411950668447}
   - component: {fileID: 1279913211817327693}
   - component: {fileID: 6225609621459858998}
-  - component: {fileID: 5028133465726437726}
   - component: {fileID: 5443351820323490594}
-  - component: {fileID: 1375013941103181020}
+  - component: {fileID: -1158852777098057542}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -337,29 +336,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1.6141878, y: 1.1483387, z: 3.7099938}
   m_Center: {x: 0.0020207406, y: 0.0023685934, z: -0.18403664}
---- !u!114 &5028133465726437726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2624520138224426251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a94f358fafe11e4e846ea67b49be402, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Speed: 20
-  tileSpawner: {fileID: 0}
-  _FrountTile: {fileID: 0}
-  _BackTile: {fileID: 0}
-  controlPoint: 0
-  targetChildPosition: 0
-  carModelParent: {fileID: 4219070725946866443}
 --- !u!54 &5443351820323490594
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -387,21 +367,21 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 84
   m_CollisionDetection: 2
---- !u!114 &1375013941103181020
+--- !u!114 &-1158852777098057542
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2624520138224426251}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cc4068bac3aa0c44b0196f2841427b3, type: 3}
+  m_Script: {fileID: 11500000, guid: fe4d58cac28a72c40b73356053ad678a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  route: {fileID: 0}
-  routes:
-  - {fileID: 0}
+  speed: 20
+  turnSpeed: 5
+  closeEnoughDistance: 5
 --- !u!1 &4219070725946866443
 GameObject:
   m_ObjectHideFlags: 0
