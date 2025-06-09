@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -34,16 +35,28 @@ public class CarSpawner : MonoBehaviour
             return;
 
         LanePath lane = spawnLanes[Random.Range(0, spawnLanes.Count)];
-        //if (lane.points.Count == 0) return;
+        if (lane.points.Count == 0) return;
 
-        Vector3 spawnPoint = lane.points[Random.Range(0, spawnLanes.Count)];
+        Vector3 spawnPoint = lane.points[Random.Range(0, lane.points.Count)];
         Vector3 offset = new Vector3(Random.Range(-spawnRadius, spawnRadius), 0, Random.Range(-spawnRadius, spawnRadius));
-        GameObject car = Instantiate(carPrefab, spawnPoint + offset, Quaternion.identity);
+        Vector3 finalPos = spawnPoint + offset;
+
+        GameObject car = Instantiate(carPrefab, finalPos, Quaternion.identity);
 
         PathFollower movement = car.GetComponent<PathFollower>();
         if (movement != null)
         {
-            movement.AssignLane(lane);
+            //movement.AssignLane(lane);
+
+            // Optional: Rotate car to face the next point in the lane if possible
+            if (lane.points.Count > 1)
+            {
+                Vector3 direction = (lane.points[1] - lane.points[0]).normalized;
+                if (direction != Vector3.zero)
+                {
+                    car.transform.rotation = Quaternion.LookRotation(direction);
+                }
+            }
         }
 
         activeCars.Add(car);
