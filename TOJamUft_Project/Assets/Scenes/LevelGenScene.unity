@@ -6419,12 +6419,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac1b55080d23f34cbadc7d7a70199b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swapSender: {fileID: 735250382}
   movementScript: {fileID: 509149374}
-  _horizontalAxis: Horizontal1
-  _verticalAxis: Vertical1
-  _horizontalAxisOpposite: Horizontal2
-  _verticalAxisOpposite: Vertical2
+  playerInput: {fileID: 509149376}
 --- !u!114 &509149370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6766,7 +6762,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 3746d7fa-4791-4f51-88e2-5579cadd99d0
+  m_DefaultActionMap: DDPlayer
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!4 &512518384 stripped
@@ -11174,6 +11170,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1620153143}
     - target: {fileID: 8026216081645158780, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
+      propertyPath: Selector
+      value: 
+      objectReference: {fileID: 842299770}
+    - target: {fileID: 8026216081645158780, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
       propertyPath: swapSender
       value: 
       objectReference: {fileID: 735250382}
@@ -11185,6 +11185,10 @@ PrefabInstance:
       propertyPath: mouseYField
       value: Vertical2
       objectReference: {fileID: 0}
+    - target: {fileID: 8026216081645158780, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
+      propertyPath: playerInput
+      value: 
+      objectReference: {fileID: 1620153155}
     - target: {fileID: 8026216081645158780, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
       propertyPath: CopMinimapCamera
       value: 
@@ -11736,6 +11740,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.6399999, y: 0.893, z: 1.0078912}
   m_Center: {x: -0.000000059604634, y: 0.4465, z: 0.00000014901158}
+--- !u!1 &842299770 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6934017594502498363, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
+  m_PrefabInstance: {fileID: 797967146}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &842305314 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2760760175688235886, guid: 2134f640627159c4c86e28d970ec4f4b, type: 3}
@@ -14461,7 +14470,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2062682699922586489, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
   m_PrefabInstance: {fileID: 797967146}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 842299770}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 933e1522c1adc6c4fb317b01a130be89, type: 3}
@@ -18501,6 +18510,7 @@ Transform:
   - {fileID: 735250381}
   - {fileID: 2032406125}
   - {fileID: 1948696099}
+  - {fileID: 1573797450}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1232133433
@@ -22128,6 +22138,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cc2aaf204bfc846448c74d6c9b9f018d, type: 3}
   m_PrefabInstance: {fileID: 691125942}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1573797449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1573797450}
+  - component: {fileID: 1573797451}
+  m_Layer: 0
+  m_Name: PlayerControlSwapManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1573797450
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573797449}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1230694854}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1573797451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573797449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1683a16847b9ffa49a2774300ed79d96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drunkPlayerInput: {fileID: 509149376}
+  copPlayerInput: {fileID: 1620153155}
+  swapSender: {fileID: 735250382}
 --- !u!4 &1580399455 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cc2aaf204bfc846448c74d6c9b9f018d, type: 3}
@@ -23234,12 +23291,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac1b55080d23f34cbadc7d7a70199b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swapSender: {fileID: 735250382}
   movementScript: {fileID: 1620153148}
-  _horizontalAxis: Horizontal2
-  _verticalAxis: Vertical2
-  _horizontalAxisOpposite: Horizontal1
-  _verticalAxisOpposite: Vertical1
+  playerInput: {fileID: 1620153155}
 --- !u!114 &1620153155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23267,7 +23320,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: a6428166-2f06-4600-b72a-d1a42a2996f9
+  m_DefaultActionMap: CopPlayer
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1001 &1621395810
