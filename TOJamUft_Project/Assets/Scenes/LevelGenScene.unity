@@ -6010,6 +6010,7 @@ GameObject:
   - component: {fileID: 509149372}
   - component: {fileID: 509149371}
   - component: {fileID: 509149373}
+  - component: {fileID: 509149376}
   m_Layer: 0
   m_Name: DrunkPlayer
   m_TagString: Player
@@ -6738,6 +6739,36 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &509149376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509149359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 9f67882dbb6d072439d9202267034dff, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 3746d7fa-4791-4f51-88e2-5579cadd99d0
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!4 &512518384 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 62c66ae72912f97488b34abd771bf659, type: 3}
@@ -22744,6 +22775,7 @@ GameObject:
   - component: {fileID: 1620153146}
   - component: {fileID: 1620153145}
   - component: {fileID: 1620153154}
+  - component: {fileID: 1620153155}
   m_Layer: 0
   m_Name: CopPlayer
   m_TagString: CopCar
@@ -23208,6 +23240,36 @@ MonoBehaviour:
   _verticalAxis: Vertical2
   _horizontalAxisOpposite: Horizontal1
   _verticalAxisOpposite: Vertical1
+--- !u!114 &1620153155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620153143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 9f67882dbb6d072439d9202267034dff, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: a6428166-2f06-4600-b72a-d1a42a2996f9
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1001 &1621395810
 PrefabInstance:
   m_ObjectHideFlags: 0
