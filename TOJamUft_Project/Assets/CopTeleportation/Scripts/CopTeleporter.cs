@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
 
@@ -7,21 +8,17 @@ public class CopTeleporter : MonoBehaviour
     public float speed = 0.25f;     // The speed of the cursor when being moved with the joystick
 
     public GameObject CopCar;       // The cop car that is teleported
+    public GameObject Selector;
 
     public Camera CopMinimapCamera;
 
     public AlertDDOfCopLocationEventSender AlertDDOfCopLocationEventSender;
 
+    [SerializeField] private PlayerInput playerInput;
+
     private bool state = false;
 
     private int teleportMask;
-
-    // Swap stuff (we should refactor this later...)
-    public PlayerSwapEventSender swapSender;
-    [SerializeField] private string mouseXField;
-    [SerializeField] private string mouseYField;
-    [SerializeField] private string mouseXFieldOpposite;
-    [SerializeField] private string mouseYFieldOpposite;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,36 +28,14 @@ public class CopTeleporter : MonoBehaviour
         CopMinimapCamera.cullingMask &= ~teleportMask;
     }
 
-    private void OnEnable()
-    {
-        if (swapSender != null)
-            swapSender.OnBoolEvent += recievePlayerSwap;
-    }
-
-    private void OnDisable()
-    {
-        if (swapSender != null)
-            swapSender.OnBoolEvent -= recievePlayerSwap;
-    }
-
-    public void recievePlayerSwap(bool isPlayer1DrunkDriver)
-    {
-        // Swap the mouse X and Y axes
-        string tempMouseX = mouseXField;
-        string tempMouseY = mouseYField;
-
-        mouseXField = mouseXFieldOpposite;
-        mouseYField = mouseYFieldOpposite;
-
-        mouseXFieldOpposite = tempMouseX;
-        mouseYFieldOpposite = tempMouseY;
-        Debug.Log($"Swapped mouse controls: {mouseXField}, {mouseYField} <-> {mouseXFieldOpposite}, {mouseYFieldOpposite}");
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha6)) {
+        if (playerInput == null) return;
+        InputAction abilityAction = playerInput.actions["Ability"];
+        if (abilityAction == null) return;
+
+        if (abilityAction.WasPerformedThisFrame()) {
             // When the key is pressed
             state = !state;
             if (state) {
@@ -79,7 +54,7 @@ public class CopTeleporter : MonoBehaviour
 
                 GameObject[] markedCars = GameObject.FindGameObjectsWithTag("MarkedCar");
                 foreach (GameObject car in markedCars) {
-                    Vector3 diff = car.transform.position - transform.position;
+                    Vector3 diff = car.transform.position - Selector.transform.position;
                     float dist = diff.sqrMagnitude;
 
                     if (dist < minDist) {
@@ -109,17 +84,24 @@ public class CopTeleporter : MonoBehaviour
                     closestCar.transform.rotation = tempRot;
 
                     // Set the crosshair to the new position to make it easier for next use
-                    transform.position = CopCar.transform.position;
+                    Selector.transform.position = CopCar.transform.position;
 
                     AlertDDOfCopLocationEventSender.Trigger(new Vector2(CopCar.transform.position.x, CopCar.transform.position.z)); // Alert drunk driver of cop
                 }
             }
         }
 
-        // Main loop
+        // Running the cursor slew
         if (state) {
-            Vector3 delta = new Vector3(Input.GetAxis(mouseXField), 0f, Input.GetAxis(mouseYField));
-            transform.position += delta * speed;   
+            // Always pull from current action map
+            if (playerInput == null) return;
+            InputAction camAction = playerInput.actions["Camera"];
+            if (camAction == null) return;
+
+            Vector2 slew = camAction.ReadValue<Vector2>();
+
+            Vector3 delta = new Vector3(slew.x, 0f, slew.y);
+            Selector.transform.position += delta * speed;   
         }
     }
 }

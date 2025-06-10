@@ -13,7 +13,6 @@ public class PlayerControl : MonoBehaviour
     private void Start()
     {
         movementModel = movementScript as IMovementModel;
-        playerInput = GetComponent<PlayerInput>();
     }
 
     public void SetLocked(bool newLocked)
@@ -23,9 +22,8 @@ public class PlayerControl : MonoBehaviour
 
     private void Update()
     {
-        if (playerInput == null || movementModel == null) return;
-
         // Always pull from current action map
+        if (playerInput == null) return;
         InputAction steerAction = playerInput.actions["Steer"];
         if (steerAction == null) return;
 
