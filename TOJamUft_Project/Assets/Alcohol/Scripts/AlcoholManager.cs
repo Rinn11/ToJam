@@ -13,6 +13,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 
@@ -29,6 +30,9 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     public int initialAlcoholSupply;
 
     public GameObject FineManager;
+
+    [SerializeField] private PlayerInput playerInput;
+
     private FineManagerBehavior fineManager;
 
     private int alcoholCount;                 // The number of alcohol bottles 
@@ -142,8 +146,12 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     // Update is called once per frame
     void Update()
     {
+        if (playerInput == null) return;
+        InputAction abilityAction = playerInput.actions["Ability"];
+        if (abilityAction == null) return;
+
         // press space to initiate drink alcohol routine
-        if (alcoholSupply > 0 && canDrink && Input.GetKeyDown(KeyCode.Space))
+        if (alcoholSupply > 0 && canDrink && abilityAction.WasPerformedThisFrame())
         {
             StartCoroutine(DrinkAlcohol());
         }
