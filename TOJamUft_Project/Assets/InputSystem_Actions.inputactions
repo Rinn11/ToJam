@@ -1286,6 +1286,17 @@
                 },
                 {
                     "name": "",
+                    "id": "6075fba6-8963-43b6-8059-ecef38d21e83",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "DeltaTimeScale,ScaleVector2(x=0.1,y=0.1)",
+                    "groups": ";Keyboard&Mouse;Touch",
+                    "action": "Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "64729c56-b6d4-429a-95f9-94ddd13dcef5",
                     "path": "<Keyboard>/w",
                     "interactions": "",
@@ -1622,6 +1633,17 @@
                     "action": "Camera",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "93a1af66-0699-4120-a48d-510654e9a4fa",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "ScaleVector2(x=100,y=100)",
+                    "groups": ";Gamepad",
+                    "action": "Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
