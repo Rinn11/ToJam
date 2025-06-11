@@ -1,4 +1,3 @@
-// LaneGenerator.cs
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,36 +11,32 @@ public class LaneGenerator : MonoBehaviour
     public int nodesPerLane = 5;
     public float nodeSpacing = 2f;
     public float laneOffset = 1.5f;
+    public float connectThreshold = 20;
+
     public bool visualizeGizmos = true;
 
     public string exportPath = "Assets/Lanes";
-    public string forwardAssetName = "Lane_Forward.asset";
-    public string backwardAssetName = "Lane_Backward.asset";
 
-    public Dictionary<string, List<Vector3>> lanes = new();
+    public Dictionary<string, LaneSegment> laneSegments = new();
 
     private Vector3 RoundVec(Vector3 v) => new(Mathf.Round(v.x), Mathf.Round(v.y), Mathf.Round(v.z));
 
-    private Transform FindNearestTile(Vector3 pos, List<Transform> tiles, float maxDist = 0.6f)
+
+
+    [ContextMenu("Generate + Link + Export Lanes")]
+    public void GenerateAndLinkLanes()
     {
-        Transform closest = null;
-        float min = float.MaxValue;
-        foreach (var t in tiles)
-        {
-            float dist = Vector3.Distance(RoundVec(t.position), RoundVec(pos));
-            if (dist < min && dist <= maxDist)
-            {
-                min = dist;
-                closest = t;
-            }
-        }
-        return closest;
+        GenerateLanes();
+
+        var allSegments = laneSegments.Values.ToList();
+        LinkLaneSegments(allSegments);
+
+        ExportCombinedPaths(allSegments);
     }
 
-    [ContextMenu("Generate Lanes")]
     public void GenerateLanes()
     {
-        lanes.Clear();
+        laneSegments.Clear();
 
         List<Transform> tiles = new();
         foreach (Transform child in transform)
@@ -57,7 +52,7 @@ public class LaneGenerator : MonoBehaviour
             GenerateLanesForTile(current, tile.name, tiles);
         }
 
-        Debug.Log($"Lane generation complete. Total: {lanes.Count}");
+        Debug.Log($"Lane generation complete. Total: {laneSegments.Count}");
     }
 
     private void GenerateLanesForTile(Vector3 center, string tileName, List<Transform> tiles)
@@ -94,38 +89,42 @@ public class LaneGenerator : MonoBehaviour
                 back.Add(center - right * laneOffset - dir * offset);
             }
         }
-        else if (isBend)
+        else if (isBend || isJunction)
         {
-            Vector3 from = connected[0];
-            Vector3 to = connected[1];
-            Vector3 fromRight = Vector3.Cross(Vector3.up, from).normalized * laneOffset;
-            Vector3 toRight = Vector3.Cross(Vector3.up, to).normalized * laneOffset;
-
-            Vector3 startFwd = center + from * tileSpacing / 2f + fromRight;
-            Vector3 endFwd = center + to * tileSpacing / 2f + toRight;
-            fwd.AddRange(Bezier(startFwd, center, endFwd));
-
-            Vector3 startBack = center + to * tileSpacing / 2f - toRight;
-            Vector3 endBack = center + from * tileSpacing / 2f - fromRight;
-            back.AddRange(Bezier(startBack, center, endBack));
-        }
-        else if (isJunction)
-        {
-            foreach (var dir in connected)
+            foreach (var from in connected)
             {
-                Vector3 right = Vector3.Cross(Vector3.up, dir).normalized;
-                float half = (nodesPerLane - 1) / 2f;
-                for (int i = 0; i < nodesPerLane; i++)
+                foreach (var to in connected)
                 {
-                    float offset = (i - half) * nodeSpacing;
-                    fwd.Add(center + right * laneOffset + dir * offset);
-                    back.Add(center - right * laneOffset - dir * offset);
+                    if (from == to || to == -from || to == Vector3.left)
+                        continue;
+
+                    Vector3 fromRight = Vector3.Cross(Vector3.up, from).normalized * laneOffset;
+                    Vector3 toRight = Vector3.Cross(Vector3.up, to).normalized * laneOffset;
+                    Vector3 startFwd = center + from * tileSpacing / 2f + fromRight;
+                    Vector3 endFwd = center + to * tileSpacing / 2f + toRight;
+
+                    fwd.AddRange(Bezier(startFwd, center + (from + to).normalized * tileSpacing / 3f, endFwd));
+
+                    Vector3 fromLeft = -Vector3.Cross(Vector3.up, to).normalized * laneOffset;
+                    Vector3 toLeft = -Vector3.Cross(Vector3.up, from).normalized * laneOffset;
+                    Vector3 startBack = center + to * tileSpacing / 2f + fromLeft;
+                    Vector3 endBack = center + from * tileSpacing / 2f + toLeft;
+
+                    back.AddRange(Bezier(startBack, center + (from + to).normalized * tileSpacing / 3f, endBack));
                 }
             }
         }
 
-        lanes[$"{tileName}_{center}_Forward"] = fwd;
-        lanes[$"{tileName}_{center}_Backward"] = back;
+        AddLane(tileName + "_" + center + "_Forward", fwd);
+        AddLane(tileName + "_" + center + "_Backward", back);
+    }
+
+    private void AddLane(string name, List<Vector3> points)
+    {
+        LaneSegment segment = ScriptableObject.CreateInstance<LaneSegment>();
+        segment.name = name;
+        segment.points = points;
+        laneSegments[name] = segment;
     }
 
     private List<Vector3> Bezier(Vector3 p0, Vector3 p1, Vector3 p2, int steps = 5)
@@ -140,53 +139,102 @@ public class LaneGenerator : MonoBehaviour
         return curve;
     }
 
-    [ContextMenu("Export Lanes To Assets")]
-    public void ExportLanesToAssets()
+    [ContextMenu("Link Lane Segments")]
+    private void LinkLaneSegments(List<LaneSegment> allSegments)
     {
-        if (lanes == null || lanes.Count == 0)
+        foreach (var segment in allSegments)
+            segment.nextLanes.Clear();
+
+        foreach (var segment in allSegments)
         {
-            Debug.LogWarning("No lanes to export. Run GenerateLanes first.");
-            return;
+            bool isForward = segment.name.Contains("Forward");
+            Vector3 end = segment.points[^1];
+
+            foreach (var other in allSegments)
+            {
+                if (segment == other) continue;
+
+                bool otherIsForward = other.name.Contains("Forward");
+
+                // Only link forward to forward, back to back
+                if (isForward != otherIsForward) continue;
+
+                Vector3 start = other.points[0];
+
+                if (IsAdjacent(RoundVec(end), RoundVec(start)))
+                {
+                    segment.nextLanes.Add(other);
+                }
+            }
+        }
+    }
+
+
+    private void ExportCombinedPaths(List<LaneSegment> allSegments)
+    {
+        List<LaneSegment> forward = allSegments.Where(l => l.name.Contains("Forward")).ToList();
+        List<LaneSegment> backward = allSegments.Where(l => l.name.Contains("Backward")).ToList();
+
+        List<Vector3> finalForward = BuildLongestPath(forward);
+        List<Vector3> finalBackward = BuildLongestPath(backward);
+
+        ExportLanePath("ForwardPath", finalForward);
+        ExportLanePath("BackwardPath", finalBackward);
+    }
+
+    private List<Vector3> BuildLongestPath(List<LaneSegment> segments)
+    {
+        HashSet<LaneSegment> visited = new();
+        List<Vector3> longestPath = new();
+
+        foreach (var start in segments)
+        {
+            if (visited.Contains(start)) continue;
+
+            List<Vector3> currentPath = new(start.points);
+            LaneSegment current = start;
+            visited.Add(current);
+
+            while (current.nextLanes.Count > 0)
+            {
+                var next = current.nextLanes.FirstOrDefault(n => !visited.Contains(n));
+                if (next == null) break;
+
+                visited.Add(next);
+                currentPath.AddRange(next.points);
+                current = next;
+            }
+
+            if (currentPath.Count > longestPath.Count)
+                longestPath = currentPath;
         }
 
+        return longestPath;
+    }
+
+    private void ExportLanePath(string name, List<Vector3> path)
+    {
         if (!AssetDatabase.IsValidFolder(exportPath))
         {
             Directory.CreateDirectory(exportPath);
             AssetDatabase.Refresh();
         }
 
-        List<Vector3> forwardPoints = new();
-        List<Vector3> backwardPoints = new();
+        var asset = ScriptableObject.CreateInstance<LaneSegment>();
+        asset.points = path;
+        asset.name = name;
 
-        foreach (var kvp in lanes)
-        {
-            if (kvp.Key.Contains("Forward"))
-                forwardPoints.AddRange(kvp.Value);
-            else if (kvp.Key.Contains("Backward"))
-                backwardPoints.AddRange(kvp.Value);
-        }
-
-        LanePath forwardAsset = ScriptableObject.CreateInstance<LanePath>();
-        forwardAsset.points = forwardPoints;
-        AssetDatabase.CreateAsset(forwardAsset, Path.Combine(exportPath, forwardAssetName));
-
-        LanePath backwardAsset = ScriptableObject.CreateInstance<LanePath>();
-        backwardAsset.points = backwardPoints;
-        AssetDatabase.CreateAsset(backwardAsset, Path.Combine(exportPath, backwardAssetName));
-
-        AssetDatabase.SaveAssets();
-        Debug.Log("Exported combined forward and backward lanes as two ScriptableObjects.");
+        AssetDatabase.CreateAsset(asset, Path.Combine(exportPath, name + ".asset"));
     }
 
     private void OnDrawGizmosSelected()
     {
-        if (!visualizeGizmos || lanes == null) return;
+        if (!visualizeGizmos || laneSegments == null) return;
 
-        foreach (var lane in lanes)
+        foreach (var lane in laneSegments)
         {
-            bool isForward = lane.Key.Contains("Forward");
-            Gizmos.color = isForward ? Color.green : Color.red;
-            List<Vector3> points = lane.Value;
+            Gizmos.color = lane.Key.Contains("Forward") ? Color.green : Color.red;
+            List<Vector3> points = lane.Value.points;
 
             for (int i = 0; i < points.Count - 1; i++)
             {
@@ -198,13 +246,35 @@ public class LaneGenerator : MonoBehaviour
                 Gizmos.DrawRay(arrowHead, side1 * 0.3f);
                 Gizmos.DrawRay(arrowHead, side2 * 0.3f);
             }
-        }
 
-        Gizmos.color = Color.cyan;
-        foreach (Transform tile in transform)
-        {
-            Gizmos.DrawWireCube(RoundVec(tile.position), Vector3.one * 0.5f);
+            if (points.Count > 0)
+            {
+                Handles.color = Color.white;
+                Handles.Label(points[0], lane.Key);
+            }
+
+            foreach (var next in lane.Value.nextLanes)
+            {
+                if (next != null && next.points.Count > 0 && points.Count > 0)
+                {
+                    Gizmos.color = Color.cyan;
+                    Gizmos.DrawLine(points[^1], next.points[0]);
+                }
+            }
         }
     }
-}
 
+    bool IsAdjacent(Vector3 a, Vector3 b)
+    {
+        Vector3 diff = b - a;
+        return (Mathf.Abs(diff.x) <= connectThreshold && Mathf.Approximately(diff.z, 0)) ||
+               (Mathf.Abs(diff.z) <= connectThreshold && Mathf.Approximately(diff.x, 0));
+    }
+
+    [System.Serializable]
+    public class LaneSegment : ScriptableObject
+    {
+        public List<Vector3> points = new();
+        public List<LaneSegment> nextLanes = new();
+    }
+}

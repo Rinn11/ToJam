@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: ForwardPath
+  m_EditorClassIdentifier: Assembly-CSharp::LaneGenerator/LaneSegment
+  points:
+  - {x: 98.5, y: 0, z: 32}
+  - {x: 98.5, y: 0, z: 34}
+  - {x: 98.5, y: 0, z: 36}
+  - {x: 98.5, y: 0, z: 38}
+  - {x: 98.5, y: 0, z: 40}
+  - {x: 98.5, y: 0, z: 23.5}
+  - {x: 100.34562, y: 0, z: 20.825619}
+  - {x: 102.36842, y: 0, z: 18.088428}
+  - {x: 104.56842, y: 0, z: 15.288426}
+  - {x: 106.94562, y: 0, z: 12.425619}
+  - {x: 109.5, y: 0, z: 9.5}
+  - {x: 109.5, y: 0, z: 9.5}
+  - {x: 106.94562, y: 0, z: 12.425619}
+  - {x: 104.56843, y: 0, z: 15.288427}
+  - {x: 102.36842, y: 0, z: 18.088427}
+  - {x: 100.34563, y: 0, z: 20.825619}
+  - {x: 98.5, y: 0, z: 23.5}
+  - {x: 84.5, y: 0, z: 12.5}
+  - {x: 87.17439, y: 0, z: 14.345619}
+  - {x: 89.911575, y: 0, z: 16.368427}
+  - {x: 92.71158, y: 0, z: 18.568428}
+  - {x: 95.57439, y: 0, z: 20.94562}
+  - {x: 98.5, y: 0, z: 23.5}
+  nextLanes: []
