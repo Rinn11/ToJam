@@ -5,6 +5,10 @@ public class Bar : MonoBehaviour
 {
     public Material openMaterial;
     public Material closedMaterial;
+    
+    private GameObject openModel;
+    private GameObject closedModel;
+    
     private Renderer rend;
     public bool IsOpen { get; private set; }
     private bool isVisited = false;
@@ -16,8 +20,14 @@ public class Bar : MonoBehaviour
     internal BarManager Manager { get; set; }
 
     void Awake()
-    {
-        Debug.Log("Bar Start");
+    {   
+        openModel = transform.Find("OpenModel")?.gameObject;
+        closedModel = transform.Find("ClosedModel")?.gameObject;
+
+        if (openModel == null || closedModel == null) {
+            Debug.LogError("Missing OpenModel or ClosedModel in children!");
+        }
+        
         rend = GetComponent<Renderer>();
         if (player == null)
         {
@@ -31,7 +41,9 @@ public class Bar : MonoBehaviour
 
     void Update()
     {
-        float dist = Vector3.Distance(player.position, transform.position);
+        // get x and z distance only
+        Vector3 diff = player.position - transform.position;
+        float dist = Mathf.Sqrt(diff.x * diff.x + diff.z * diff.z);
         if (IsOpen && !isVisited && player != null && dist < Mathf.Sqrt(activationRadiusSqr))
         {
             isVisited = true;
@@ -44,6 +56,8 @@ public class Bar : MonoBehaviour
         Debug.Log($"Bar {gameObject.name} set open");
         IsOpen = true;
         isVisited = false;
+        openModel.SetActive(true);
+        closedModel.SetActive(false);
         if (rend != null && openMaterial != null)
         {
             rend.material = openMaterial;
@@ -55,6 +69,8 @@ public class Bar : MonoBehaviour
         Debug.Log($"Bar {gameObject.name} set closed");
         IsOpen = false;
         isVisited = false;
+        openModel.SetActive(false);
+        closedModel.SetActive(true);
         if (rend != null && closedMaterial != null)
         {
             rend.material = closedMaterial;
