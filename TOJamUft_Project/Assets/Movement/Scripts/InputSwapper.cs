@@ -13,6 +13,8 @@ public class InputSwapper : MonoBehaviour
     public PlayerInput copPlayerInput;
     public CinemachineInputAxisController drunkCinemachineInputAxisController;
     public CinemachineInputAxisController copCinemachineInputAxisController;
+    public InputActionReference drunkCameraInputActionReference;
+    public InputActionReference copCameraInputActionReference;
 
     public PlayerSwapEventSender swapSender;
 
@@ -45,43 +47,46 @@ public class InputSwapper : MonoBehaviour
         if (isPlayer1Driving)
         {
             drunkPlayerInput.SwitchCurrentActionMap("DDPlayer");
+            copPlayerInput.SwitchCurrentActionMap("CopPlayer");
+
+            // Yes for some reason, this is the only way to set the input actions for the CinemachineInputAxisController...
             foreach (var c in drunkCinemachineInputAxisController.Controllers)
             {
                 if (c.Name == "Look Orbit X")
-                    c.Input.InputAction = InputActionReference.Create(drunkPlayerInput.actions["Camera"]);
+                    c.Input.InputAction = drunkCameraInputActionReference;
 
                 if (c.Name == "Look Orbit Y")
-                    c.Input.InputAction = InputActionReference.Create(drunkPlayerInput.actions["Camera"]);
+                    c.Input.InputAction = drunkCameraInputActionReference;
             }
-            copPlayerInput.SwitchCurrentActionMap("CopPlayer");
             foreach (var c in copCinemachineInputAxisController.Controllers)
             {
                 if (c.Name == "Look Orbit X")
-                    c.Input.InputAction = InputActionReference.Create(copPlayerInput.actions["Camera"]);
+                    c.Input.InputAction = copCameraInputActionReference;
 
                 if (c.Name == "Look Orbit Y")
-                    c.Input.InputAction = InputActionReference.Create(copPlayerInput.actions["Camera"]);
+                    c.Input.InputAction = copCameraInputActionReference;
             }
         }
         else
         {
             drunkPlayerInput.SwitchCurrentActionMap("CopPlayer");
+            copPlayerInput.SwitchCurrentActionMap("DDPlayer");
+            
             foreach (var c in drunkCinemachineInputAxisController.Controllers)
             {
                 if (c.Name == "Look Orbit X")
-                    c.Input.InputAction = InputActionReference.Create(drunkPlayerInput.actions["Camera"]);
+                    c.Input.InputAction = copCameraInputActionReference;
 
                 if (c.Name == "Look Orbit Y")
-                    c.Input.InputAction = InputActionReference.Create(drunkPlayerInput.actions["Camera"]);
+                    c.Input.InputAction = copCameraInputActionReference;
             }
-            copPlayerInput.SwitchCurrentActionMap("DDPlayer");
             foreach (var c in copCinemachineInputAxisController.Controllers)
             {
                 if (c.Name == "Look Orbit X")
-                    c.Input.InputAction = InputActionReference.Create(copPlayerInput.actions["Camera"]);
+                    c.Input.InputAction = drunkCameraInputActionReference;
 
                 if (c.Name == "Look Orbit Y")
-                    c.Input.InputAction = InputActionReference.Create(copPlayerInput.actions["Camera"]);
+                    c.Input.InputAction = drunkCameraInputActionReference;
             }
         }
     }
