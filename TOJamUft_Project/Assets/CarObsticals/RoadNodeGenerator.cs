@@ -18,10 +18,9 @@ public class LaneGenerator : MonoBehaviour
     public string exportPath = "Assets/Lanes";
 
     public Dictionary<string, LanePath> laneSegments = new();
+    private HashSet<string> junctionSegmentNames = new();
 
     private Vector3 RoundVec(Vector3 v) => new(Mathf.Round(v.x), Mathf.Round(v.y), Mathf.Round(v.z));
-
-
 
     [ContextMenu("Generate + Link + Export Lanes")]
     public void GenerateAndLinkLanes()
@@ -37,6 +36,7 @@ public class LaneGenerator : MonoBehaviour
     public void GenerateLanes()
     {
         laneSegments.Clear();
+        junctionSegmentNames.Clear();
 
         List<Transform> tiles = new();
         foreach (Transform child in transform)
@@ -95,28 +95,45 @@ public class LaneGenerator : MonoBehaviour
             {
                 foreach (var to in connected)
                 {
-                    if (from == to || to == -from || to == Vector3.left)
+                    if (from == to || to == -from)
                         continue;
 
-                    Vector3 fromRight = Vector3.Cross(Vector3.up, from).normalized * laneOffset;
-                    Vector3 toRight = Vector3.Cross(Vector3.up, to).normalized * laneOffset;
-                    Vector3 startFwd = center + from * tileSpacing / 2f + fromRight;
-                    Vector3 endFwd = center + to * tileSpacing / 2f + toRight;
+                    Vector3 centerOffset = center;
 
-                    fwd.AddRange(Bezier(startFwd, center + (from + to).normalized * tileSpacing / 3f, endFwd));
+                    // Forward lane
+                    Vector3 rightFrom = Vector3.Cross(Vector3.up, from).normalized * laneOffset;
+                    Vector3 rightTo = Vector3.Cross(Vector3.up, to).normalized * laneOffset;
+                    Vector3 startFwd = centerOffset + from * tileSpacing / 2f + rightFrom;
+                    Vector3 endFwd = centerOffset + to * tileSpacing / 2f + rightTo;
+                    Vector3 controlFwd = centerOffset + (from + to).normalized * tileSpacing / 3f + rightFrom;
+                    fwd.AddRange(Bezier(startFwd, controlFwd, endFwd));
 
-                    Vector3 fromLeft = -Vector3.Cross(Vector3.up, to).normalized * laneOffset;
-                    Vector3 toLeft = -Vector3.Cross(Vector3.up, from).normalized * laneOffset;
-                    Vector3 startBack = center + to * tileSpacing / 2f + fromLeft;
-                    Vector3 endBack = center + from * tileSpacing / 2f + toLeft;
-
-                    back.AddRange(Bezier(startBack, center + (from + to).normalized * tileSpacing / 3f, endBack));
+                    // Backward lane (reverse direction)
+                    Vector3 reverseFrom = -to;
+                    Vector3 reverseTo = -from;
+                    Vector3 rightFromBack = Vector3.Cross(Vector3.up, reverseFrom).normalized * laneOffset;
+                    Vector3 rightToBack = Vector3.Cross(Vector3.up, reverseTo).normalized * laneOffset;
+                    Vector3 startBack = centerOffset + reverseFrom * tileSpacing / 2f + rightFromBack;
+                    Vector3 endBack = centerOffset + reverseTo * tileSpacing / 2f + rightToBack;
+                    Vector3 controlBack = centerOffset + (reverseFrom + reverseTo).normalized * tileSpacing / 3f + rightFromBack;
+                    List<Vector3> backCurve = Bezier(startBack, controlBack, endBack);
+                    backCurve.Reverse();
+                    back.AddRange(backCurve);
                 }
             }
         }
 
-        AddLane(tileName + "_" + center + "_Forward", fwd);
-        AddLane(tileName + "_" + center + "_Backward", back);
+        string fwdName = tileName + "_" + center + "_Forward";
+        string backName = tileName + "_" + center + "_Backward";
+
+        AddLane(fwdName, fwd);
+        AddLane(backName, back);
+
+        if (isJunction || isBend)
+        {
+            junctionSegmentNames.Add(fwdName);
+            junctionSegmentNames.Add(backName);
+        }
     }
 
     private void AddLane(string name, List<Vector3> points)
@@ -156,7 +173,6 @@ public class LaneGenerator : MonoBehaviour
 
                 bool otherIsForward = other.name.Contains("Forward");
 
-                // Only link forward to forward, back to back
                 if (isForward != otherIsForward) continue;
 
                 Vector3 start = other.points[0];
@@ -169,11 +185,15 @@ public class LaneGenerator : MonoBehaviour
         }
     }
 
-
     private void ExportCombinedPaths(List<LanePath> allSegments)
     {
-        List<LanePath> forward = allSegments.Where(l => l.name.Contains("Forward")).ToList();
-        List<LanePath> backward = allSegments.Where(l => l.name.Contains("Backward")).ToList();
+        List<LanePath> forward = allSegments
+            .Where(l => l.name.Contains("Forward") && !junctionSegmentNames.Contains(l.name))
+            .ToList();
+
+        List<LanePath> backward = allSegments
+            .Where(l => l.name.Contains("Backward") && !junctionSegmentNames.Contains(l.name))
+            .ToList();
 
         List<Vector3> finalForward = BuildLongestPath(forward);
         List<Vector3> finalBackward = BuildLongestPath(backward);
@@ -270,5 +290,4 @@ public class LaneGenerator : MonoBehaviour
         return (Mathf.Abs(diff.x) <= connectThreshold && Mathf.Approximately(diff.z, 0)) ||
                (Mathf.Abs(diff.z) <= connectThreshold && Mathf.Approximately(diff.x, 0));
     }
-
 }
