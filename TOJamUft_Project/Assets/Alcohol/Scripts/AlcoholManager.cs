@@ -19,7 +19,7 @@ using UnityEngine.UI;
 public class AlcoholManager : MonoBehaviour, IMovementModifier
 {
     public GameObject blackoutPanel;          // The panel used to simulate a blackout
-    public GameObject bottle;                 // The alcohol bottle
+    // public GameObject bottle;                 // The alcohol bottle
 
     //UI text
     public Text alcoholCountUI;
@@ -38,7 +38,7 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
 
     private AudioSource[] audioSources;
 
-    public float bottlex, bottley, bottlez;   // Controls the angle the bottle is tilted to during the drinking animations
+    // public float bottlex, bottley, bottlez;   // Controls the angle the bottle is tilted to during the drinking animations
 
 
     private bool canDrink = true;  // when blacking out, you can't drink
@@ -80,10 +80,10 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
         {
             Debug.LogError("blackoutPanel not found in the scene!");
         }
-        
-        bottlex = 140f;
-        bottley = -15f;
-        bottlez = 0f;
+        //
+        // bottlex = 140f;
+        // bottley = -15f;
+        // bottlez = 0f;
 
         audioSources = GetComponents<AudioSource>();
         if (audioSources.Length < 2)
@@ -165,15 +165,15 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     // function to drink alcohol
     private IEnumerator DrinkAlcohol()
     {
-        canDrink = false;
-
-        // grab bottle animation, drink animation + gulp sfx, then increase alcoholCount
-        Transform bottleTransform = bottle.transform;
-
-        // // Record bottle's original position and rotation
-        Vector3 originalLocalPos = bottleTransform.localPosition;
-        Quaternion originalLocalRot = bottleTransform.localRotation;
+        //
+        // // grab bottle animation, drink animation + gulp sfx, then increase alcoholCount
+        // Transform bottleTransform = bottle.transform;
+        //
+        // // // Record bottle's original position and rotation
+        // Vector3 originalLocalPos = bottleTransform.localPosition;
+        // Quaternion originalLocalRot = bottleTransform.localRotation;
         // yield return StartCoroutine(AlcoholMove());
+        canDrink = false;
         yield return StartCoroutine(PlayAndWaitForSoundToFinish(audioSources[0]));
 
         // drink increase same as supply decrease
