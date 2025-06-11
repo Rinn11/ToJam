@@ -173,7 +173,7 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
         // // Record bottle's original position and rotation
         Vector3 originalLocalPos = bottleTransform.localPosition;
         Quaternion originalLocalRot = bottleTransform.localRotation;
-        yield return StartCoroutine(AlcoholMove());
+        // yield return StartCoroutine(AlcoholMove());
         yield return StartCoroutine(PlayAndWaitForSoundToFinish(audioSources[0]));
 
         // drink increase same as supply decrease
@@ -184,7 +184,7 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
         if (alcoholCount >= 3 && UnityEngine.Random.Range(0, 100) < 40 + (Math.Pow(2, GetAlcoholMultiplier())))
         {
             TriggerBlackout();
-            yield return StartCoroutine(AlcoholReturnLocal(originalLocalPos, originalLocalRot));
+            // yield return StartCoroutine(AlcoholReturnLocal(originalLocalPos, originalLocalRot));
             canDrink = true;
         }
         else
@@ -193,83 +193,83 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
             {
                 yield return StartCoroutine(PlayAndWaitForSoundToFinish(audioSources[1]));
             }
-            yield return StartCoroutine(AlcoholReturnLocal(originalLocalPos, originalLocalRot));
+            // yield return StartCoroutine(AlcoholReturnLocal(originalLocalPos, originalLocalRot));
             canDrink = true;
         }
     }
 
-    private IEnumerator AlcoholMove()
-    {
-        Transform bottleTransform = bottle.transform;
-        Transform cameraTransform = Camera.main.transform;
-
-        Vector3 startLocalPos = bottleTransform.localPosition;
-        Quaternion startLocalRot = bottleTransform.localRotation;
-
-        Vector3 bottleTopOffset = bottleTransform.up * (-0.2f); // adjust 0.2f based on bottle size
-
-
-        // Compute local target position relative to bottle's parent (e.g., car)
-        Vector3 targetWorldPos = cameraTransform.position + cameraTransform.forward * 0.5f - bottleTopOffset;
-        Vector3 targetLocalPos = bottleTransform.parent.InverseTransformPoint(targetWorldPos);
-        // Quaternion targetLocalRot = Quaternion.Inverse(bottleTransform.parent.rotation) * cameraTransform.rotation;
-
-        // Base rotation facing the camera
-        Quaternion cameraRot = cameraTransform.rotation;
-
-        // Apply a tilt so the bottle isn't upside down
-        Quaternion bottleTilt = Quaternion.Euler(bottlex, bottley, bottlez); // adjust X angle as needed
-
-        // Final rotation is camera-facing plus tilt (in world space)
-        Quaternion targetWorldRot = cameraRot * bottleTilt;
-
-        // Convert to local space
-        Quaternion targetLocalRot = Quaternion.Inverse(bottleTransform.parent.rotation) * targetWorldRot;
-
-        float duration = 0.5f;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / duration;
-
-            bottleTransform.localPosition = Vector3.Lerp(startLocalPos, targetLocalPos, t);
-            bottleTransform.localRotation = Quaternion.Slerp(startLocalRot, targetLocalRot, t);
-
-            yield return null;
-        }
-
-        bottleTransform.localPosition = targetLocalPos;
-        bottleTransform.localRotation = targetLocalRot;
-    }
-
-
-    private IEnumerator AlcoholReturnLocal(Vector3 originalLocalPos, Quaternion originalLocalRot)
-    {
-        Transform bottleTransform = bottle.transform;
-
-        Vector3 startLocalPos = bottleTransform.localPosition;
-        Quaternion startLocalRot = bottleTransform.localRotation;
-
-        float duration = 0.5f;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / duration;
-
-            bottleTransform.localPosition = Vector3.Lerp(startLocalPos, originalLocalPos, t);
-            bottleTransform.localRotation = Quaternion.Slerp(startLocalRot, originalLocalRot, t);
-
-            yield return null;
-        }
-
-        bottleTransform.localPosition = originalLocalPos;
-        bottleTransform.localRotation = originalLocalRot;
-        canDrink = true;
-    }
+    // private IEnumerator AlcoholMove()
+    // {
+    //     Transform bottleTransform = bottle.transform;
+    //     Transform cameraTransform = Camera.main.transform;
+    //
+    //     Vector3 startLocalPos = bottleTransform.localPosition;
+    //     Quaternion startLocalRot = bottleTransform.localRotation;
+    //
+    //     Vector3 bottleTopOffset = bottleTransform.up * (-0.2f); // adjust 0.2f based on bottle size
+    //
+    //
+    //     // Compute local target position relative to bottle's parent (e.g., car)
+    //     Vector3 targetWorldPos = cameraTransform.position + cameraTransform.forward * 0.5f - bottleTopOffset;
+    //     Vector3 targetLocalPos = bottleTransform.parent.InverseTransformPoint(targetWorldPos);
+    //     // Quaternion targetLocalRot = Quaternion.Inverse(bottleTransform.parent.rotation) * cameraTransform.rotation;
+    //
+    //     // Base rotation facing the camera
+    //     Quaternion cameraRot = cameraTransform.rotation;
+    //
+    //     // Apply a tilt so the bottle isn't upside down
+    //     Quaternion bottleTilt = Quaternion.Euler(bottlex, bottley, bottlez); // adjust X angle as needed
+    //
+    //     // Final rotation is camera-facing plus tilt (in world space)
+    //     Quaternion targetWorldRot = cameraRot * bottleTilt;
+    //
+    //     // Convert to local space
+    //     Quaternion targetLocalRot = Quaternion.Inverse(bottleTransform.parent.rotation) * targetWorldRot;
+    //
+    //     float duration = 0.5f;
+    //     float elapsed = 0f;
+    //
+    //     while (elapsed < duration)
+    //     {
+    //         elapsed += Time.deltaTime;
+    //         float t = elapsed / duration;
+    //
+    //         bottleTransform.localPosition = Vector3.Lerp(startLocalPos, targetLocalPos, t);
+    //         bottleTransform.localRotation = Quaternion.Slerp(startLocalRot, targetLocalRot, t);
+    //
+    //         yield return null;
+    //     }
+    //
+    //     bottleTransform.localPosition = targetLocalPos;
+    //     bottleTransform.localRotation = targetLocalRot;
+    // }
+    //
+    //
+    // private IEnumerator AlcoholReturnLocal(Vector3 originalLocalPos, Quaternion originalLocalRot)
+    // {
+    //     Transform bottleTransform = bottle.transform;
+    //
+    //     Vector3 startLocalPos = bottleTransform.localPosition;
+    //     Quaternion startLocalRot = bottleTransform.localRotation;
+    //
+    //     float duration = 0.5f;
+    //     float elapsed = 0f;
+    //
+    //     while (elapsed < duration)
+    //     {
+    //         elapsed += Time.deltaTime;
+    //         float t = elapsed / duration;
+    //
+    //         bottleTransform.localPosition = Vector3.Lerp(startLocalPos, originalLocalPos, t);
+    //         bottleTransform.localRotation = Quaternion.Slerp(startLocalRot, originalLocalRot, t);
+    //
+    //         yield return null;
+    //     }
+    //
+    //     bottleTransform.localPosition = originalLocalPos;
+    //     bottleTransform.localRotation = originalLocalRot;
+    //     canDrink = true;
+    // }
 
 
 

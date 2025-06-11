@@ -1,43 +1,18 @@
-/*
- * Passes input from the controller to the PlayerMove script
- */
-
-// TODO: Originally was used because Cop AI used the same movement model (PlayerMove) that the player used.
-// Since the cop is now another player, this may not be needed anymore.
-
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerControl : MonoBehaviour
 {
-    public PlayerSwapEventSender swapSender;
+    public MonoBehaviour movementScript; // Drag any script that implements IMovementModel
+    private IMovementModel movementModel;
 
-    public PlayerMove PlayerMove;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField] string _horizontalAxis;
-    [SerializeField] string _verticalAxis;
-
-    [SerializeField] string _horizontalAxisOpposite;
-    [SerializeField] string _verticalAxisOpposite;
+    [SerializeField] private PlayerInput playerInput;
 
     private bool locked = false;
 
-    void Start()
+    private void Start()
     {
-
-    }
-
-    private void OnEnable()
-    {
-        if (swapSender != null)
-            swapSender.OnBoolEvent += recievePlayerSwap;
-    }
-
-    private void OnDisable()
-    {
-        if (swapSender != null)
-            swapSender.OnBoolEvent -= recievePlayerSwap;
+        movementModel = movementScript as IMovementModel;
     }
 
     public void SetLocked(bool newLocked)
@@ -45,32 +20,19 @@ public class PlayerControl : MonoBehaviour
         locked = newLocked;
     }
 
-
-    public void recievePlayerSwap(bool isPlayer1Driving)
+    private void Update()
     {
-        // Swap the horizontal and vertical axes
-        string tempHorizontal = _horizontalAxis;
-        string tempVertical = _verticalAxis;
+        // Always pull from current action map
+        if (playerInput == null) return;
+        InputAction steerAction = playerInput.actions["Steer"];
+        if (steerAction == null) return;
 
-        _horizontalAxis = _horizontalAxisOpposite;
-        _verticalAxis = _verticalAxisOpposite;
-
-        _horizontalAxisOpposite = tempHorizontal;
-        _verticalAxisOpposite = tempVertical;
-        Debug.Log($"Swapped controls: {_horizontalAxis}, {_verticalAxis} <-> {_horizontalAxisOpposite}, {_verticalAxisOpposite}");
-    }
-
-    
-
-    // Update is called once per frame
-    void Update()
-    {
-        Vector2 moveValue = new Vector2(Input.GetAxis(_horizontalAxis), Input.GetAxis(_verticalAxis));
+        Vector2 steer = steerAction.ReadValue<Vector2>();
         if (locked)
         {
-            moveValue = Vector2.zero;
+            steer = Vector2.zero;
         }
-        PlayerMove.ProcessInputs(moveValue.x, moveValue.y);
+
+        movementModel.ProcessInputs(steer.x, steer.y);
     }
-    
 }

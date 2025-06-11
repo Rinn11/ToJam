@@ -10,7 +10,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : MonoBehaviour, IMovementModel
 {
     [Header("Movement Settings")]
     public float accelerationForce, brakeForce, turnTorque, maxSpeed, maxTurnSpeed;
