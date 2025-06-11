@@ -17,7 +17,7 @@ public class LaneGenerator : MonoBehaviour
 
     public string exportPath = "Assets/Lanes";
 
-    public Dictionary<string, LaneSegment> laneSegments = new();
+    public Dictionary<string, LanePath> laneSegments = new();
 
     private Vector3 RoundVec(Vector3 v) => new(Mathf.Round(v.x), Mathf.Round(v.y), Mathf.Round(v.z));
 
@@ -121,7 +121,7 @@ public class LaneGenerator : MonoBehaviour
 
     private void AddLane(string name, List<Vector3> points)
     {
-        LaneSegment segment = ScriptableObject.CreateInstance<LaneSegment>();
+        LanePath segment = ScriptableObject.CreateInstance<LanePath>();
         segment.name = name;
         segment.points = points;
         laneSegments[name] = segment;
@@ -140,7 +140,7 @@ public class LaneGenerator : MonoBehaviour
     }
 
     [ContextMenu("Link Lane Segments")]
-    private void LinkLaneSegments(List<LaneSegment> allSegments)
+    private void LinkLaneSegments(List<LanePath> allSegments)
     {
         foreach (var segment in allSegments)
             segment.nextLanes.Clear();
@@ -170,10 +170,10 @@ public class LaneGenerator : MonoBehaviour
     }
 
 
-    private void ExportCombinedPaths(List<LaneSegment> allSegments)
+    private void ExportCombinedPaths(List<LanePath> allSegments)
     {
-        List<LaneSegment> forward = allSegments.Where(l => l.name.Contains("Forward")).ToList();
-        List<LaneSegment> backward = allSegments.Where(l => l.name.Contains("Backward")).ToList();
+        List<LanePath> forward = allSegments.Where(l => l.name.Contains("Forward")).ToList();
+        List<LanePath> backward = allSegments.Where(l => l.name.Contains("Backward")).ToList();
 
         List<Vector3> finalForward = BuildLongestPath(forward);
         List<Vector3> finalBackward = BuildLongestPath(backward);
@@ -182,9 +182,9 @@ public class LaneGenerator : MonoBehaviour
         ExportLanePath("BackwardPath", finalBackward);
     }
 
-    private List<Vector3> BuildLongestPath(List<LaneSegment> segments)
+    private List<Vector3> BuildLongestPath(List<LanePath> segments)
     {
-        HashSet<LaneSegment> visited = new();
+        HashSet<LanePath> visited = new();
         List<Vector3> longestPath = new();
 
         foreach (var start in segments)
@@ -192,7 +192,7 @@ public class LaneGenerator : MonoBehaviour
             if (visited.Contains(start)) continue;
 
             List<Vector3> currentPath = new(start.points);
-            LaneSegment current = start;
+            LanePath current = start;
             visited.Add(current);
 
             while (current.nextLanes.Count > 0)
@@ -220,7 +220,7 @@ public class LaneGenerator : MonoBehaviour
             AssetDatabase.Refresh();
         }
 
-        var asset = ScriptableObject.CreateInstance<LaneSegment>();
+        var asset = ScriptableObject.CreateInstance<LanePath>();
         asset.points = path;
         asset.name = name;
 
@@ -271,10 +271,4 @@ public class LaneGenerator : MonoBehaviour
                (Mathf.Abs(diff.z) <= connectThreshold && Mathf.Approximately(diff.x, 0));
     }
 
-    [System.Serializable]
-    public class LaneSegment : ScriptableObject
-    {
-        public List<Vector3> points = new();
-        public List<LaneSegment> nextLanes = new();
-    }
 }

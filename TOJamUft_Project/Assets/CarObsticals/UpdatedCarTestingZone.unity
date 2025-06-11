@@ -21519,7 +21519,7 @@ MonoBehaviour:
   nodesPerLane: 5
   nodeSpacing: 2
   laneOffset: 1.5
-  connectThreshold: 20
+  connectThreshold: 53
   visualizeGizmos: 1
   exportPath: Assets/Lanes
 --- !u!1001 &1572431411
@@ -28047,7 +28047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 634c2cbbd01d3ef45a2cf2f1e155b447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lanePath: {fileID: 0}
+  lanePath: {fileID: 11400000, guid: 7effb32f37721f04787b7d3ff72b4543, type: 2}
   speed: 20
   turnSpeed: 360
   closeEnoughDistance: 1
