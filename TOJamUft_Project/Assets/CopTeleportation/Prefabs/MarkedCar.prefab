@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4723348096044968834}
   - component: {fileID: 4455827476579258322}
   - component: {fileID: 896256192812369219}
-  m_Layer: 21
+  m_Layer: 0
   m_Name: MarkedCar
   m_TagString: MarkedCar
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -131,8 +131,8 @@ Rigidbody:
     serializedVersion: 2
     m_Bits: 0
   m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_ImplicitTensor: 0
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 9010292629284991588}
   - component: {fileID: 3110922691118164643}
   - component: {fileID: 3280773989332285513}
-  m_Layer: 21
+  m_Layer: 0
   m_Name: MarkedCarImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 4151541930544019359}
   - component: {fileID: 7551147828009636384}
   - component: {fileID: 5682490192963178290}
-  m_Layer: 21
+  m_Layer: 0
   m_Name: MarkedCarCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
