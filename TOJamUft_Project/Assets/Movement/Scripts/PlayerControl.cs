@@ -26,13 +26,23 @@ public class PlayerControl : MonoBehaviour
         if (playerInput == null) return;
         InputAction steerAction = playerInput.actions["Steer"];
         if (steerAction == null) return;
+        
+        InputAction accelerateAction = playerInput.actions["Accelerate"];
+        if (accelerateAction == null) return;        
+        
+        InputAction deccelerateAction = playerInput.actions["Deccelerate"];
+        if (deccelerateAction == null) return;
 
         Vector2 steer = steerAction.ReadValue<Vector2>();
+        float accelerate = accelerateAction.ReadValue<float>();
+        float decelerate = deccelerateAction.ReadValue<float>();
+
         if (locked)
         {
             steer = Vector2.zero;
+            accelerate = 0;
         }
 
-        movementModel.ProcessInputs(steer.x, steer.y);
+        movementModel.ProcessInputs(steer.x * (accelerate - decelerate), accelerate - decelerate);
     }
 }
