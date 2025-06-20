@@ -42,7 +42,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - MinimapExcluded
   - MinimapElements
   m_SortingLayers:
   - name: Default
