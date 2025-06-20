@@ -43,6 +43,6 @@ public class PlayerControl : MonoBehaviour
             accelerate = 0;
         }
 
-        movementModel.ProcessInputs(steer.x * (accelerate - decelerate), accelerate - decelerate);
+        movementModel.ProcessInputs(steer.x, accelerate - decelerate);
     }
 }

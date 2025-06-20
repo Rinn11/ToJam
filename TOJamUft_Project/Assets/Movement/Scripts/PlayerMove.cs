@@ -76,10 +76,11 @@ public class PlayerMove : MonoBehaviour, IMovementModel
             speedUI.text = $"Speed: {Mathf.RoundToInt(speed)} km/h";
         }
 
-        if (Mathf.Abs(moveValue.x) > 0)
+        if (Mathf.Abs(moveValue.y) > 0)
         {
-            float isMoving = rb.linearVelocity.magnitude != 0 ? 1.0f : 0.0f; // Only apply turning if we're already moving
-            rb.AddTorque(Vector3.up * useTurnTorque * isMoving * moveValue.x);
+            //float isMoving = rb.linearVelocity.magnitude != 0 ? 1.0f : 0.0f; // Only apply turning if we're already moving
+            float turnDirection = Math.Sign(rb.linearVelocity.magnitude); // This inverts steering when reversing
+            rb.AddTorque(Vector3.up * useTurnTorque * turnDirection * moveValue.x);
         }
 
         if (moveValue.y > 0)
