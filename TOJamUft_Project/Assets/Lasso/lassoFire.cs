@@ -1,49 +1,67 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class lassoFire : MonoBehaviour
 {
     public Transform target;            // Target to check
-    UFOMovement uFOMovement;
+    private Rigidbody TarRB;
 
-    public float maxDistance = 10f;     // Max distance to check
+    public float maxDistance = 10f;     // Max distance force applicable
+    public float forceMult = 0.1f;      // Linear multiplier for force
+
     public LayerMask obstacleMask;      // What counts as an obstacle
 
-    public float acceleration = 0.75f;
+    [SerializeField] private PlayerInput playerInput;
+
+    public GameObject ParticleSystem;
 
     private void Start()
     {
-        uFOMovement = target.GetComponent<UFOMovement>();
+        TarRB = target.GetComponent<Rigidbody>();
     }
 
     void Update()
     {
         if (target == null) return;
 
-        Vector3 direction = target.position - transform.position;
-        float distance = direction.magnitude;
+        if (playerInput == null) return;
+        InputAction ability2Action = playerInput.actions["Ability2"];
+        if (ability2Action == null) return;
 
-        // 1. Check if within range
-        if (distance <= maxDistance)
+        if (ability2Action.IsPressed())
         {
-            Ray ray = new Ray(transform.position, direction.normalized);
-            RaycastHit hit;
+            ParticleSystem.SetActive(true);
 
-            // 2. Perform the raycast
-            if (Physics.Raycast(ray, out hit, distance, obstacleMask))
+            Vector3 direction = target.position - transform.position;
+            float distance = direction.magnitude;
+
+            // 1. Check if within range
+            if (distance <= maxDistance)
             {
-                // 3. Something is in the way
-                Debug.Log($"Obstacle in the way: {hit.collider.name}");
+                Ray ray = new Ray(transform.position, direction.normalized);
+                RaycastHit hit;
+
+                // 2. Perform the raycast
+                if (Physics.Raycast(ray, out hit, distance, obstacleMask))
+                {
+                    // 3. Something is in the way
+                }
+                else
+                {
+                    // 4. Clear line of sight
+                    Debug.DrawRay(transform.position, direction, Color.green);
+                    TarRB.AddForce(-direction.normalized * forceMult * (distance * distance));
+                }
             }
             else
             {
-                uFOMovement.maxSpeed*=acceleration;
-                // 4. Clear line of sight
-                Debug.Log("Target is visible and within range.");
+                // Target out of range
             }
         }
         else
         {
-            Debug.Log("Target is too far.");
+            ParticleSystem.SetActive(false);
         }
     }
 }
