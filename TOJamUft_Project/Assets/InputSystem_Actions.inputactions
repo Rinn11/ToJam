@@ -1648,7 +1648,7 @@
                 {
                     "name": "",
                     "id": "68dfd131-a6ab-42d4-9899-5de41d112288",
-                    "path": "<Keyboard>/w",
+                    "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1670,7 +1670,7 @@
                 {
                     "name": "",
                     "id": "7325e3d8-5152-4bab-b51b-3315a536a3a0",
-                    "path": "<Keyboard>/s",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
