@@ -1005,6 +1005,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Ability2",
+                    "type": "Button",
+                    "id": "95af3882-9511-404b-8ac1-12d161c45a40",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Accelerate",
                     "type": "Button",
                     "id": "0778f53e-68c7-4065-94af-2705b124a397",
@@ -1061,6 +1070,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Ability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d86a71ca-3042-4129-b592-65d8ddd55524",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ability2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1355,6 +1375,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Ability2",
+                    "type": "Button",
+                    "id": "511b9e5c-da91-4f1b-9e2c-1f9f4064533c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Accelerate",
                     "type": "Button",
                     "id": "922d9612-d8dd-40b8-9fd1-a9485b372081",
@@ -1411,6 +1440,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Ability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "973469c5-0a6b-4aaa-8dc6-485d5dfaec4c",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ability2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
