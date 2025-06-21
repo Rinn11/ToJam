@@ -9,6 +9,7 @@ using System.Collections.Generic;
 // We define 1 game as 2 rounds, each round will end with a player swap once the player that is driving the cop car catches the other player.
 public class RoundManager : MonoBehaviour
 {
+    public PlayerJoinManager playerJoinManager;
     public static RoundManager Instance { get; private set; }
     public int numberOfGames;
     public float scoreBoardShowDelay;
@@ -94,6 +95,7 @@ public class RoundManager : MonoBehaviour
             startRound();
         }
 
+        FindObjectOfType<PlayerJoinManager>().SwapPlayers();
     }
 
     public void runEndRoundCoroutine(float score)
