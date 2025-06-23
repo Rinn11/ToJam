@@ -992,7 +992,7 @@
             ]
         },
         {
-            "name": "Player1",
+            "name": "DDPlayer",
             "id": "3746d7fa-4791-4f51-88e2-5579cadd99d0",
             "actions": [
                 {
@@ -1382,7 +1382,7 @@
                 {
                     "name": "up",
                     "id": "949d987f-dc55-4a48-a2ae-a37873966f1f",
-                    "path": "<Keyboard>/numpad7",
+                    "path": "<Keyboard>/numpad8",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1393,7 +1393,7 @@
                 {
                     "name": "down",
                     "id": "2d072e8c-1815-4469-9b25-995ea679e909",
-                    "path": "<Keyboard>/numpad3",
+                    "path": "<Keyboard>/numpad2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1404,7 +1404,7 @@
                 {
                     "name": "left",
                     "id": "178e970f-b009-4cb0-bac1-855962603990",
-                    "path": "<Keyboard>/numpad1",
+                    "path": "<Keyboard>/numpad4",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1415,7 +1415,7 @@
                 {
                     "name": "right",
                     "id": "a58259ab-6916-4061-983c-965e723c31e6",
-                    "path": "<Keyboard>/numpad9",
+                    "path": "<Keyboard>/numpad6",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1426,7 +1426,7 @@
             ]
         },
         {
-            "name": "Player2",
+            "name": "CopPlayer",
             "id": "a6428166-2f06-4600-b72a-d1a42a2996f9",
             "actions": [
                 {
@@ -1486,7 +1486,7 @@
                 {
                     "name": "DPad",
                     "type": "Value",
-                    "id": "bd826cb7-d0ba-4982-a6ad-c8e3e278a1f1",
+                    "id": "226acd3a-7f97-462e-8c8e-ca43ee6ccfde",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -1496,7 +1496,7 @@
             "bindings": [
                 {
                     "name": "2D Vector",
-                    "id": "7ac2e4ca-484b-477e-bc24-e26f43b13533",
+                    "id": "633f6b59-26d2-419c-a237-dd0a3b4e3728",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -1507,8 +1507,8 @@
                 },
                 {
                     "name": "up",
-                    "id": "73f8cccc-676d-4c82-969b-d256b05d20a5",
-                    "path": "<Keyboard>/numpad7",
+                    "id": "41af8bc3-9e9f-4c1b-b101-400a19c36952",
+                    "path": "<Keyboard>/numpad8",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1518,8 +1518,8 @@
                 },
                 {
                     "name": "down",
-                    "id": "736f4aa7-a8ee-4307-b318-c7cbcebf732f",
-                    "path": "<Keyboard>/numpad3",
+                    "id": "fe583c5d-377a-4e6b-b9c9-555f1e2b735d",
+                    "path": "<Keyboard>/numpad2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1529,8 +1529,8 @@
                 },
                 {
                     "name": "left",
-                    "id": "df009290-5bc2-41c7-9453-246961286a61",
-                    "path": "<Keyboard>/numpad1",
+                    "id": "800fbe89-7a80-4ecc-9144-50e72929540b",
+                    "path": "<Keyboard>/numpad4",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1540,8 +1540,8 @@
                 },
                 {
                     "name": "right",
-                    "id": "8ca5c811-a816-4720-b5de-07b55df8b316",
-                    "path": "<Keyboard>/numpad9",
+                    "id": "d8ecc432-0f61-4dc3-81a6-23134e015f1d",
+                    "path": "<Keyboard>/numpad6",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
