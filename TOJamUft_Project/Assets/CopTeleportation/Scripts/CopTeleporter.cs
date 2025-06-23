@@ -1,107 +1,102 @@
+using UnityEditor.Overlays;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.Splines;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class CopTeleporter : MonoBehaviour
 {
-    public float speed = 0.25f;     // The speed of the cursor when being moved with the joystick
-
     public GameObject CopCar;       // The cop car that is teleported
-    public GameObject Selector;
+    public GameObject DDCar;        // The drunk driver to aim at
 
-    public Camera CopMinimapCamera;
+    public GameObject[] TeleportLocations;
 
     public AlertDDOfCopLocationEventSender AlertDDOfCopLocationEventSender;
 
     [SerializeField] private PlayerInput playerInput;
 
-    private bool state = false;
-
-    private int teleportMask;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        int teleportLayer = LayerMask.NameToLayer("CopTeleportationElements");
-        teleportMask = 1 << teleportLayer;
-        CopMinimapCamera.cullingMask &= ~teleportMask;
-    }
-
     // Update is called once per frame
+    Vector2 last = Vector2.zero;
+
     void Update()
     {
         if (playerInput == null) return;
-        InputAction abilityAction = playerInput.actions["Ability"];
-        if (abilityAction == null) return;
 
-        if (abilityAction.WasPerformedThisFrame()) {
-            // When the key is pressed
-            state = !state;
-            if (state) {
-                // Show layer relavant to selection
-                CopCar.GetComponent<PlayerControl>().SetLocked(true); // TODO: Refactor
-                CopMinimapCamera.cullingMask |= teleportMask;
-            }
-            else {
-                // Hide layer relevant to selection
-                CopCar.GetComponent<PlayerControl>().SetLocked(false); // TODO: Refactor
-                CopMinimapCamera.cullingMask &= ~teleportMask;
+        var dpad = playerInput.actions["Camera"];
+        Vector2 curr = dpad.ReadValue<Vector2>();
+        Debug.Log("DPAD" + curr);
 
-                // Find closest marked car
-                GameObject closestCar = null;
-                float minDist = Mathf.Infinity;
-
-                GameObject[] markedCars = GameObject.FindGameObjectsWithTag("MarkedCar");
-                foreach (GameObject car in markedCars) {
-                    Vector3 diff = car.transform.position - Selector.transform.position;
-                    float dist = diff.sqrMagnitude;
-
-                    if (dist < minDist) {
-                        minDist = dist;
-                        closestCar = car;
-                    }
-                }
-
-                // If a suitable car was found
-                if (closestCar != null) {
-                    // "Stop" both entities in place
-                    Rigidbody rb1 = CopCar.GetComponent<Rigidbody>();
-                    rb1.linearVelocity = Vector3.zero;
-                    rb1.angularVelocity = Vector3.zero;
-
-                    Rigidbody rb2 = closestCar.GetComponent<Rigidbody>();
-                    rb2.linearVelocity = Vector3.zero;
-                    rb2.angularVelocity = Vector3.zero;
-
-                    // Swap positions and angles
-                    Vector3 TempPos = CopCar.transform.position;
-                    CopCar.transform.position = closestCar.transform.position;
-                    closestCar.transform.position = TempPos;
-
-                    Quaternion tempRot = CopCar.transform.rotation;
-                    CopCar.transform.rotation = closestCar.transform.rotation;
-                    closestCar.transform.rotation = tempRot;
-
-                    // Set the crosshair to the new position to make it easier for next use
-                    Selector.transform.position = CopCar.transform.position;
-
-                    AlertDDOfCopLocationEventSender.Trigger(new Vector2(CopCar.transform.position.x, CopCar.transform.position.z)); // Alert drunk driver of cop
-                }
-            }
+        if (curr == Vector2.up && last != Vector2.up) {
+            Debug.Log("Dpad_Up");
+            Teleport(CopCar, DDCar, TeleportLocations[0].transform.position);
+        }
+        if (curr == Vector2.left && last != Vector2.left) {
+            Debug.Log("Dpad_Left");
+            Teleport(CopCar, DDCar, TeleportLocations[1].transform.position);
+        }
+        if (curr == Vector2.down && last != Vector2.down)
+        {
+            Debug.Log("Dpad_Down");
+            Teleport(CopCar, DDCar, TeleportLocations[2].transform.position);
+        }
+        if (curr == Vector2.right && last != Vector2.right)
+        {
+            Debug.Log("Dpad_Right");
+            Teleport(CopCar, DDCar, TeleportLocations[3].transform.position);
         }
 
-        // Running the cursor slew
-        if (state) {
-            // Always pull from current action map
-            if (playerInput == null) return;
-            InputAction camAction = playerInput.actions["Camera"];
-            if (camAction == null) return;
+        last = curr;
+    }
 
-            Vector2 slew = camAction.ReadValue<Vector2>();
+    // Teleports the Cop to Location, looking towards Driver
+    void Teleport(GameObject Cop, GameObject Driver, Vector3 Location) {
+        Rigidbody RB = Cop.GetComponent<Rigidbody>();
 
-            Vector3 delta = new Vector3(slew.x, 0f, slew.y);
-            Selector.transform.position += delta * speed;   
-        }
+        // Store original speed
+        float TempSpeed = RB.linearVelocity.magnitude;
+
+        // Teleport to the new location
+        Cop.transform.position = Location;
+
+        // Angle towards DD on the horizontal plane
+        Vector3 GroundDir = Driver.transform.position - Cop.transform.position; // Angle from cop to driver
+        GroundDir.y = 0;
+        GroundDir.Normalize();
+
+        Quaternion GroundRot = Quaternion.LookRotation(GroundDir, Vector3.up);
+        Cop.transform.rotation = GroundRot;
+
+        // Reapply original speed at new direction
+        RB.linearVelocity = GroundDir * TempSpeed;
+
+        AlertDDOfCopLocationEventSender.Trigger(new Vector2(CopCar.transform.position.x, CopCar.transform.position.z)); // Alert drunk driver of cop
+    }
+
+    // Swaps the locations, orientations, velocities and angular velocities of two objects
+    void Swap(GameObject Obj1, GameObject Obj2) {
+        Rigidbody RB1 = Obj1.GetComponent<Rigidbody>();
+        Rigidbody RB2 = Obj2.GetComponent<Rigidbody>();
+
+        // Swap positions
+        Vector3 TempPos = Obj1.transform.position;
+        Obj1.transform.position = Obj2.transform.position;
+        Obj2.transform.position = TempPos;
+
+        // Swap rotations
+        Quaternion TempRot = Obj1.transform.rotation;
+        Obj1.transform.rotation = Obj2.transform.rotation;
+        Obj2.transform.rotation = TempRot;
+
+        // Swap velocities
+        Vector3 TempVel = RB1.linearVelocity;
+        RB1.linearVelocity = RB2.linearVelocity;
+        RB2.linearVelocity = TempVel;
+
+        // Swap angular velocities
+        Vector3 TempAngVel = RB1.angularVelocity;
+        RB1.angularVelocity = RB2.angularVelocity;
+        RB2.angularVelocity = TempAngVel;
     }
 }

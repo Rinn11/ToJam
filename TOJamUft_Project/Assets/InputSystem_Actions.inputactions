@@ -1382,7 +1382,7 @@
                 {
                     "name": "up",
                     "id": "949d987f-dc55-4a48-a2ae-a37873966f1f",
-                    "path": "<Keyboard>/numpad8",
+                    "path": "<Keyboard>/numpad7",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1393,7 +1393,7 @@
                 {
                     "name": "down",
                     "id": "2d072e8c-1815-4469-9b25-995ea679e909",
-                    "path": "<Keyboard>/numpad2",
+                    "path": "<Keyboard>/numpad3",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1404,7 +1404,7 @@
                 {
                     "name": "left",
                     "id": "178e970f-b009-4cb0-bac1-855962603990",
-                    "path": "<Keyboard>/numpad4",
+                    "path": "<Keyboard>/numpad1",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1415,7 +1415,7 @@
                 {
                     "name": "right",
                     "id": "a58259ab-6916-4061-983c-965e723c31e6",
-                    "path": "<Keyboard>/numpad6",
+                    "path": "<Keyboard>/numpad9",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1486,7 +1486,7 @@
                 {
                     "name": "DPad",
                     "type": "Value",
-                    "id": "0638445b-3868-4389-a92c-2c753a8e1168",
+                    "id": "bd826cb7-d0ba-4982-a6ad-c8e3e278a1f1",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -1494,6 +1494,61 @@
                 }
             ],
             "bindings": [
+                {
+                    "name": "2D Vector",
+                    "id": "7ac2e4ca-484b-477e-bc24-e26f43b13533",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DPad",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "73f8cccc-676d-4c82-969b-d256b05d20a5",
+                    "path": "<Keyboard>/numpad7",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DPad",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "736f4aa7-a8ee-4307-b318-c7cbcebf732f",
+                    "path": "<Keyboard>/numpad3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DPad",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "df009290-5bc2-41c7-9453-246961286a61",
+                    "path": "<Keyboard>/numpad1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DPad",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "8ca5c811-a816-4720-b5de-07b55df8b316",
+                    "path": "<Keyboard>/numpad9",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DPad",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
                 {
                     "name": "",
                     "id": "3021ce5e-bd5c-47b9-912d-0b3912df8820",
@@ -1515,61 +1570,6 @@
                     "action": "Ability",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "2D Vector",
-                    "id": "f2d1bf9a-5781-465a-a7db-76e7a82e8402",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DPad",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "613b4f4e-bd0f-4805-aa86-642ac178b1d6",
-                    "path": "<Keyboard>/numpad8",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DPad",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "97d67b67-eee1-42c5-bd6b-4d4e9a64577e",
-                    "path": "<Keyboard>/numpad2",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DPad",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "a5cc24fd-e6eb-44b8-8cd5-f44f9195d25b",
-                    "path": "<Keyboard>/numpad4",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DPad",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "998090e5-84e5-4e31-9265-08be5ad19abb",
-                    "path": "<Keyboard>/numpad6",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DPad",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
