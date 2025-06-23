@@ -7,6 +7,8 @@ public class lassoFire : MonoBehaviour
     public Transform target;            // Target to check
     private Rigidbody TarRB;
 
+    public GameObject targetOutline;    // Outline object to activate during ability usage
+
     public float maxDistance = 10f;     // Max distance force applicable
     public float forceMult = 0.1f;      // Linear multiplier for force
 
@@ -14,7 +16,7 @@ public class lassoFire : MonoBehaviour
 
     [SerializeField] private PlayerInput playerInput;
 
-    public GameObject ParticleSystem;
+    public GameObject ParticleSystem;   // Particle system to activate during ability usage
 
     private void Start()
     {
@@ -32,6 +34,7 @@ public class lassoFire : MonoBehaviour
         if (ability2Action.IsPressed())
         {
             ParticleSystem.SetActive(true);
+            targetOutline.SetActive(true);
 
             Vector3 direction = target.position - transform.position;
             float distance = direction.magnitude;
@@ -62,6 +65,7 @@ public class lassoFire : MonoBehaviour
         else
         {
             ParticleSystem.SetActive(false);
+            targetOutline.SetActive(false);
         }
     }
 }
