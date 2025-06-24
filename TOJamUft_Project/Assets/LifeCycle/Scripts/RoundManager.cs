@@ -80,6 +80,11 @@ public class RoundManager : MonoBehaviour
             p1Scores.Add(score);
             toggleIsP1Driving();
 
+
+            // swaps players controls to the other car
+            Debug.Log("Swaping Controls");
+            FindObjectOfType<PlayerJoinManager>().SwapPlayers();
+
             // TODO: Then you can add logic here to make some UI show up that explains the round is over and the players are switching roles.
             // Or for testing, don't execute the next set of lines for like 5 seconds.
             showScoreBoardEvent.Invoke();
@@ -94,8 +99,7 @@ public class RoundManager : MonoBehaviour
             hideScoreBoardEvent.Invoke();
             startRound();
         }
-
-        FindObjectOfType<PlayerJoinManager>().SwapPlayers();
+        
     }
 
     public void runEndRoundCoroutine(float score)

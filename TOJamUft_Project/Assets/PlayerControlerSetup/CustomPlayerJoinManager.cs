@@ -1,8 +1,8 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Users;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.InputSystem.Users;
+using UnityEngine.InputSystem;
+using UnityEngine;
 using System.Linq;
 
 public class PlayerJoinManager : MonoBehaviour
@@ -32,6 +32,8 @@ public class PlayerJoinManager : MonoBehaviour
 
     private void Awake()
     {
+        SwapPlayers();
+
         foreach (var slot in playerSlots)
         {
             if (slot.playerObject != null)
@@ -58,53 +60,57 @@ public class PlayerJoinManager : MonoBehaviour
     private void OnJoinPressed(InputAction.CallbackContext ctx)
     {
         var device = ctx.control.device;
+        Debug.Log($"Join pressed by: {device.displayName}");
 
-        // Prevent joining with same device
-        if (InputUser.FindUserPairedToDevice(device).HasValue)
-            return;
-
-        // Prevent duplicate keyboard/mouse join
-        if ((device is Keyboard || device is Mouse) && keyboardMouseTaken)
+        // Prevent duplicate joins from same device
+        foreach (var slot in playerSlots)
         {
-            Debug.Log("Keyboard/Mouse already assigned.");
-            return;
+            if (slot.occupied && slot.input.user.pairedDevices.Contains(device))
+            {
+                Debug.Log("Device is already in use.");
+                return;
+            }
+        }
+
+        Debug.Log("Available slots:");
+        for (int i = 0; i < playerSlots.Count; i++)
+        {
+            var slot = playerSlots[i];
+            Debug.Log($"Slot {i} occupied: {slot.occupied}");
         }
 
         foreach (var slot in playerSlots)
         {
             if (!slot.occupied && slot.input != null)
             {
-                Debug.Log($"Player joined on {device.displayName}");
+                Debug.Log($"Assigning player using {device.displayName}");
 
-                // Setup user
-                var user = InputUser.CreateUserWithoutPairedDevices();
-                InputUser.PerformPairingWithDevice(device, user);
-                user.AssociateActionsWithUser(slot.input.actions);
-                user.ActivateControlScheme("Gamepad"); // or set per device
+                // Pick matching control scheme
+                var pickedScheme = slot.input.actions.controlSchemes
+                    .FirstOrDefault(s => s.SupportsDevice(device));
 
-                // Enable input
+                if (pickedScheme == null)
+                {
+                    Debug.LogError($"No control scheme found for {device.displayName}");
+                    return;
+                }
+
+                // Switch to the correct control scheme with device
+                slot.input.SwitchCurrentControlScheme(pickedScheme.name, new[] { device });
+
+                // Activate input (this will auto-pair the device)
                 slot.input.ActivateInput();
-                slot.user = user;
+
+                slot.user = slot.input.user; // now populated
                 slot.occupied = true;
 
-                // Listen for input changes
-                slot.input.onControlsChanged += OnControlsChanged;
-
-                // Device type logic
-                var scheme = GetControlSchemeType(device);
-                slot.controlScheme = scheme;
-
-                if (scheme == ControlSchemeType.KeyboardMouse)
-                    keyboardMouseTaken = true;
-
-                // UI Highlight
+                // Visuals
                 if (slot.highlightRenderer != null)
                     slot.highlightRenderer.material.color = Color.green;
-
                 if (slot.deviceLabel != null)
-                    slot.deviceLabel.text = scheme.ToString();
+                    slot.deviceLabel.text = pickedScheme.name;
 
-                // Leave logic
+                // Leave support
                 var leaveAction = slot.input.actions.FindAction("Leave", true);
                 leaveAction.performed += ctx => LeavePlayer(slot);
 
@@ -112,22 +118,24 @@ public class PlayerJoinManager : MonoBehaviour
             }
         }
 
-        Debug.Log("No free player slots.");
+        Debug.Log("No available player slots.");
     }
+
+
+
+
 
     public void LeavePlayer(PlayerSlot slot)
     {
         if (!slot.occupied) return;
 
-        Debug.Log($"Player left: {slot.user.pairedDevices[0].displayName}");
+        Debug.Log($"Player leaving: {slot.input.user.id}");
 
-        slot.user.UnpairDevicesAndRemoveUser();
+        // Unpair and deactivate input
         slot.input.DeactivateInput();
+        slot.input.user.UnpairDevicesAndRemoveUser();
         slot.user = default;
         slot.occupied = false;
-
-        if (slot.controlScheme == ControlSchemeType.KeyboardMouse)
-            keyboardMouseTaken = false;
 
         if (slot.highlightRenderer != null)
             slot.highlightRenderer.material.color = Color.white;
@@ -135,6 +143,7 @@ public class PlayerJoinManager : MonoBehaviour
         if (slot.deviceLabel != null)
             slot.deviceLabel.text = "Press Start to Join";
     }
+
 
     private ControlSchemeType GetControlSchemeType(InputDevice device)
     {
@@ -183,6 +192,7 @@ public class PlayerJoinManager : MonoBehaviour
             Debug.LogWarning("Both players must be joined to swap control.");
             return;
         }
+
 
         Debug.Log("Swapping player controls...");
 

@@ -1085,6 +1085,17 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "bb9e387f-c511-4656-95f9-9f164feaf013",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ability2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "2D Vector",
                     "id": "117999bb-7187-406d-8882-98c7a55da9ab",
                     "path": "2DVector",
