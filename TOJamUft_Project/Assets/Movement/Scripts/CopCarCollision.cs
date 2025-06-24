@@ -22,8 +22,8 @@ public class CopCarCollision : MonoBehaviour
 
     void Start()
     {
-        // Register the event to send the score when the round ends
-        roundOverEvent.AddListener(GameObject.FindGameObjectWithTag("FineManager").GetComponent<FineManagerBehavior>().sendScoreInvoker);
+    // Register the event to send the score when the round ends
+    roundOverEvent.AddListener(GameObject.FindGameObjectWithTag("RoundManager").GetComponent<RoundManager>().runEndRoundCoroutine);
     }
 
     private void OnTriggerEnter(Collider other)

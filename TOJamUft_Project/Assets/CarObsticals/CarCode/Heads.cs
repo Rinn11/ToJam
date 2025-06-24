@@ -13,7 +13,7 @@ public class Heads : MonoBehaviour
 
   void Start()
   {
-    roundOverEvent.AddListener(GameObject.FindGameObjectWithTag("FineManager").GetComponent<FineManagerBehavior>().sendScoreInvoker);
+    roundOverEvent.AddListener(GameObject.FindGameObjectWithTag("RoundManager").GetComponent<RoundManager>().runEndRoundCoroutine);
   }
 
   private void OnTriggerEnter(Collider other)

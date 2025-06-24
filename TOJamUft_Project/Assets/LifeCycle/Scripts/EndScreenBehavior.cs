@@ -10,16 +10,12 @@ using UnityEngine.UI;
 
 public class EndScreenBehavior : MonoBehaviour
 {
-    public FineManagerBehavior scoreManager;
     public Text winnerText;
 
     // Count and update the score.
-    public void updateWinnerUI()
+    public void updateWinnerUI(string winnerName)
     {
-        if (scoreManager != null)
-        {
-            winnerText.text = $"Fine: ${scoreManager.fine}";
-        }
+        winnerText.text = $"Winner: {winnerName}";
     }
 
     // Reload the Scene and reset the round manager to play again
@@ -35,9 +31,4 @@ public class EndScreenBehavior : MonoBehaviour
         Application.Quit();
     }
 
-    // On Enabling the UI we will update the score.
-    private void OnEnable() {
-        Debug.Log("Enabling End Screen");
-        updateWinnerUI();
-    }
 }

@@ -20,6 +20,10 @@ public class RoundManager : MonoBehaviour
 
     private bool isP1Driving = true; // This will track which player is currently driving the drunk driver car.
     public PlayerSwapEventSender playerSwapEvent;
+
+    // Let's opt for this set up so that we can easily access the both score metrics instead of using events all the time.
+    public FineManagerBehavior fineManager;
+    // public RoundTimerBehavior roundTimer;
     
     public bool toggleIsP1Driving()
     {
@@ -51,9 +55,12 @@ public class RoundManager : MonoBehaviour
     }
 
     // This method will be called when a round ends.
-    public IEnumerator EndRound(float score)
+    public IEnumerator EndRound()
     {
+        float score = fineManager.fine; // Get the score from the FineManager
         Debug.Log($"Round ended with score: {score}. Current round: {currentRound}, Current game: {currentGame}, Next Round: {currentRound + 1}");
+        fineManager.sendScoreInvoker();
+
         currentRound++;
         if (currentRound % 2 == 0)
         {
@@ -96,12 +103,12 @@ public class RoundManager : MonoBehaviour
 
     }
 
-    public void runEndRoundCoroutine(float score)
+    public void runEndRoundCoroutine()
     { 
         // This method is a placeholder for running a coroutine to end the round.
         // It can be used to delay the end of the round or perform any other actions before ending the round.
         Debug.Log("Running end round coroutine...");
-        StartCoroutine(EndRound(score));
+        StartCoroutine(EndRound());
     }
 
 }
