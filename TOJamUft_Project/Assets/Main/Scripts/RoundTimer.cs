@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using Unity.VisualScripting;
 
 [Serializable]
 public class TimeEvent : UnityEvent<float> { };
@@ -10,6 +11,7 @@ public class RoundTimer : MonoBehaviour
 {
     // This is class that modifies UI text elements to display a timer.
     public List<UnityEngine.UI.Text> timerTextElements; // List of UI text elements to display the timer for this script to modify
+    public List<UnityEngine.UI.Text> timeElapsedTextElements; // List of UI text elements to display the time elapsed for this script to modify
     public float roundDuration; // Max duration of the round in seconds
     public TimeEvent sendTimeEvent; // Event to send the elapsed time to other components
 
@@ -28,7 +30,9 @@ public class RoundTimer : MonoBehaviour
     {
         // Update both private variables with the delta time provided by each frame
         elapsedTime = Mathf.Min(elapsedTime + Time.deltaTime, roundDuration);
-        timeRemaining = Mathf.Max(roundDuration - Time.deltaTime, 0f);
+        timeRemaining = Mathf.Max(timeRemaining - Time.deltaTime, 0f);
+
+        Debug.Log($"Elapsed Time: {elapsedTime:F2}, Time Remaining: {timeRemaining:F2}");
 
         // Seperate into minutes and seconds for display purposes.
         int elapsedMinutes = Mathf.FloorToInt(elapsedTime / 60);
@@ -50,6 +54,15 @@ public class RoundTimer : MonoBehaviour
                 timerText.text = remainingTimeFormatted;
             }
         }
+
+        foreach (var timeElapsedText in timeElapsedTextElements)
+        {
+            if (timeElapsedText != null)
+            {
+                // Update the text to show elapsed time.
+                timeElapsedText.text = elapsedTimeFormatted;
+            }
+        }
     }
 
     // Method to reset the timer to the initial round duration
@@ -58,13 +71,22 @@ public class RoundTimer : MonoBehaviour
         timeRemaining = roundDuration;
         elapsedTime = 0f;
 
-        // Initialize all timer text elements to show the initial time remaining
+        // Initialize all timer text elements to show the initial time remaining, and all time elapsed text elements to show 00:00.
         foreach (var timerText in timerTextElements)
         {
             if (timerText != null)
             {
                 // Set the initial text to show time remaining for now.
                 timerText.text = string.Format("{0:D2}:{1:D2}", Mathf.FloorToInt(roundDuration / 60), Mathf.FloorToInt(roundDuration % 60));
+            }
+        }
+
+        foreach (var timeElapsedText in timeElapsedTextElements)
+        {
+            if (timeElapsedText != null)
+            {
+                // Set the initial text to show elapsed time as 00:00.
+                timeElapsedText.text = "00:00";
             }
         }
     }
