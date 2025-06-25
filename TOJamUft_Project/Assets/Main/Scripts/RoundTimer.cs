@@ -1,12 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System;
+
+[Serializable]
+public class TimeEvent : UnityEvent<float> { };
 
 public class RoundTimer : MonoBehaviour
 {
     // This is class that modifies UI text elements to display a timer.
     public List<UnityEngine.UI.Text> timerTextElements; // List of UI text elements to display the timer for this script to modify
     public float roundDuration; // Max duration of the round in seconds
+    public TimeEvent sendTimeEvent; // Event to send the elapsed time to other components
 
     // Keep both time remaining and elapsed time to calculate the timer, in case we want to utilize both in the future
     private float timeRemaining; // Time remaining in the current round
@@ -49,7 +54,7 @@ public class RoundTimer : MonoBehaviour
 
     // Method to reset the timer to the initial round duration
     public void ResetTimer()
-    { 
+    {
         timeRemaining = roundDuration;
         elapsedTime = 0f;
 
@@ -62,5 +67,14 @@ public class RoundTimer : MonoBehaviour
                 timerText.text = string.Format("{0:D2}:{1:D2}", Mathf.FloorToInt(roundDuration / 60), Mathf.FloorToInt(roundDuration % 60));
             }
         }
+    }
+
+    // Method to send the elapsed time to other components as a event invokation.
+    public void sendTimeInvoker()
+    {
+        // This method can be used to send the elapsed time to other components if needed.
+        // For now, we will just log it.
+        Debug.Log($"Elapsed Time: {elapsedTime:F2} seconds");
+        sendTimeEvent.Invoke(elapsedTime);
     }
 }

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class RoundScreenUIBehavior : MonoBehaviour
 {
     public Text scoreText;
-    public Text timerText;
+    public Text timeText;
 
     // Count and update the score.
     public void updateScoreText(float score)
@@ -19,10 +19,14 @@ public class RoundScreenUIBehavior : MonoBehaviour
     }
 
     // Update the timer text
-    public void updateTimerText(float timeLeft)
+    public void updateTimeText(float elapsedTime)
     { 
-        Debug.Log($"Updating timer text with time left: {timeLeft}");
-        timerText.text = $"Time Left: {timeLeft:F2} seconds";
+        Debug.Log($"Police car caught the drunk driver in {elapsedTime}");
+
+        // Format elapsed time as a string of Minutes:Seconds
+        int minutes = Mathf.FloorToInt(elapsedTime / 60);
+        int seconds = Mathf.FloorToInt(elapsedTime % 60);
+        timeText.text = string.Format("Time: {0:D2}:{1:D2}", minutes, seconds);
     }
 
     // Show the whole round screen UI

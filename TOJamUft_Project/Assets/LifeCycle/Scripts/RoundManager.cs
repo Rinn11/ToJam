@@ -60,6 +60,7 @@ public class RoundManager : MonoBehaviour
         float score = fineManager.fine; // Get the score from the FineManager
         Debug.Log($"Round ended with score: {score}. Current round: {currentRound}, Current game: {currentGame}, Next Round: {currentRound + 1}");
         fineManager.sendScoreInvoker();
+        roundTimer.sendTimeInvoker();
 
         currentRound++;
         if (currentRound % 2 == 0)
@@ -100,7 +101,6 @@ public class RoundManager : MonoBehaviour
             hideScoreBoardEvent.Invoke();
             startRound();
         }
-        roundTimer.ResetTimer(); // Reset the round timer for the next round.
     }
 
     public void runEndRoundCoroutine()
