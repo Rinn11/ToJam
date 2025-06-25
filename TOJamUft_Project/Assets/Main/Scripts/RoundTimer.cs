@@ -14,6 +14,7 @@ public class RoundTimer : MonoBehaviour
     public List<UnityEngine.UI.Text> timeElapsedTextElements; // List of UI text elements to display the time elapsed for this script to modify
     public float roundDuration; // Max duration of the round in seconds
     public TimeEvent sendTimeEvent; // Event to send the elapsed time to other components
+    public UnityEvent roundEndEvent; // Event to invoke when the round ends.
 
     // Keep both time remaining and elapsed time to calculate the timer, in case we want to utilize both in the future
     private float timeRemaining; // Time remaining in the current round
@@ -33,6 +34,13 @@ public class RoundTimer : MonoBehaviour
         timeRemaining = Mathf.Max(timeRemaining - Time.deltaTime, 0f);
 
         Debug.Log($"Elapsed Time: {elapsedTime:F2}, Time Remaining: {timeRemaining:F2}");
+
+        if (timeRemaining <= 0f)
+        {
+            // Invoke an event to tell the round manager that the round has ended.
+            roundEndEvent.Invoke();
+            Debug.Log("Round ended due to time running out.");
+        }
 
         // Seperate into minutes and seconds for display purposes.
         int elapsedMinutes = Mathf.FloorToInt(elapsedTime / 60);
