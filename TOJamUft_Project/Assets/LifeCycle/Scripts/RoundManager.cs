@@ -15,15 +15,15 @@ public class RoundManager : MonoBehaviour
     
     private int currentRound = 0;
     private int currentGame = 0;
-    private List<float> p1Scores = new List<float>();
-    private List<float> p2Scores = new List<float>();
+    private List<float> p1DrunkDriverScores = new List<float>();
+    private List<float> p2DrunkDriverScores = new List<float>();
 
     private bool isP1Driving = true; // This will track which player is currently driving the drunk driver car.
     public PlayerSwapEventSender playerSwapEvent;
 
     // Let's opt for this set up so that we can easily access the both score metrics instead of using events all the time.
     public FineManagerBehavior fineManager;
-    // public RoundTimerBehavior roundTimer;
+    public RoundTimer roundTimer;
     
     public bool toggleIsP1Driving()
     {
@@ -64,13 +64,13 @@ public class RoundManager : MonoBehaviour
         currentRound++;
         if (currentRound % 2 == 0)
         {
-            p2Scores.Add(score);
+            p2DrunkDriverScores.Add(score);
 
-            if (p2Scores[currentGame] > p1Scores[currentGame])
+            if (p2DrunkDriverScores[currentGame] > p1DrunkDriverScores[currentGame])
             {
                 Debug.Log("Player 2 wins this game!");
             }
-            else if (p2Scores[currentGame] < p1Scores[currentGame])
+            else if (p2DrunkDriverScores[currentGame] < p1DrunkDriverScores[currentGame])
             {
                 Debug.Log("Player 1 wins this game!");
             }
@@ -83,7 +83,7 @@ public class RoundManager : MonoBehaviour
         }
         else
         {
-            p1Scores.Add(score);
+            p1DrunkDriverScores.Add(score);
             toggleIsP1Driving();
 
             // TODO: Then you can add logic here to make some UI show up that explains the round is over and the players are switching roles.
@@ -100,7 +100,7 @@ public class RoundManager : MonoBehaviour
             hideScoreBoardEvent.Invoke();
             startRound();
         }
-
+        roundTimer.ResetTimer(); // Reset the round timer for the next round.
     }
 
     public void runEndRoundCoroutine()
