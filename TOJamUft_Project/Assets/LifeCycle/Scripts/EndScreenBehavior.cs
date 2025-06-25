@@ -13,9 +13,20 @@ public class EndScreenBehavior : MonoBehaviour
     public Text winnerText;
 
     // Count and update the score.
-    public void updateWinnerUI(string winnerName)
+    public void updateWinnerUI(int winnerID)
     {
-        winnerText.text = $"Winner: {winnerName}";
+        if (winnerID == 0) // Player 1 is the winner
+        {
+            winnerText.text = "Player 1\nWins!";
+        }
+        else if (winnerID == 1) // Player 2 is the winner
+        {
+            winnerText.text = "Player 2\nWins!";
+        }
+        else // Just say it's a draw
+        {
+            winnerText.text = "Tied!";
+        }
     }
 
     // Reload the Scene and reset the round manager to play again
@@ -27,8 +38,23 @@ public class EndScreenBehavior : MonoBehaviour
     }
 
     // Quit the game
-    public void quitGame() {
+    public void quitGame()
+    {
         Application.Quit();
+    }
+
+    // Show the end screen UI
+    public void showEndScreenUI()
+    {
+        Transform child = transform.Find("Canvas");
+        child.gameObject.SetActive(true);
+    }
+
+    // Hide the end screen UI
+    public void hideEndScreenUI()
+    {
+        Transform child = transform.Find("Canvas");
+        child.gameObject.SetActive(false);
     }
 
 }

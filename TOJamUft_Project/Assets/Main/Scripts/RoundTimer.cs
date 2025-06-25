@@ -39,6 +39,7 @@ public class RoundTimer : MonoBehaviour
         {
             // Invoke an event to tell the round manager that the round has ended.
             roundEndEvent.Invoke();
+            ResetTimer();
             Debug.Log("Round ended due to time running out.");
         }
 

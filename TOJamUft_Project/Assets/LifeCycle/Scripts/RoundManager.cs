@@ -3,6 +3,11 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+
+
+[Serializable]
+public class WinnerEvent : UnityEvent<int> { };
 
 
 // RoundManager will be utilizing the event system to manage game rounds. It will have methods to start, end, and manage states of the round.
@@ -12,7 +17,7 @@ public class RoundManager : MonoBehaviour
     public static RoundManager Instance { get; private set; }
     public int numberOfGames;
     public float scoreBoardShowDelay;
-    
+
     private int currentRound = 0;
     private int currentGame = 0;
     private List<float> p1DrunkDriverScores = new List<float>();
@@ -24,17 +29,20 @@ public class RoundManager : MonoBehaviour
     // Let's opt for this set up so that we can easily access the both score metrics instead of using events all the time.
     public FineManagerBehavior fineManager;
     public RoundTimer roundTimer;
-    
+
     public bool toggleIsP1Driving()
     {
         isP1Driving = !isP1Driving;
         Debug.Log($"Toggled driving status. Player 1 driving: {isP1Driving}");
         return isP1Driving;
     }
-    
+
     public UnityEvent NewRoundEvent = new UnityEvent();
     public UnityEvent showScoreBoardEvent = new UnityEvent();
     public UnityEvent hideScoreBoardEvent = new UnityEvent();
+    public UnityEvent showEndScreenEvent = new UnityEvent();
+    public WinnerEvent winnerEvent;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -48,7 +56,7 @@ public class RoundManager : MonoBehaviour
     {
         // Check which player is currently driving and swap controls and camera positions & UI by sending this event
         playerSwapEvent.Trigger(isP1Driving);
-        
+
         NewRoundEvent.Invoke();
         Debug.Log($"Cleaning up, new round will start soon...");
 
@@ -70,16 +78,24 @@ public class RoundManager : MonoBehaviour
             if (p2DrunkDriverScores[currentGame] > p1DrunkDriverScores[currentGame])
             {
                 Debug.Log("Player 2 wins this game!");
+                winnerEvent.Invoke(1); // Invoke the winner event with Player 2 as the winner
             }
             else if (p2DrunkDriverScores[currentGame] < p1DrunkDriverScores[currentGame])
             {
                 Debug.Log("Player 1 wins this game!");
+                winnerEvent.Invoke(0); // Invoke the winner event with Player 1 as the winner
             }
             else
             {
                 Debug.Log("It's a tie for this game!");
+                winnerEvent.Invoke(2); // Invoke the winner event with 2 for a tie I guess?
             }
 
+            // Show the end screen UI after the round ends.
+            showEndScreenEvent.Invoke();
+
+            // Then stop time so players can see the board.
+            Time.timeScale = 0f;
             currentGame++;
         }
         else
@@ -101,10 +117,11 @@ public class RoundManager : MonoBehaviour
             hideScoreBoardEvent.Invoke();
             startRound();
         }
+        Debug.Log("Coroutine done, round ended.");
     }
 
     public void runEndRoundCoroutine()
-    { 
+    {
         // This method is a placeholder for running a coroutine to end the round.
         // It can be used to delay the end of the round or perform any other actions before ending the round.
         Debug.Log("Running end round coroutine...");
