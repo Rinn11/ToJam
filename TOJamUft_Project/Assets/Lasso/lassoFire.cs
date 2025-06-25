@@ -7,6 +7,8 @@ public class lassoFire : MonoBehaviour
     public Transform target;            // Target to check
     private Rigidbody TarRB;
 
+    public GameObject targetOutline;    // Outline object to activate during ability usage
+
     public float maxDistance = 10f;     // Max distance force applicable
     public float forceMult = 0.1f;      // Linear multiplier for force
 
@@ -14,11 +16,14 @@ public class lassoFire : MonoBehaviour
 
     [SerializeField] private PlayerInput playerInput;
 
-    public GameObject ParticleSystem;
+    public GameObject particleSystem;   // Particle system to activate during ability usage
 
     private void Start()
     {
         TarRB = target.GetComponent<Rigidbody>();
+        ParticleSystem ps = particleSystem.GetComponent<ParticleSystem>();
+        var main = ps.main;
+        main.startSize = maxDistance * 2;
     }
 
     void Update()
@@ -29,12 +34,14 @@ public class lassoFire : MonoBehaviour
         InputAction ability2Action = playerInput.actions["Ability2"];
         if (ability2Action == null) return;
 
+        Vector3 direction = target.position - transform.position;
+        float distance = direction.magnitude;
+        if (distance <= maxDistance) targetOutline.SetActive(true);
+        else targetOutline.SetActive(false);
+
         if (ability2Action.IsPressed())
         {
-            ParticleSystem.SetActive(true);
-
-            Vector3 direction = target.position - transform.position;
-            float distance = direction.magnitude;
+            particleSystem.SetActive(true);
 
             // 1. Check if within range
             if (distance <= maxDistance)
@@ -43,25 +50,16 @@ public class lassoFire : MonoBehaviour
                 RaycastHit hit;
 
                 // 2. Perform the raycast
-                if (Physics.Raycast(ray, out hit, distance, obstacleMask))
+                if (!Physics.Raycast(ray, out hit, distance, obstacleMask))
                 {
-                    // 3. Something is in the way
-                }
-                else
-                {
-                    // 4. Clear line of sight
                     Debug.DrawRay(transform.position, direction, Color.green);
                     TarRB.AddForce(-direction.normalized * forceMult * (distance * distance));
                 }
             }
-            else
-            {
-                // Target out of range
-            }
         }
         else
         {
-            ParticleSystem.SetActive(false);
+            particleSystem.SetActive(false);
         }
     }
 }
