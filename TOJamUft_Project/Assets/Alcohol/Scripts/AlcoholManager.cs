@@ -29,10 +29,9 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
   public int initialAlcoholCount;
   public int initialAlcoholSupply;
 
-  public GameObject FineManager;
-
   [SerializeField] private PlayerInput playerInput;
 
+  [SerializeField]
   private FineManagerBehavior fineManager;
 
   private int alcoholCount;                 // The number of alcohol bottles 
@@ -62,12 +61,6 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     alcoholSupply = initialAlcoholSupply;
     alcoholCount = initialAlcoholCount;
     Shader.SetGlobalInt("GlobalAlcoholCount", initialAlcoholCount);
-
-    if (FineManager == null)
-    {
-      Debug.LogError("FineManager not found!");
-    }
-    fineManager = FineManager.GetComponent<FineManagerBehavior>();
 
     if (blackoutPanel != null)
     {

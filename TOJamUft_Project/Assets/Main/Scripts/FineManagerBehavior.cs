@@ -16,8 +16,6 @@ public class ScoreEvent : UnityEvent<float> { };
 public class FineManagerBehavior : MonoBehaviour
 {
     public float fine;
-    public AlcoholManager am;
-    private AlcoholManager alcoholManager;
     public Text fineUI;
 
     // Events
@@ -26,13 +24,12 @@ public class FineManagerBehavior : MonoBehaviour
     void Start()
     {
         fine = 0.0f;
-        alcoholManager = am.GetComponent<AlcoholManager>();
     }
 
     public void increaseFine(int amount)
     {
         fine += amount;
-        fine = (float)Math.Round(fine, 2);
+        fine = (float) Math.Round(fine, 2);
 
         if (fineUI != null)
         {
