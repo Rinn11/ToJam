@@ -6,6 +6,7 @@ public class FinalBlitCamera : MonoBehaviour
 {
     private RenderTexture blurredSource;
     public Material blurMaterial;
+    
     public Camera drunkDriverCamera;
     public Camera copPlayerCamera;
     public PlayerSwapEventSender swapSender;
@@ -37,46 +38,61 @@ public class FinalBlitCamera : MonoBehaviour
         else
         {
             Debug.Log("Single monitor setup detected. Initializing cameras for splitscreen mode.");
-
-            // Create a new RenderTexture with the correct dimensions
-            blurredSource = new RenderTexture(Screen.width, Screen.height / 2, 0);
+            blurredSource = new RenderTexture(Screen.width / 2, Screen.height / 2, 0);
             blurredSource.Create();
-
+            
             UpdateCameraViewportsSplitscreen();
         }
     }
 
     void UpdateCameraViewportsSplitscreen()
     {
-        // Ensure drunk driver camera always occupies the full screen
+        // Calculate the camera viewports based on the player being the drunk driver or not
+        float drunkDriverX = IsPlayer1DrunkDriver ? 0 : 0.5f;
+        float copCameraX = IsPlayer1DrunkDriver ? 0.5f : 0;
+        // Set the camera viewports for splitscreen
+        
+        // drunk driver
         if (drunkDriverCamera != null)
         {
-            drunkDriverCamera.rect = new Rect(0, 0, 1, 1);
-        }
-
-        // Set cop player camera position based on who is the drunk driver
-        if (copPlayerCamera != null)
-        {
-            if (IsPlayer1DrunkDriver)
+            drunkDriverCamera.rect = new Rect(drunkDriverX, 0.25f, 0.5f, 0.5f);
+            // ui scale
+            if (drunkDriverCanvas != null)
             {
-                copPlayerCamera.rect = new Rect(0, 0, 1, 0.5f); // Bottom half
+                var canvasScaler = drunkDriverCanvas.GetComponent<UnityEngine.UI.CanvasScaler>();
+                if (canvasScaler != null)
+                {
+                    canvasScaler.uiScaleMode = UnityEngine.UI.CanvasScaler.ScaleMode.ScaleWithScreenSize;
+                    canvasScaler.referenceResolution = new Vector2(Screen.width, Screen.height);  // should be ratio of 1920x1080
+                    canvasScaler.screenMatchMode = UnityEngine.UI.CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+                    canvasScaler.matchWidthOrHeight = 0.5f; // Balance width and height scaling
+                }
             }
-            else
-            {
-                copPlayerCamera.rect = new Rect(0, 0.5f, 1, 0.5f); // Top half
-            }
-        }
-        // Apply blur effect to the drunk driver camera
-        if (drunkDriverCamera != null)
-        {
+            
+            // Create a new RenderTexture for the blurred source
             drunkDriverCamera.targetTexture = blurredSource;
             drunkDriverCamera.depth = 0; // Render after copPlayerCamera
         }
-
-        // Ensure cop player camera renders normally
+        
+        // cop car
         if (copPlayerCamera != null)
         {
-            copPlayerCamera.depth = -1; // Render first
+            Debug.LogWarning("Setting up cop player camera for splitscreen mode.");
+            copPlayerCamera.rect = new Rect(copCameraX, 0.25f, 0.5f, 0.5f);
+            // ui scale
+            if (copPlayerCanvas != null)
+            {
+                var canvasScaler = copPlayerCanvas.GetComponent<UnityEngine.UI.CanvasScaler>();
+                if (canvasScaler != null)
+                {
+                    canvasScaler.uiScaleMode = UnityEngine.UI.CanvasScaler.ScaleMode.ScaleWithScreenSize;
+                    canvasScaler.referenceResolution = new Vector2(Screen.width, Screen.height);
+                    canvasScaler.screenMatchMode = UnityEngine.UI.CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+                    canvasScaler.matchWidthOrHeight = 0.5f; // Balance width and height scaling
+                }
+            }
+            // copPlayerCamera.targetTexture = null; // Render directly to the screen
+            copPlayerCamera.depth = 10;
         }
     }
 
@@ -121,46 +137,14 @@ public class FinalBlitCamera : MonoBehaviour
 
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-        if (blurredSource == null)
+        if (blurredSource != null)
         {
-            Graphics.Blit(source, destination);
-            return;
-        }
-
-        if (isDualMonitor)
-        {
-            // Fullscreen blur (dual monitor)
             Graphics.Blit(blurredSource, destination, blurMaterial);
         }
         else
-        { 
-            // Render the blurred texture for the drunk driver camera
-            RenderTexture.active = destination;
-
-            GL.PushMatrix();
-            GL.LoadPixelMatrix(0, Screen.width, Screen.height, 0);
-
-            // Draw the blurred texture on the drunk driver camera's viewport
-            if (IsPlayer1DrunkDriver)
-            {
-                Graphics.DrawTexture(
-                    new Rect(0, 0, Screen.width, Screen.height / 2),
-                    blurredSource,
-                    blurMaterial
-                );
-            }
-            else
-            {
-                Graphics.DrawTexture(
-                    new Rect(0, Screen.height / 2, Screen.width, Screen.height / 2),
-                    blurredSource,
-                    blurMaterial
-                );
-            }
-
-            GL.PopMatrix();
+        {
+            Graphics.Blit(source, destination);
         }
-        
     }
 
     void OnDestroy()
@@ -192,46 +176,15 @@ public class FinalBlitCamera : MonoBehaviour
         if (isDualMonitor)
         {
             blurredSource.Release();
-
             UpdateCameraViewportsDualMonitor();
             Debug.Log($"Player swap received. Swapping target displays for the cameras for dual monitor setup");
         }
         else
         {
-            // Recreate the RenderTexture
-            if (blurredSource != null)
-            {
-                blurredSource.Release();
-            }
-            blurredSource = new RenderTexture(Screen.width, Screen.height / 2, 0);
-            blurredSource.Create();
-
-            // Update the blur material with the new RenderTexture
-            if (blurMaterial != null)
-            {
-                blurMaterial.SetTexture("_MainTex", blurredSource);
-            }
-
-            // Update camera settings
-            if (drunkDriverCamera != null)
-            {
-                drunkDriverCamera.targetTexture = blurredSource;
-                drunkDriverCamera.rect = new Rect(0, 0, 1, 1); // Full screen
-                drunkDriverCamera.depth = 0; // Render after copPlayerCamera
-            }
-
-            if (copPlayerCamera != null)
-            {
-                copPlayerCamera.targetTexture = null; // Render directly to the screen
-                copPlayerCamera.depth = -1; // Render first
-
-                // Adjust viewport based on the drunk driver
-                copPlayerCamera.rect = IsPlayer1DrunkDriver
-                    ? new Rect(0, 0, 1, 0.5f) // Bottom half
-                    : new Rect(0, 0.5f, 1, 0.5f); // Top half
-            }
-
+            blurredSource.Release();
+            UpdateCameraViewportsSplitscreen();
             Debug.Log($"Player swap received. Swapping camera positions");
         }
     }
+
 }
