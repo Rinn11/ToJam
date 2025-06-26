@@ -10,15 +10,22 @@ using UnityEngine.UI;
 
 public class EndScreenBehavior : MonoBehaviour
 {
-    public FineManagerBehavior scoreManager;
     public Text winnerText;
 
     // Count and update the score.
-    public void updateWinnerUI()
+    public void updateWinnerUI(int winnerID)
     {
-        if (scoreManager != null)
+        if (winnerID == 0) // Player 1 is the winner
         {
-            winnerText.text = $"Fine: ${scoreManager.fine}";
+            winnerText.text = "Player 1\nWins!";
+        }
+        else if (winnerID == 1) // Player 2 is the winner
+        {
+            winnerText.text = "Player 2\nWins!";
+        }
+        else // Just say it's a draw
+        {
+            winnerText.text = "Tied!";
         }
     }
 
@@ -31,13 +38,23 @@ public class EndScreenBehavior : MonoBehaviour
     }
 
     // Quit the game
-    public void quitGame() {
+    public void quitGame()
+    {
         Application.Quit();
     }
 
-    // On Enabling the UI we will update the score.
-    private void OnEnable() {
-        Debug.Log("Enabling End Screen");
-        updateWinnerUI();
+    // Show the end screen UI
+    public void showEndScreenUI()
+    {
+        Transform child = transform.Find("Canvas");
+        child.gameObject.SetActive(true);
     }
+
+    // Hide the end screen UI
+    public void hideEndScreenUI()
+    {
+        Transform child = transform.Find("Canvas");
+        child.gameObject.SetActive(false);
+    }
+
 }
