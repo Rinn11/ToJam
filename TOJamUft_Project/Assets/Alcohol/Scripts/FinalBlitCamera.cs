@@ -8,6 +8,7 @@ public class FinalBlitCamera : MonoBehaviour
     public Material blurMaterial;
     
     public Camera drunkDriverCamera;
+    public Camera drunkDriverUICamera;
     public Camera copPlayerCamera;
     public PlayerSwapEventSender swapSender;
     
@@ -29,6 +30,11 @@ public class FinalBlitCamera : MonoBehaviour
             Display.displays[i].Activate();
 
         isDualMonitor = displayCount >= 2;
+        
+        drunkDriverCanvas.renderMode   = RenderMode.ScreenSpaceCamera;
+        drunkDriverCanvas.worldCamera  = drunkDriverUICamera;
+        drunkDriverCanvas.planeDistance = 1f;          // positive & small
+        drunkDriverCanvas.gameObject.layer = LayerMask.NameToLayer("UI");
 
         if (isDualMonitor)
         {
@@ -77,7 +83,6 @@ public class FinalBlitCamera : MonoBehaviour
         // cop car
         if (copPlayerCamera != null)
         {
-            Debug.LogWarning("Setting up cop player camera for splitscreen mode.");
             copPlayerCamera.rect = new Rect(copCameraX, 0.25f, 0.5f, 0.5f);
             // ui scale
             if (copPlayerCanvas != null)
@@ -94,6 +99,10 @@ public class FinalBlitCamera : MonoBehaviour
             // copPlayerCamera.targetTexture = null; // Render directly to the screen
             copPlayerCamera.depth = 10;
         }
+        
+        drunkDriverUICamera.rect = drunkDriverCamera.rect;
+        // make sure UI depth is higher than both cameras
+        drunkDriverUICamera.depth = 20; // Ensure UI camera renders on top
     }
 
     void UpdateCameraViewportsDualMonitor()
@@ -133,6 +142,8 @@ public class FinalBlitCamera : MonoBehaviour
         overlayCam.targetDisplay = drunkDriverCamera.targetDisplay;
         overlayCam.depth = drunkDriverCamera.depth + 1;
         overlayCam.clearFlags = CameraClearFlags.Nothing;
+        
+        drunkDriverUICamera.targetDisplay = drunkDriverCamera.targetDisplay;
     }
 
     void OnRenderImage(RenderTexture source, RenderTexture destination)
