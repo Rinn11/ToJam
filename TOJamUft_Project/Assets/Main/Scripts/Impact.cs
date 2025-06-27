@@ -3,8 +3,10 @@ using UnityEngine;
 public class Impact : MonoBehaviour
 {
     public ParticleSystem crashEffectPrefab;
-    public float smallestScale;
-    public float largestScale;
+    [SerializeField]
+    private float smallestScale;
+    [SerializeField]
+    private float largestScale;
 
     private void OnCollisionEnter(Collision collision)
     {
