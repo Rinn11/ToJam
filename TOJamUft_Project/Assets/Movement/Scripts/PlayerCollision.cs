@@ -5,21 +5,44 @@
 
 // TODO: Maybe this should use the game ending functions in EndScreenBehaviour?
 
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerCollision : MonoBehaviour
 {
+  [Header("UI Related Settings")]
+  public GameObject textUI;
 
+  [Header("Collision Settings")]
+  [SerializeField]
+  private int numberOfCollisions;
+  private int currentCollisions = 0;
+
+  [Header("IFrame Settings")]
+  [SerializeField]
+  private float iframeDuration; // Duration of invincibility frames (in seconds)
+  [SerializeField]
+  private int numberOfIframeFlashes; // Number of times to flash the player during iFrames
+
+  [Header("Audio Settings")]
   public AudioSource crashSource;
   public AudioSource damageSource;
-  public GameObject textUI;
-  public UnityEvent roundOverEvent;
 
-  float damage = 100f;
   float timeSinceLastCollision = 0f, lastCollisionExitTime = 0f;
 
-    private void OnCollisionEnter(Collision collision)
+  [Header("Events")]
+  public UnityEvent roundOverEvent;
+
+  // Thanks to this video for the help for the iframe implementation even though it's for 2D Unity: https://www.youtube.com/watch?v=YSzmCf_L2cE
+  private IEnumerator iFrameCoroutine()
+  {
+    return null;
+  }
+
+
+  private void OnCollisionEnter(Collision collision)
   {
     if (lastCollisionExitTime != 0f)
     {
@@ -34,18 +57,21 @@ public class PlayerCollision : MonoBehaviour
     //   damageSource.Play();
     // }
 
-    if (damage == 0f || collision.gameObject.CompareTag("CopCar"))
+    if (collision.gameObject.CompareTag("CopCar"))
     {
+      currentCollisions++;
+      Debug.Log("Collision with cop car detected. Current collisions: " + currentCollisions);
+
+      // Just crashing won't do. you need feedback. add visual and audio feedback here.
       crashSource.Play();
-      // endScreenUI.SetActive(true);
-      // textUI.SetActive(false);
+
+      // Use an iFrame period to give the player a chance to recover.
+      StartCoroutine(iFrameCoroutine());
+    }
+
+    if (currentCollisions >= numberOfCollisions)
+    {
       roundOverEvent.Invoke();
-
-      Debug.Log("Collision occurred in player collision script");
-
-      // Cursor.lockState = CursorLockMode.None;
-      // Cursor.visible = true;
-      // collision.gameObject.SetActive(false);
     }
   }
 
