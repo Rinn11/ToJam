@@ -5,6 +5,7 @@
 
 // TODO: Maybe this should use the game ending functions in EndScreenBehaviour?
 
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,12 +20,15 @@ public class PlayerCollision : MonoBehaviour
   [SerializeField]
   private int numberOfCollisions;
   private int currentCollisions = 0;
+  private bool acceptCollisions = true; // Flag to control whether collisions are accepted for certain behaviors to trigger
 
   [Header("IFrame Settings")]
   [SerializeField]
   private float iframeDuration; // Duration of invincibility frames (in seconds)
   [SerializeField]
   private int numberOfIframeFlashes; // Number of times to flash the player during iFrames
+  [SerializeField]
+  private float iframeOpacity; // Amount to change the opacity during iFrames
 
   [Header("Audio Settings")]
   public AudioSource crashSource;
@@ -38,7 +42,11 @@ public class PlayerCollision : MonoBehaviour
   // Thanks to this video for the help for the iframe implementation even though it's for 2D Unity: https://www.youtube.com/watch?v=YSzmCf_L2cE
   private IEnumerator iFrameCoroutine()
   {
-    return null;
+    acceptCollisions = false; // Disable further collisions and more behaviors during iframes
+
+    yield return new WaitForSeconds(iframeDuration);
+
+    acceptCollisions = true; // Re-enable collisions after the iFrame duration
   }
 
 
@@ -57,7 +65,7 @@ public class PlayerCollision : MonoBehaviour
     //   damageSource.Play();
     // }
 
-    if (collision.gameObject.CompareTag("CopCar"))
+    if (collision.gameObject.CompareTag("CopCar") && acceptCollisions)
     {
       currentCollisions++;
       Debug.Log("Collision with cop car detected. Current collisions: " + currentCollisions);
@@ -65,14 +73,16 @@ public class PlayerCollision : MonoBehaviour
       // Just crashing won't do. you need feedback. add visual and audio feedback here.
       crashSource.Play();
 
+      if (currentCollisions >= numberOfCollisions)
+      {
+        roundOverEvent.Invoke();
+        return;
+      }
+
       // Use an iFrame period to give the player a chance to recover.
       StartCoroutine(iFrameCoroutine());
     }
 
-    if (currentCollisions >= numberOfCollisions)
-    {
-      roundOverEvent.Invoke();
-    }
   }
 
   void OnCollisionExit(Collision collision)
