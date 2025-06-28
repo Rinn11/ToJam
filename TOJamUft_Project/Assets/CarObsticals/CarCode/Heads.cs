@@ -6,7 +6,6 @@ public class Heads : MonoBehaviour
 {
 
   public AudioSource crashSource;
-  public GameObject endScreenUI;
   // public GameObject alcoholUI;
 
   public UnityEvent roundOverEvent = new UnityEvent();
@@ -24,7 +23,6 @@ public class Heads : MonoBehaviour
     {
       // Use a signal to end the round
       crashSource.Play();
-      endScreenUI.SetActive(true);
       roundOverEvent.Invoke();
       // alcoholUI.SetActive(false);
 
