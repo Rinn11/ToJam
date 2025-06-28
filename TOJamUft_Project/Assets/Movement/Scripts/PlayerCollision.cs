@@ -13,17 +13,11 @@ public class PlayerCollision : MonoBehaviour
 
   public AudioSource crashSource;
   public AudioSource damageSource;
-  public GameObject endScreenUI;
   public GameObject textUI;
-  public UnityEvent roundOverEvent = new UnityEvent();
+  public UnityEvent roundOverEvent;
 
   float damage = 100f;
   float timeSinceLastCollision = 0f, lastCollisionExitTime = 0f;
-
-    void Start()
-    {
-        roundOverEvent.AddListener(GameObject.FindGameObjectWithTag("RoundManager").GetComponent<RoundManager>().runEndRoundCoroutine);
-    }
 
     private void OnCollisionEnter(Collision collision)
   {
@@ -46,6 +40,8 @@ public class PlayerCollision : MonoBehaviour
       // endScreenUI.SetActive(true);
       // textUI.SetActive(false);
       roundOverEvent.Invoke();
+
+      Debug.Log("Collision occurred in player collision script");
 
       // Cursor.lockState = CursorLockMode.None;
       // Cursor.visible = true;

@@ -16,7 +16,6 @@ public class CopCarCollision : MonoBehaviour
 {
 
     public AudioSource crashSource;
-    public GameObject endScreenUI;
     public GameObject alcoholUI;
     public UnityEvent roundOverEvent = new UnityEvent();
 
