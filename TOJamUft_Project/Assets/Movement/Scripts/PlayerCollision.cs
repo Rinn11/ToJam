@@ -44,7 +44,19 @@ public class PlayerCollision : MonoBehaviour
   {
     acceptCollisions = false; // Disable further collisions and more behaviors during iframes
 
-    yield return new WaitForSeconds(iframeDuration);
+    // Grab the mesh renderer of the player to flash it
+    MeshRenderer renderer = GetComponent<MeshRenderer>();
+    Color materialColor = renderer.material.color;
+
+    for (int i = 0; i < numberOfIframeFlashes; i++)
+    {
+      materialColor.a = iframeOpacity; // Set the material color to semi-transparent
+      renderer.material.color = materialColor; // Apply the color change
+      yield return new WaitForSeconds(iframeDuration / (numberOfIframeFlashes * 2));
+      materialColor.a = 1f; // Reset to full opacity
+      renderer.material.color = materialColor; // Apply the color change
+      yield return new WaitForSeconds(iframeDuration / (numberOfIframeFlashes * 2));
+    }
 
     acceptCollisions = true; // Re-enable collisions after the iFrame duration
   }
