@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.UI;
+using TMPro;
 
 [Serializable]
 public class TimeEvent : UnityEvent<float> { };
@@ -10,7 +12,7 @@ public class TimeEvent : UnityEvent<float> { };
 public class RoundTimer : MonoBehaviour
 {
     // This is class that modifies UI text elements to display a timer.
-    public List<UnityEngine.UI.Text> timerTextElements; // List of UI text elements to display the timer for this script to modify
+    public List<TMP_Text> timerTextElements; // List of UI text elements to display the timer for this script to modify
     public List<UnityEngine.UI.Text> timeElapsedTextElements; // List of UI text elements to display the time elapsed for this script to modify
     public float roundDuration; // Max duration of the round in seconds
     public TimeEvent sendTimeEvent; // Event to send the elapsed time to other components
