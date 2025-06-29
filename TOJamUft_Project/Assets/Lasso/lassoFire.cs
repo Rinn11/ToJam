@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -15,6 +16,8 @@ public class lassoFire : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
 
     public GameObject particleSystem;   // Particle system to activate during ability usage
+
+    public Boolean CurrentlyPulling = false;
 
     private void Start()
     {
@@ -35,7 +38,12 @@ public class lassoFire : MonoBehaviour
         Vector3 direction = target.position - transform.position;
         float distance = direction.magnitude;
 
-        if (ability2Action.IsPressed())
+        if (ability2Action.WasPressedThisFrame())
+        {
+            CurrentlyPulling = true;
+        }
+
+        if (CurrentlyPulling)
         {
             particleSystem.SetActive(true);
 
@@ -51,6 +59,9 @@ public class lassoFire : MonoBehaviour
                     Debug.DrawRay(transform.position, direction, Color.green);
                     TarRB.AddForce(-direction.normalized * forceMult * 1000000 / (distance * distance));
                 }
+            }
+            else {
+                CurrentlyPulling = false;
             }
         }
         else
