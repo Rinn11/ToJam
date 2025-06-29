@@ -101,4 +101,10 @@ public class PlayerCollision : MonoBehaviour
   {
     lastCollisionExitTime = Time.time;
   }
+
+  public void resetCollisions()
+  {
+    currentCollisions = 0; // Reset the collision count
+    acceptCollisions = true; // Re-enable collisions
+  }
 }
