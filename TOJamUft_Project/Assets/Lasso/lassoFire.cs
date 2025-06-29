@@ -17,6 +17,9 @@ public class lassoFire : MonoBehaviour
 
     public GameObject particleSystem;   // Particle system to activate during ability usage
 
+    public GameObject lockOnIndicator; // Indicator that tells cop when they can use their ability
+    private RectTransform lockOnTransform;
+
     public Boolean CurrentlyPulling = false;
 
     private void Start()
@@ -25,6 +28,11 @@ public class lassoFire : MonoBehaviour
         ParticleSystem ps = particleSystem.GetComponent<ParticleSystem>();
         var main = ps.main;
         main.startSize = maxDistance * 2;
+
+        if (lockOnIndicator != null)
+        {
+            lockOnTransform = lockOnIndicator.GetComponent<RectTransform>();
+        }
     }
 
     void Update()
@@ -47,7 +55,10 @@ public class lassoFire : MonoBehaviour
         // Looped logic during pulling sequence
         if (CurrentlyPulling)
         {
-            particleSystem.SetActive(true);
+            particleSystem?.SetActive(true);
+            lockOnIndicator?.SetActive(true);
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(target.position);
+            lockOnTransform.position = screenPos;
 
             // 1. Check if within range
             if (distance <= maxDistance)
@@ -68,7 +79,8 @@ public class lassoFire : MonoBehaviour
         }
         else
         {
-            particleSystem.SetActive(false);
+            particleSystem?.SetActive(false);
+            lockOnIndicator.SetActive(false);
         }
     }
 
