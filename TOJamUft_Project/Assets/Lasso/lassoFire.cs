@@ -38,11 +38,13 @@ public class lassoFire : MonoBehaviour
         Vector3 direction = target.position - transform.position;
         float distance = direction.magnitude;
 
-        if (ability2Action.WasPressedThisFrame())
+        // Only when starting a new pulling sequence
+        if (ability2Action.WasPressedThisFrame() && !CurrentlyPulling)
         {
             CurrentlyPulling = true;
         }
 
+        // Looped logic during pulling sequence
         if (CurrentlyPulling)
         {
             particleSystem.SetActive(true);
@@ -67,6 +69,15 @@ public class lassoFire : MonoBehaviour
         else
         {
             particleSystem.SetActive(false);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Stop pulling after collision
+        if (collision.gameObject.CompareTag("Player")) {
+            CurrentlyPulling = false;
+            return;
         }
     }
 }
