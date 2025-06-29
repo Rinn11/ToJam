@@ -88,6 +88,7 @@ public class PlayerCollision : MonoBehaviour
       if (currentCollisions >= numberOfCollisions)
       {
         roundOverEvent.Invoke();
+        currentCollisions = 0; // Reset the collision count after the round is over
         return;
       }
 
