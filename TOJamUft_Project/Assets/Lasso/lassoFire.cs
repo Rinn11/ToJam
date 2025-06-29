@@ -7,10 +7,8 @@ public class lassoFire : MonoBehaviour
     public Transform target;            // Target to check
     private Rigidbody TarRB;
 
-    public GameObject targetOutline;    // Outline object to activate during ability usage
-
     public float maxDistance = 10f;     // Max distance force applicable
-    public float forceMult = 0.1f;      // Linear multiplier for force
+    public float forceMult = 1f;      // Linear multiplier for force
 
     public LayerMask obstacleMask;      // What counts as an obstacle
 
@@ -36,8 +34,6 @@ public class lassoFire : MonoBehaviour
 
         Vector3 direction = target.position - transform.position;
         float distance = direction.magnitude;
-        if (distance <= maxDistance) targetOutline.SetActive(true);
-        else targetOutline.SetActive(false);
 
         if (ability2Action.IsPressed())
         {
@@ -53,7 +49,7 @@ public class lassoFire : MonoBehaviour
                 if (!Physics.Raycast(ray, out hit, distance, obstacleMask))
                 {
                     Debug.DrawRay(transform.position, direction, Color.green);
-                    TarRB.AddForce(-direction.normalized * forceMult * (distance * distance));
+                    TarRB.AddForce(-direction.normalized * forceMult * 1000000 / (distance * distance));
                 }
             }
         }
