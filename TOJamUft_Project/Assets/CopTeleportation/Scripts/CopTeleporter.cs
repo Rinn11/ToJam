@@ -27,7 +27,7 @@ public class CopTeleporter : MonoBehaviour
 
         var dpad = playerInput.actions["DPad"];
         Vector2 curr = dpad.ReadValue<Vector2>();
-        Debug.Log("DPAD" + curr);
+        //Debug.Log("DPAD" + curr);
 
         if (curr == Vector2.up && last != Vector2.up) {
             Debug.Log("Dpad_Up");
@@ -59,7 +59,7 @@ public class CopTeleporter : MonoBehaviour
         float TempSpeed = RB.linearVelocity.magnitude;
 
         // Teleport to the new location
-        Cop.transform.position = TeleportMarker.transform.position;
+        RB.MovePosition(TeleportMarker.transform.position);
 
         Vector3 GroundDir = Vector3.zero;
         if (AngleTowardsDD)
@@ -75,7 +75,7 @@ public class CopTeleporter : MonoBehaviour
         }
 
         Quaternion GroundRot = Quaternion.LookRotation(GroundDir, Vector3.up);
-        Cop.transform.rotation = GroundRot;
+        RB.MoveRotation(GroundRot);
 
         // Reapply original speed at new direction
         RB.linearVelocity = GroundDir * TempSpeed;
