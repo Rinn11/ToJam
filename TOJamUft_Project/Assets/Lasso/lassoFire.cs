@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements; // Not strictly needed for this specific UI positioning, but kept as it was in your original script.
@@ -22,6 +23,8 @@ public class lassoFire : MonoBehaviour
 
     public float cooldown = 5f;         // Minimum Time after target was lost to use the ability again
     private float lastLostTime = -999;  // Timestamp of time when target was lost
+
+    public TMP_Text cooldownTimerText;  // Timer text representing the number of seconds left before next use
 
     private bool currentlyPulling = false;
 
@@ -75,7 +78,12 @@ public class lassoFire : MonoBehaviour
 
                 // Start pulling sequence if not already in one
                 float TimeSinceLastLoss = Time.time - lastLostTime;
-                if (ability2Action.WasPressedThisFrame() && !currentlyPulling && TimeSinceLastLoss >= cooldown)
+                cooldownTimerText.text = "" + Math.Round(Math.Max(0, cooldown - TimeSinceLastLoss));
+
+                bool hasCooledDown = TimeSinceLastLoss >= cooldown;
+                cooldownTimerText.color = hasCooledDown ? Color.green : Color.red;
+
+                if (ability2Action.WasPressedThisFrame() && !currentlyPulling && hasCooledDown)
                 {
                     currentlyPulling = true;
                 }
