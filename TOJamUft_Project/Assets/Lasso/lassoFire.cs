@@ -20,7 +20,10 @@ public class lassoFire : MonoBehaviour
     public GameObject lockOnIndicator;  // Indicator that tells cop when they can use their ability
     public Camera uiCamera;             // Camera the HUD's parent canvas is tied to
 
-    public bool currentlyPulling = false;
+    public float cooldown = 5f;         // Minimum Time after target was lost to use the ability again
+    private float lastLostTime = -999;  // Timestamp of time when target was lost
+
+    private bool currentlyPulling = false;
 
     private void Start()
     {
@@ -71,7 +74,8 @@ public class lassoFire : MonoBehaviour
                 }
 
                 // Start pulling sequence if not already in one
-                if (ability2Action.WasPressedThisFrame() && !currentlyPulling)
+                float TimeSinceLastLoss = Time.time - lastLostTime;
+                if (ability2Action.WasPressedThisFrame() && !currentlyPulling && TimeSinceLastLoss >= cooldown)
                 {
                     currentlyPulling = true;
                 }
@@ -87,17 +91,13 @@ public class lassoFire : MonoBehaviour
             else
             {
                 // Target no longer visible
-                currentlyPulling = false;
-                particleSystem?.SetActive(false);
-                lockOnIndicator?.SetActive(false);
+                OnTargetLost();
             }            
         }
         else
         {
             // Target out of range
-            currentlyPulling = false;
-            particleSystem?.SetActive(false);
-            lockOnIndicator?.SetActive(false);
+            OnTargetLost();
         }
     }
 
@@ -106,10 +106,18 @@ public class lassoFire : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             // Once target collides with cop, stop pulling
-            currentlyPulling = false;
-            particleSystem?.SetActive(false);
-            lockOnIndicator?.SetActive(false);
+            OnTargetLost();
             return;
         }
+    }
+
+    private void OnTargetLost() {
+        if (currentlyPulling)
+        {
+            lastLostTime = Time.time;
+            currentlyPulling = false;
+        }
+        particleSystem?.SetActive(false);
+        lockOnIndicator?.SetActive(false);
     }
 }
