@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
-public class PortraitSwitcher : MonoBehaviour
+public class PortraitSwitcherDD : MonoBehaviour
 {
     [Header("Portrait sprites")]
     public Sprite defaultSprite;
