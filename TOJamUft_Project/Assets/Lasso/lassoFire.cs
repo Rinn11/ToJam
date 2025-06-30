@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
+using UnityEngine.UIElements; // Not strictly needed for this specific UI positioning, but kept as it was in your original script.
 
 public class lassoFire : MonoBehaviour
 {
@@ -9,7 +9,7 @@ public class lassoFire : MonoBehaviour
     private Rigidbody TarRB;
 
     public float maxDistance = 10f;     // Max distance force applicable
-    public float forceMult = 1f;      // Linear multiplier for force
+    public float forceMult = 1f;        // Linear multiplier for force
 
     public LayerMask obstacleMask;      // What counts as an obstacle
 
@@ -17,8 +17,8 @@ public class lassoFire : MonoBehaviour
 
     public GameObject particleSystem;   // Particle system to activate during ability usage
 
-    public GameObject lockOnIndicator; // Indicator that tells cop when they can use their ability
-    private RectTransform lockOnTransform;
+    public GameObject lockOnIndicator;  // Indicator that tells cop when they can use their ability
+    public Camera uiCamera;             // Camera the HUD's parent canvas is tied to
 
     public Boolean CurrentlyPulling = false;
 
@@ -29,17 +29,17 @@ public class lassoFire : MonoBehaviour
         var main = ps.main;
         main.startSize = maxDistance * 2;
 
-        if (lockOnIndicator != null)
-        {
-            lockOnTransform = lockOnIndicator.GetComponent<RectTransform>();
-        }
+        // Initially hide the indicator and particle system
+        particleSystem?.SetActive(false);
+        lockOnIndicator?.SetActive(false);
     }
 
     void Update()
     {
         if (target == null) return;
-
         if (playerInput == null) return;
+        if (uiCamera == null) return; // Ensure the camera is available for positioning
+
         InputAction ability2Action = playerInput.actions["Ability2"];
         if (ability2Action == null) return;
 
@@ -57,8 +57,21 @@ public class lassoFire : MonoBehaviour
         {
             particleSystem?.SetActive(true);
             lockOnIndicator?.SetActive(true);
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(target.position);
-            lockOnTransform.position = screenPos;
+
+            // Calculate the 2D screen position of the 3D target
+            Vector3 screenPos = uiCamera.WorldToScreenPoint(target.position);
+
+            RectTransform indicatorRectTransform = lockOnIndicator.GetComponent<RectTransform>();
+            RectTransform canvasRectTransform = lockOnIndicator.GetComponentInParent<Canvas>().GetComponent<RectTransform>();
+
+            // Adjust the 2D screen position to the parent canvas
+            Vector2 localPointerPos;
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, screenPos, uiCamera, out localPointerPos))
+            {
+                indicatorRectTransform.anchoredPosition = localPointerPos;
+            }
+
+            lockOnIndicator.SetActive(true);
 
             // 1. Check if within range
             if (distance <= maxDistance)
@@ -72,8 +85,15 @@ public class lassoFire : MonoBehaviour
                     Debug.DrawRay(transform.position, direction, Color.green);
                     TarRB.AddForce(-direction.normalized * forceMult * 1000000 / (distance * distance));
                 }
+                else
+                {
+                    // If an obstacle is hit, stop pulling
+                    CurrentlyPulling = false;
+                }
             }
-            else {
+            else
+            {
+                // If target goes out of range, stop pulling
                 CurrentlyPulling = false;
             }
         }
@@ -86,8 +106,9 @@ public class lassoFire : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Stop pulling after collision
-        if (collision.gameObject.CompareTag("Player")) {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // Once target collides with cop, stop pulling
             CurrentlyPulling = false;
             return;
         }
