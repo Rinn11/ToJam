@@ -12,6 +12,11 @@ public class shakeBottle : MonoBehaviour
         shakeTimer = shakeDuration; // Set the shake timer to the specified duration
     }
     
+    public bool GetIsShaking()
+    {
+        return shakeTimer > 0f; // Returns true if the bottle is currently shaking
+    }
+    
     void Update()
     {
         if (shakeTimer > 0f)

@@ -11,6 +11,10 @@ public class PortraitSwitcherDD : MonoBehaviour
     
     public AlcoholManager alcoholManager; // Reference to the AlcoholManager to check drinking state
     private bool isLassoed = false;
+    
+    public GameObject CopPlayer;  // should have lassoFire.cs
+    private lassoFire lasso; // reference to the lassoFire component
+
 
     private Image _img;                 // cached reference
     private PortraitState _current;     // tracks what we last showed
@@ -22,6 +26,11 @@ public class PortraitSwitcherDD : MonoBehaviour
         _img = GetComponent<Image>();
         _img.sprite = defaultSprite;    // initial value
         _current = PortraitState.Default;
+        
+        if (CopPlayer != null)
+        {
+            lasso = CopPlayer.GetComponent<lassoFire>();
+        }
     }
 
     void Update()
@@ -29,7 +38,7 @@ public class PortraitSwitcherDD : MonoBehaviour
         // A simple priority ladder: drinking > lassoed > default
         PortraitState desired =
             (alcoholManager != null && alcoholManager.GetIsDrinking()) ? PortraitState.Drinking :
-            isLassoed  ? PortraitState.Dizzy     :
+            lasso.GetIsPulling()  ? PortraitState.Dizzy     :
             PortraitState.Default;
 
         // Avoid redundant sprite assignments every frame

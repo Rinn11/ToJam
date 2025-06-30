@@ -8,9 +8,13 @@ public class PortraitSwitcherCOP : MonoBehaviour
     public Sprite defaultSprite;
     public Sprite angrySprite;
     public Sprite happySprite;
+
+    public GameObject CopPlayer;  // should have lassoFire.cs
+    private lassoFire lasso; // reference to the lassoFire component
+
+    public GameObject Bottle;  // to get isShaking, which implies DD visited bar which makes Cop angry
+    private shakeBottle shakeBottle; 
     
-
-
     private Image _img;                 // cached reference
     private PortraitState _current;     // tracks what we last showed
 
@@ -21,6 +25,17 @@ public class PortraitSwitcherCOP : MonoBehaviour
         _img = GetComponent<Image>();
         _img.sprite = defaultSprite;    // initial value
         _current = PortraitState.Default;
+        
+        // get component for lassoFire's GetIsPulling()
+        if (CopPlayer != null)
+        {
+            lasso = CopPlayer.GetComponent<lassoFire>();
+        }
+
+        if (Bottle != null)
+        {
+            shakeBottle = Bottle.GetComponent<shakeBottle>();
+        }
     }
 
     void Update()
@@ -30,8 +45,8 @@ public class PortraitSwitcherCOP : MonoBehaviour
         // angry is for a second when DD visits a bar i.e pinged
         // default is when DD is not lassoed or pinged
         PortraitState desired =
-            false ? PortraitState.Happy :
-            false ? PortraitState.Angry :
+            lasso.GetIsPulling() ? PortraitState.Happy :
+            shakeBottle.GetIsShaking() ? PortraitState.Angry :
             PortraitState.Default;
 
         // Avoid redundant sprite assignments every frame
