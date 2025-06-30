@@ -6,9 +6,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using TMPro;
 
 [Serializable]
 public class ScoreEvent : UnityEvent<float> { };
@@ -16,7 +18,7 @@ public class ScoreEvent : UnityEvent<float> { };
 public class FineManagerBehavior : MonoBehaviour
 {
     public float fine;
-    public Text fineUI;
+    public TMP_Text  fineUI;
 
     // Events
     public ScoreEvent sendScoreEvent;
@@ -33,7 +35,7 @@ public class FineManagerBehavior : MonoBehaviour
 
         if (fineUI != null)
         {
-            fineUI.text = $"Fine: ${fine}";
+            fineUI.text = $"${fine}";
         }
     }
 

@@ -15,16 +15,18 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class AlcoholManager : MonoBehaviour, IMovementModifier
 {
   public GameObject blackoutPanel;          // The panel used to simulate a blackout
-                                            // public GameObject bottle;                 // The alcohol bottle
 
+  public RawImage capacityRectangle; // this is the rectangle that fills up with alcohol supply
+  public int capacityRectangleMaxHeight = 150; // the maximum height of the rectangle in pixels
+  
   //UI text
-  public Text alcoholCountUI;
-  public Text alcoholSupplyUI;
+  public TMP_Text alcoholCountUI;
 
   public int initialAlcoholCount;
   public int initialAlcoholSupply;
@@ -36,7 +38,12 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
 
   private int alcoholCount;                 // The number of alcohol bottles 
   private int alcoholSupply;              // The number of alcohol bottles available
-
+  
+  
+  private bool withdrawalSymptom = false;  // If true, the player is experiencing withdrawal symptoms and can't drink alcohol
+  private float withdrawalTimer = 0.0f;  // when this reaches a threshold, the player will experience withdrawal symptoms
+  public int withdrawalThreshold = 20; // how many seconds of not drinking alcohol before withdrawal symptoms kick in
+  
   private CanvasGroup blackoutCanvasGroup;  // A reference to control every object in the same canvas as the blackout panel
 
   private AudioSource[] audioSources;
@@ -51,7 +58,7 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
   public float GetAccelerationMultiplier() => GetAlcoholMultiplier() * 2f;
   public float GetReverseMultiplier() => GetAlcoholMultiplier() * 0.7f;
   public float GetBrakeMultiplier() => GetAlcoholMultiplier();
-  public float GetTurnMultiplier() => Mathf.Pow(1.6f, GetAlcoholMultiplier()) * (GetAlcoholMultiplier() / 2f);
+  public float GetTurnMultiplier() => (withdrawalSymptom ? Mathf.Pow(1.6f, GetAlcoholMultiplier()) * (GetAlcoholMultiplier() / 2f) : 1.0f);
   public float GetMaxSpeedMultiplier() => GetAlcoholMultiplier() * 2f;
 
 
@@ -78,10 +85,6 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     {
       Debug.LogError("blackoutPanel not found in the scene!");
     }
-    //
-    // bottlex = 140f;
-    // bottley = -15f;
-    // bottlez = 0f;
 
     audioSources = GetComponents<AudioSource>();
     if (audioSources.Length < 2)
@@ -102,12 +105,13 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
   public void increaseAlcoholCount(int amount = 1)
   {
     alcoholCount += amount;
-    fineManager.increaseFine(100);  // 100 dollar fine per bottle - TODO: fix this from being "magic num"
+    fineManager.increaseFine(100);
     Shader.SetGlobalInt("GlobalAlcoholCount", alcoholCount);
 
     if (alcoholCountUI != null)
     {
-      alcoholCountUI.text = "Alcohol Count: " + alcoholCount;
+      // turn count into blood alc percent. E.g. level 1 is 0.01%, level 10 is 0.1%, level 20 is 0.2%, etc. level 101 is 1.01 
+      alcoholCountUI.text = (alcoholCount / 100f).ToString("F2") + "%";
     }
     else
     {
@@ -135,9 +139,13 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     }
 
     // update text
-    if (alcoholSupplyUI != null)
+    if (capacityRectangle != null)
     {
-      alcoholSupplyUI.text = "Alcohol Supply: " + alcoholSupply;
+      // should follow an asymptote so that the bottle never fulls - this gives infinite capacity but good indicator of supply
+      // the first 10 drinks should take up about the first 80% of the hight
+      float height = Mathf.Clamp(capacityRectangleMaxHeight * (1 - (Mathf.Exp(-alcoholSupply / 10f))), 0,
+        capacityRectangleMaxHeight);
+      capacityRectangle.rectTransform.sizeDelta = new Vector2(capacityRectangle.rectTransform.sizeDelta.x, height);
     }
   }
 
@@ -145,42 +153,66 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
   // Update is called once per frame
   void Update()
   {
+    withdrawalTimer += Time.deltaTime;  // increase withdrawal timer by the time since last frame
+    Debug.Log("Withdrawal timer: " + withdrawalTimer);
+    if (withdrawalTimer >= withdrawalThreshold)
+    {
+      withdrawalSymptom = true;  // player is experiencing withdrawal symptoms
+      Debug.Log("Withdrawal symptoms are kicking in!");
+      // change colour of alcohol capacity rectangle to red
+      if (capacityRectangle != null)
+      {
+        capacityRectangle.color = Color.red;
+      }
+      else
+      {
+        Debug.LogError("CapacityRectangle not found!");
+      }
+      
+      Debug.Log("Withdrawal symptoms are kicking in!");
+    }
+    
+    
     if (playerInput == null) return;
     abilityAction = playerInput.actions["Ability"];
     if (abilityAction == null) return;
 
     // press space to initiate drink alcohol routine
-    if (alcoholSupply > 0 && canDrink && abilityAction.WasPressedThisFrame())
+    if (abilityAction.WasPressedThisFrame())
     {
-      StartCoroutine(DrinkAlcohol());
-    }
-    else if (alcoholSupply <= 0)
-    {
-      Debug.Log("No alcohol supply left!");
-    }
-    else if (!canDrink)
-    {
-      Debug.Log("Can't drink while blacking out!");
-    }
-  }
+      if (alcoholSupply > 0 && canDrink)
+      {
+        StartCoroutine(DrinkAlcohol());
+      }
+      else if (alcoholSupply <= 0)
+      {
+        Debug.Log("No alcohol supply left!");
+      }
+      else if (!canDrink)
+      {
+        Debug.Log("Can't drink while blacking out!");
+      }
 
-  private void FixedUpdate()
-  {
-
+    }
   }
 
   // function to drink alcohol
   private IEnumerator DrinkAlcohol()
   {
-    //
-    // // grab bottle animation, drink animation + gulp sfx, then increase alcoholCount
-    // Transform bottleTransform = bottle.transform;
-    //
-    // // // Record bottle's original position and rotation
-    // Vector3 originalLocalPos = bottleTransform.localPosition;
-    // Quaternion originalLocalRot = bottleTransform.localRotation;
-    // yield return StartCoroutine(AlcoholMove());
     canDrink = false;
+    // reset withdrawal timer
+    withdrawalTimer = 0;
+    withdrawalSymptom = false;  // player is not experiencing withdrawal symptoms
+    // fix colour of alcohol capacity rectangle
+    if (capacityRectangle != null)
+    {
+      capacityRectangle.color = new Color(0.529f, 0.337f, 0.325f); // brownish color
+    }
+    else
+    {
+      Debug.LogError("CapacityRectangle not found!");
+    }
+    
     yield return StartCoroutine(PlayAndWaitForSoundToFinish(audioSources[0]));
 
     // drink increase same as supply decrease
@@ -191,7 +223,6 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     if (alcoholCount >= 3 && UnityEngine.Random.Range(0, 100) < 40 + (Math.Pow(2, GetAlcoholMultiplier())))
     {
       TriggerBlackout();
-      // yield return StartCoroutine(AlcoholReturnLocal(originalLocalPos, originalLocalRot));
     }
     else
     {
@@ -199,84 +230,10 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
       {
         yield return StartCoroutine(PlayAndWaitForSoundToFinish(audioSources[1]));
       }
-      // yield return StartCoroutine(AlcoholReturnLocal(originalLocalPos, originalLocalRot));
     }
     canDrink = true;
   }
-
-  // private IEnumerator AlcoholMove()
-  // {
-  //     Transform bottleTransform = bottle.transform;
-  //     Transform cameraTransform = Camera.main.transform;
-  //
-  //     Vector3 startLocalPos = bottleTransform.localPosition;
-  //     Quaternion startLocalRot = bottleTransform.localRotation;
-  //
-  //     Vector3 bottleTopOffset = bottleTransform.up * (-0.2f); // adjust 0.2f based on bottle size
-  //
-  //
-  //     // Compute local target position relative to bottle's parent (e.g., car)
-  //     Vector3 targetWorldPos = cameraTransform.position + cameraTransform.forward * 0.5f - bottleTopOffset;
-  //     Vector3 targetLocalPos = bottleTransform.parent.InverseTransformPoint(targetWorldPos);
-  //     // Quaternion targetLocalRot = Quaternion.Inverse(bottleTransform.parent.rotation) * cameraTransform.rotation;
-  //
-  //     // Base rotation facing the camera
-  //     Quaternion cameraRot = cameraTransform.rotation;
-  //
-  //     // Apply a tilt so the bottle isn't upside down
-  //     Quaternion bottleTilt = Quaternion.Euler(bottlex, bottley, bottlez); // adjust X angle as needed
-  //
-  //     // Final rotation is camera-facing plus tilt (in world space)
-  //     Quaternion targetWorldRot = cameraRot * bottleTilt;
-  //
-  //     // Convert to local space
-  //     Quaternion targetLocalRot = Quaternion.Inverse(bottleTransform.parent.rotation) * targetWorldRot;
-  //
-  //     float duration = 0.5f;
-  //     float elapsed = 0f;
-  //
-  //     while (elapsed < duration)
-  //     {
-  //         elapsed += Time.deltaTime;
-  //         float t = elapsed / duration;
-  //
-  //         bottleTransform.localPosition = Vector3.Lerp(startLocalPos, targetLocalPos, t);
-  //         bottleTransform.localRotation = Quaternion.Slerp(startLocalRot, targetLocalRot, t);
-  //
-  //         yield return null;
-  //     }
-  //
-  //     bottleTransform.localPosition = targetLocalPos;
-  //     bottleTransform.localRotation = targetLocalRot;
-  // }
-  //
-  //
-  // private IEnumerator AlcoholReturnLocal(Vector3 originalLocalPos, Quaternion originalLocalRot)
-  // {
-  //     Transform bottleTransform = bottle.transform;
-  //
-  //     Vector3 startLocalPos = bottleTransform.localPosition;
-  //     Quaternion startLocalRot = bottleTransform.localRotation;
-  //
-  //     float duration = 0.5f;
-  //     float elapsed = 0f;
-  //
-  //     while (elapsed < duration)
-  //     {
-  //         elapsed += Time.deltaTime;
-  //         float t = elapsed / duration;
-  //
-  //         bottleTransform.localPosition = Vector3.Lerp(startLocalPos, originalLocalPos, t);
-  //         bottleTransform.localRotation = Quaternion.Slerp(startLocalRot, originalLocalRot, t);
-  //
-  //         yield return null;
-  //     }
-  //
-  //     bottleTransform.localPosition = originalLocalPos;
-  //     bottleTransform.localRotation = originalLocalRot;
-  //     canDrink = true;
-  // }
-
+  
 
 
 
@@ -346,19 +303,21 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     Shader.SetGlobalInt("GlobalAlcoholCount", initialAlcoholCount);
     if (alcoholCountUI != null)
     {
-      alcoholCountUI.text = "Alcohol Count: " + alcoholCount;
+      // turn count into blood alc percent. E.g. level 1 is 0.01%, level 10 is 0.1%, level 20 is 0.2%, etc. level 101 is 1.01 
+      alcoholCountUI.text = (alcoholCount / 100f).ToString("F2") + "%";
     }
     else
     {
       Debug.LogError("AlcoholCounterUI not found!");
     }
-    if (alcoholSupplyUI != null)
+    if (capacityRectangle != null)
     {
-      alcoholSupplyUI.text = "Alcohol Supply: " + alcoholSupply;
+      // reset rectangle to height 2
+      capacityRectangle.rectTransform.sizeDelta = new Vector2(capacityRectangle.rectTransform.sizeDelta.x, 2);
     }
     else
     {
-      Debug.LogError("AlcoholSupplyUI not found!");
+      Debug.LogError("CapacityRectangle not found!");
     }
 
     if (alcoholSupply > 0 && canDrink)  // force first drink.

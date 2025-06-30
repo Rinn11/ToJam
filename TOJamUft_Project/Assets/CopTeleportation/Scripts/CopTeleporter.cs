@@ -65,7 +65,7 @@ public class CopTeleporter : MonoBehaviour
         if (AngleTowardsDD)
         {
             // Angle towards DD on the horizontal plane
-            GroundDir = Driver.transform.position - Cop.transform.position; // Angle from cop to driver
+            GroundDir = Driver.transform.position - TeleportMarker.transform.position; // Angle from cop to driver
             GroundDir.y = 0;
             GroundDir.Normalize();
         }
