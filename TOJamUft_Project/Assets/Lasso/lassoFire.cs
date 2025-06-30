@@ -20,7 +20,7 @@ public class lassoFire : MonoBehaviour
     public GameObject lockOnIndicator;  // Indicator that tells cop when they can use their ability
     public Camera uiCamera;             // Camera the HUD's parent canvas is tied to
 
-    public Boolean CurrentlyPulling = false;
+    public bool currentlyPulling = false;
 
     private void Start()
     {
@@ -38,7 +38,7 @@ public class lassoFire : MonoBehaviour
     {
         if (target == null) return;
         if (playerInput == null) return;
-        if (uiCamera == null) return; // Ensure the camera is available for positioning
+        if (uiCamera == null) return;
 
         InputAction ability2Action = playerInput.actions["Ability2"];
         if (ability2Action == null) return;
@@ -46,61 +46,58 @@ public class lassoFire : MonoBehaviour
         Vector3 direction = target.position - transform.position;
         float distance = direction.magnitude;
 
-        // Only when starting a new pulling sequence
-        if (ability2Action.WasPressedThisFrame() && !CurrentlyPulling)
+        if (distance <= maxDistance)
         {
-            CurrentlyPulling = true;
-        }
+            // If target is within range
+            Ray ray = new Ray(transform.position, direction.normalized);
+            RaycastHit hit;
 
-        // Looped logic during pulling sequence
-        if (CurrentlyPulling)
-        {
-            particleSystem?.SetActive(true);
-            lockOnIndicator?.SetActive(true);
-
-            // Calculate the 2D screen position of the 3D target
-            Vector3 screenPos = uiCamera.WorldToScreenPoint(target.position);
-
-            RectTransform indicatorRectTransform = lockOnIndicator.GetComponent<RectTransform>();
-            RectTransform canvasRectTransform = lockOnIndicator.GetComponentInParent<Canvas>().GetComponent<RectTransform>();
-
-            // Adjust the 2D screen position to the parent canvas
-            Vector2 localPointerPos;
-            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, screenPos, uiCamera, out localPointerPos))
+            if (!Physics.Raycast(ray, out hit, distance, obstacleMask))
             {
-                indicatorRectTransform.anchoredPosition = localPointerPos;
-            }
+                // If target is visible
 
-            lockOnIndicator.SetActive(true);
+                // Calculate the 2D screen position of the 3D target
+                Vector3 screenPos = uiCamera.WorldToScreenPoint(target.position);
 
-            // 1. Check if within range
-            if (distance <= maxDistance)
-            {
-                Ray ray = new Ray(transform.position, direction.normalized);
-                RaycastHit hit;
+                RectTransform indicatorRectTransform = lockOnIndicator.GetComponent<RectTransform>();
+                RectTransform canvasRectTransform = lockOnIndicator.GetComponentInParent<Canvas>().GetComponent<RectTransform>();
 
-                // 2. Perform the raycast
-                if (!Physics.Raycast(ray, out hit, distance, obstacleMask))
+                // Adjust the 2D screen position to the parent canvas
+                Vector2 localPointerPos;
+                if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, screenPos, uiCamera, out localPointerPos))
                 {
+                    lockOnIndicator?.SetActive(true);
+                    indicatorRectTransform.anchoredPosition = localPointerPos;
+                }
+
+                // Start pulling sequence if not already in one
+                if (ability2Action.WasPressedThisFrame() && !currentlyPulling)
+                {
+                    currentlyPulling = true;
+                }
+
+                // Main looping logic
+                if (currentlyPulling)
+                {
+                    particleSystem.SetActive(true);
                     Debug.DrawRay(transform.position, direction, Color.green);
                     TarRB.AddForce(-direction.normalized * forceMult * 1000000 / (distance * distance));
-                }
-                else
-                {
-                    // If an obstacle is hit, stop pulling
-                    CurrentlyPulling = false;
                 }
             }
             else
             {
-                // If target goes out of range, stop pulling
-                CurrentlyPulling = false;
-            }
+                // Target no longer visible
+                currentlyPulling = false;
+                particleSystem?.SetActive(false);
+                lockOnIndicator?.SetActive(false);
+            }            
         }
         else
         {
+            // Target out of range
+            currentlyPulling = false;
             particleSystem?.SetActive(false);
-            lockOnIndicator.SetActive(false);
+            lockOnIndicator?.SetActive(false);
         }
     }
 
@@ -109,7 +106,9 @@ public class lassoFire : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             // Once target collides with cop, stop pulling
-            CurrentlyPulling = false;
+            currentlyPulling = false;
+            particleSystem?.SetActive(false);
+            lockOnIndicator?.SetActive(false);
             return;
         }
     }
