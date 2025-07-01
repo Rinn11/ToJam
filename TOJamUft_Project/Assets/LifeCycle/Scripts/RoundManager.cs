@@ -8,6 +8,8 @@ using System;
 
 [Serializable]
 public class WinnerEvent : UnityEvent<int> { };
+[Serializable]
+public class GameDataEvent: UnityEvent<float, float, float, float> { };
 
 
 // RoundManager will be utilizing the event system to manage game rounds. It will have methods to start, end, and manage states of the round.
@@ -20,8 +22,14 @@ public class RoundManager : MonoBehaviour
 
     private int currentRound = 0;
     private int currentGame = 0;
+
+    // These lists will hold the scores for each player in each game.
     private List<float> p1DrunkDriverScores = new List<float>();
     private List<float> p2DrunkDriverScores = new List<float>();
+
+    // These lists will hold the times for each player took to catch the drunk driver.
+    private List<float> p1PoliceCarScores = new List<float>();
+    private List<float> p2PoliceCarScores = new List<float>();
 
     private bool isP1Driving = true; // This will track which player is currently driving the drunk driver car.
     public PlayerSwapEventSender playerSwapEvent;
@@ -37,12 +45,13 @@ public class RoundManager : MonoBehaviour
         return isP1Driving;
     }
 
+    [Header("Events")]
     public UnityEvent NewRoundEvent = new UnityEvent();
     public UnityEvent showScoreBoardEvent = new UnityEvent();
     public UnityEvent hideScoreBoardEvent = new UnityEvent();
     public UnityEvent showEndScreenEvent = new UnityEvent();
     public WinnerEvent winnerEvent;
-    
+    public GameDataEvent sendGameDataEvent;    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -66,13 +75,15 @@ public class RoundManager : MonoBehaviour
     public IEnumerator EndRound()
     {
         float score = fineManager.fine; // Get the score from the FineManager
-        Debug.Log($"Round ended with score: {score}. Current round: {currentRound}, Current game: {currentGame}, Next Round: {currentRound + 1}");
+        float time = roundTimer.elapsedTime; // Get the time from the RoundTimer
+        
         fineManager.sendScoreInvoker();
         roundTimer.sendTimeInvoker();
 
         currentRound++;
         if (currentRound % 2 == 0)
         {
+            p1PoliceCarScores.Add(time);
             p2DrunkDriverScores.Add(score);
 
             if (p2DrunkDriverScores[currentGame] > p1DrunkDriverScores[currentGame])
@@ -91,6 +102,14 @@ public class RoundManager : MonoBehaviour
                 winnerEvent.Invoke(2); // Invoke the winner event with 2 for a tie I guess?
             }
 
+            // Send the game data to the UI or any other component that needs it.
+            sendGameDataEvent.Invoke(
+                p1DrunkDriverScores[currentGame],
+                p2DrunkDriverScores[currentGame],
+                p1PoliceCarScores[currentGame],
+                p2PoliceCarScores[currentGame]
+            );
+
             // Show the end screen UI after the round ends.
             showEndScreenEvent.Invoke();
 
@@ -101,6 +120,7 @@ public class RoundManager : MonoBehaviour
         else
         {
             p1DrunkDriverScores.Add(score);
+            p2PoliceCarScores.Add(time);
             toggleIsP1Driving();
 
             // TODO: Then you can add logic here to make some UI show up that explains the round is over and the players are switching roles.
