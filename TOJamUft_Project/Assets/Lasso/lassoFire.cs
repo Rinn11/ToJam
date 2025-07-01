@@ -27,6 +27,11 @@ public class lassoFire : MonoBehaviour
     public TMP_Text cooldownTimerText;  // Timer text representing the number of seconds left before next use
 
     private bool currentlyPulling = false;
+    
+    public bool GetIsPulling()
+    {
+        return currentlyPulling;
+    }
 
     private void Start()
     {
