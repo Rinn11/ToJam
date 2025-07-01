@@ -3,6 +3,7 @@
  * It attaches itself to the PlayerSwapEventSender
  */
 
+/*
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -90,4 +91,4 @@ public class InputSwapper : MonoBehaviour
             }
         }
     }
-}
+}*/

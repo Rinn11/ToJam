@@ -35,7 +35,7 @@ public class RoundTimer : MonoBehaviour
         elapsedTime = Mathf.Min(elapsedTime + Time.deltaTime, roundDuration);
         timeRemaining = Mathf.Max(timeRemaining - Time.deltaTime, 0f);
 
-        Debug.Log($"Elapsed Time: {elapsedTime:F2}, Time Remaining: {timeRemaining:F2}");
+        //Debug.Log($"Elapsed Time: {elapsedTime:F2}, Time Remaining: {timeRemaining:F2}");
 
         if (timeRemaining <= 0f)
         {

@@ -9,11 +9,12 @@ using System;
 [Serializable]
 public class WinnerEvent : UnityEvent<int> { };
 
-
 // RoundManager will be utilizing the event system to manage game rounds. It will have methods to start, end, and manage states of the round.
 // We define 1 game as 2 rounds, each round will end with a player swap once the player that is driving the cop car catches the other player.
 public class RoundManager : MonoBehaviour
 {
+    public PlayerJoinManager playerJoinManager;
+
     public static RoundManager Instance { get; private set; }
     public int numberOfGames;
     public float scoreBoardShowDelay;
@@ -56,6 +57,7 @@ public class RoundManager : MonoBehaviour
     {
         // Check which player is currently driving and swap controls and camera positions & UI by sending this event
         playerSwapEvent.Trigger(isP1Driving);
+        playerJoinManager.SwapPlayers();
 
         NewRoundEvent.Invoke();
         Debug.Log($"Cleaning up, new round will start soon...");
@@ -91,8 +93,12 @@ public class RoundManager : MonoBehaviour
                 winnerEvent.Invoke(2); // Invoke the winner event with 2 for a tie I guess?
             }
 
+
+
             // Show the end screen UI after the round ends.
             showEndScreenEvent.Invoke();
+
+            playerSwapEvent.Trigger(isP1Driving);
 
             // Then stop time so players can see the board.
             Time.timeScale = 0f;
