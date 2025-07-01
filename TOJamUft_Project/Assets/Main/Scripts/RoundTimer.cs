@@ -19,8 +19,10 @@ public class RoundTimer : MonoBehaviour
     public UnityEvent roundEndEvent; // Event to invoke when the round ends.
 
     // Keep both time remaining and elapsed time to calculate the timer, in case we want to utilize both in the future
-    private float timeRemaining; // Time remaining in the current round
-    private float elapsedTime; // Time elapsed since the round started
+    [HideInInspector]
+    public float timeRemaining; // Time remaining in the current round
+    [HideInInspector]
+    public float elapsedTime; // Time elapsed since the round started
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
