@@ -10,44 +10,50 @@ using UnityEngine.InputSystem; // Required for the new Input System
 
 public class MouseLook : MonoBehaviour
 {
+  public PlayerSwapEventSender swapSender;
+  
   public float mouseSensitivity;
-    [SerializeField] private string mouseXField;
-    [SerializeField] private string mouseYField;
+  [SerializeField] private string mouseXField;
+  [SerializeField] private string mouseYField;
 
-    private Vector2 lookAction;
+  // Fields for swapping controls. it's a little hacky but it works for now.
+  [SerializeField] private string mouseXFieldOpposite;
+  [SerializeField] private string mouseYFieldOpposite;
+
+  private Vector2 lookAction;
 
   private float yRotation = 0f; // Stores the current rotation of the camera
 
   void Awake()
   {
-        /*
-    var inputActionAsset = InputSystem.actions;
-    if (inputActionAsset != null)
-    {
-      lookAction = inputActionAsset.FindAction("Look");
-    }
+    /*
+var inputActionAsset = InputSystem.actions;
+if (inputActionAsset != null)
+{
+  lookAction = inputActionAsset.FindAction("Look");
+}
 
-    if (lookAction == null)
-    {
-      Debug.LogError("Move action not found! Please ensure it's defined in your Input Actions asset.");
-      enabled = false;
-      return;
-    }
-    lookAction.Enable();
-        */
+if (lookAction == null)
+{
+  Debug.LogError("Move action not found! Please ensure it's defined in your Input Actions asset.");
+  enabled = false;
+  return;
+}
+lookAction.Enable();
+    */
     lookAction = new Vector2(Input.GetAxis(mouseXField), Input.GetAxis(mouseYField));
-    }
-
-    /* This is Unity's new Input System code. it won't work anymore so it will be commented out and removed later.
-  void OnEnable()
-  {
-    lookAction.Enable();
   }
 
-  void OnDisable()
-  {
-    lookAction.Disable();
-  } */
+  /* This is Unity's new Input System code. it won't work anymore so it will be commented out and removed later.
+void OnEnable()
+{
+  lookAction.Enable();
+}
+
+void OnDisable()
+{
+  lookAction.Disable();
+} */
 
   void Start()
   {
@@ -59,8 +65,8 @@ public class MouseLook : MonoBehaviour
 
   void Update()
   {
-        lookAction = new Vector2(Input.GetAxis(mouseXField), Input.GetAxis(mouseYField));
-        Vector2 mouseDelta = lookAction * mouseSensitivity * Time.deltaTime;
+    lookAction = new Vector2(Input.GetAxis(mouseXField), Input.GetAxis(mouseYField));
+    Vector2 mouseDelta = lookAction * mouseSensitivity * Time.deltaTime;
 
     // --- Vertical Look (Pitch) ---
     // Adjust the xRotation based on mouse Y input
@@ -74,5 +80,31 @@ public class MouseLook : MonoBehaviour
 
     // Apply the vertical rotation to the camera itself
     transform.localRotation = Quaternion.Euler(0f, yRotation, 0f);
+  }
+
+  private void OnEnable()
+  {
+    if (swapSender != null)
+      swapSender.OnBoolEvent += recievePlayerSwap;
+  }
+  
+  private void OnDisable()
+  {
+    if (swapSender != null)
+      swapSender.OnBoolEvent -= recievePlayerSwap;
+  }
+
+  public void recievePlayerSwap(bool isPlayer1DrunkDriver)
+  {
+    // Swap the mouse X and Y axes
+    string tempMouseX = mouseXField;
+    string tempMouseY = mouseYField;
+
+    mouseXField = mouseXFieldOpposite;
+    mouseYField = mouseYFieldOpposite;
+
+    mouseXFieldOpposite = tempMouseX;
+    mouseYFieldOpposite = tempMouseY;
+    Debug.Log($"Swapped mouse controls: {mouseXField}, {mouseYField} <-> {mouseXFieldOpposite}, {mouseYFieldOpposite}");
   }
 }

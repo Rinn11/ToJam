@@ -5,18 +5,62 @@
 
 // TODO: Maybe this should use the game ending functions in EndScreenBehaviour?
 
+using System;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerCollision : MonoBehaviour
 {
-
-  public AudioSource crashSource;
-  public AudioSource damageSource;
-  public GameObject endScreenUI;
+  [Header("UI Related Settings")]
   public GameObject textUI;
 
-  float damage = 100f;
+  [Header("Collision Settings")]
+  [SerializeField]
+  private int numberOfCollisions;
+  private int currentCollisions = 0;
+  private bool acceptCollisions = true; // Flag to control whether collisions are accepted for certain behaviors to trigger
+
+  [Header("IFrame Settings")]
+  [SerializeField]
+  private float iframeDuration; // Duration of invincibility frames (in seconds)
+  [SerializeField]
+  private int numberOfIframeFlashes; // Number of times to flash the player during iFrames
+  [SerializeField]
+  private float iframeOpacity; // Amount to change the opacity during iFrames
+
+  [Header("Audio Settings")]
+  public AudioSource crashSource;
+  public AudioSource damageSource;
+
   float timeSinceLastCollision = 0f, lastCollisionExitTime = 0f;
+
+  [Header("Events")]
+  public UnityEvent roundOverEvent;
+
+  // Thanks to this video for the help for the iframe implementation even though it's for 2D Unity: https://www.youtube.com/watch?v=YSzmCf_L2cE
+  private IEnumerator iFrameCoroutine()
+  {
+    acceptCollisions = false; // Disable further collisions and more behaviors during iframes
+
+    // Grab the mesh renderer of the player to flash it
+    MeshRenderer renderer = GetComponent<MeshRenderer>();
+    Color materialColor = renderer.material.color;
+
+    for (int i = 0; i < numberOfIframeFlashes; i++)
+    {
+      materialColor.a = iframeOpacity; // Set the material color to semi-transparent
+      renderer.material.color = materialColor; // Apply the color change
+      yield return new WaitForSeconds(iframeDuration / (numberOfIframeFlashes * 2));
+      materialColor.a = 1f; // Reset to full opacity
+      renderer.material.color = materialColor; // Apply the color change
+      yield return new WaitForSeconds(iframeDuration / (numberOfIframeFlashes * 2));
+    }
+
+    acceptCollisions = true; // Re-enable collisions after the iFrame duration
+  }
+
 
   private void OnCollisionEnter(Collision collision)
   {
@@ -33,20 +77,34 @@ public class PlayerCollision : MonoBehaviour
     //   damageSource.Play();
     // }
 
-    if (damage == 0f || collision.gameObject.CompareTag("CopCar"))
+    if (collision.gameObject.CompareTag("CopCar") && acceptCollisions)
     {
-      crashSource.Play();
-      endScreenUI.SetActive(true);
-      textUI.SetActive(false);
+      currentCollisions++;
+      Debug.Log("Collision with cop car detected. Current collisions: " + currentCollisions);
 
-      Cursor.lockState = CursorLockMode.None;
-      Cursor.visible = true;
-      collision.gameObject.SetActive(false);
+      // Just crashing won't do. you need feedback. add visual and audio feedback here.
+      crashSource.Play();
+
+      if (currentCollisions >= numberOfCollisions)
+      {
+        roundOverEvent.Invoke();
+        return;
+      }
+
+      // Use an iFrame period to give the player a chance to recover.
+      StartCoroutine(iFrameCoroutine());
     }
+
   }
 
   void OnCollisionExit(Collision collision)
   {
     lastCollisionExitTime = Time.time;
+  }
+
+  public void resetCollisions()
+  {
+    currentCollisions = 0; // Reset the collision count
+    acceptCollisions = true; // Re-enable collisions
   }
 }

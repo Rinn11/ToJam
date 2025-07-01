@@ -7,17 +7,24 @@ TagManager:
   - CarSpawner
   - ControlPoint
   - CopCar
+  - FineManager
+  - RoundManager
+  - RoundScreenUI
+  - MarkedCar
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Building
   - Water
   - UI
   - GUI
-  - Street
-  - Bar
-  - ParkingGarage
+  - CarModels
+  - 
+  - DrunkOnly
+  - CopOnly
+  - 
+  - Ground
   - 
   - 
   - 
@@ -26,6 +33,7 @@ TagManager:
   - 
   - 
   - 
+  - CopTeleportationElements
   - 
   - 
   - 
@@ -34,15 +42,14 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - MinimapExcluded
   - MinimapElements
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 820156523
     locked: 0
   m_RenderingLayers:
   - Default
