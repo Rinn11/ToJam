@@ -77,7 +77,8 @@ public class lassoFire : MonoBehaviour
                 Vector2 localPointerPos;
                 if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, screenPos, uiCamera, out localPointerPos))
                 {
-                    lockOnIndicator?.SetActive(true);
+                    // Avoid showing if behind camera
+                    lockOnIndicator?.SetActive(screenPos.z > 0);
                     indicatorRectTransform.anchoredPosition = localPointerPos;
                 }
 
