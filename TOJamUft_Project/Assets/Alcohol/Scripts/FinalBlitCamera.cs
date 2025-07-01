@@ -11,7 +11,8 @@ public class FinalBlitCamera : MonoBehaviour
     public Camera drunkDriverUICamera;
     public Camera copPlayerCamera;
     public PlayerSwapEventSender swapSender;
-    
+
+    public Canvas letterboxing;
     
     // Global variable to determine the drunk driver
     public bool IsPlayer1DrunkDriver;
@@ -39,6 +40,11 @@ public class FinalBlitCamera : MonoBehaviour
         if (isDualMonitor)
         {
             Debug.Log("Multi monitor setup detected. Initializing cameras for dual monitor mode.");
+            // set letterboxing canv unactive
+            if (letterboxing != null)
+            {
+                letterboxing.gameObject.SetActive(false);
+            }
             UpdateCameraViewportsDualMonitor();
         }
         else
@@ -46,6 +52,11 @@ public class FinalBlitCamera : MonoBehaviour
             Debug.Log("Single monitor setup detected. Initializing cameras for splitscreen mode.");
             blurredSource = new RenderTexture(Screen.width / 2, Screen.height / 2, 0);
             blurredSource.Create();
+            // set letterboxing canvas active
+            if (letterboxing != null)
+            {
+                letterboxing.gameObject.SetActive(true);
+            }
             
             UpdateCameraViewportsSplitscreen();
         }

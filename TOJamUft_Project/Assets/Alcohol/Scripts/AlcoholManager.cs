@@ -23,7 +23,8 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
   public GameObject blackoutPanel;          // The panel used to simulate a blackout
 
   public RawImage capacityRectangle; // this is the rectangle that fills up with alcohol supply
-  public int capacityRectangleMaxHeight = 150; // the maximum height of the rectangle in pixels
+  public int capacityRectangleMaxHeight = 146; // the maximum height of the rectangle in pixels
+  public RawImage bottle;
   
   //UI text
   public TMP_Text alcoholCountUI;
@@ -102,6 +103,12 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
   {
     return alcoholCount;
   }
+  
+  public bool GetIsDrinking() // returns true if the player is currently drinking alcohol
+  {
+    return !canDrink;
+  }
+  
   public void increaseAlcoholCount(int amount = 1)
   {
     alcoholCount += amount;
@@ -146,6 +153,11 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
       float height = Mathf.Clamp(capacityRectangleMaxHeight * (1 - (Mathf.Exp(-alcoholSupply / 10f))), 0,
         capacityRectangleMaxHeight);
       capacityRectangle.rectTransform.sizeDelta = new Vector2(capacityRectangle.rectTransform.sizeDelta.x, height);
+    }
+    
+    if (amount > 0) // if we are increasing the alcohol supply, shake the bottle
+    {
+      bottle.GetComponent<shakeBottle>().setShakeTimer();
     }
   }
 
