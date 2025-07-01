@@ -7,14 +7,23 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class EndScreenBehavior : MonoBehaviour
 {
     [Header("Display 1 UI")]
-    public Text winnerText;
+    public TextMeshProUGUI winnerText;
+    public TextMeshProUGUI p1ScoreText;
+    public TextMeshProUGUI p2ScoreText;
+    public TextMeshProUGUI p1TimeText;
+    public TextMeshProUGUI p2TimeText;
 
     [Header("Display 2 UI")]
-    public Text winnerText2;
+    public TextMeshProUGUI winnerText2;
+    public TextMeshProUGUI p1ScoreText2;
+    public TextMeshProUGUI p2ScoreText2;
+    public TextMeshProUGUI p1TimeText2;
+    public TextMeshProUGUI p2TimeText2;
 
     // Count and update the score.
     public void updateWinnerUI(int winnerID)
@@ -32,6 +41,28 @@ public class EndScreenBehavior : MonoBehaviour
             winnerText.text = "Tied!";
         }
         winnerText2.text = winnerText.text;
+    }
+
+    // Update the scores and times for both players
+    public void updateScoreUI(float p1Score, float p2Score, float p1Time, float p2Time)
+    {
+        // Update the scores and times for the first display
+        p1ScoreText.text = $"Player 1 Score: {p1Score:F2}";
+        p2ScoreText.text = $"Player 2 Score: {p2Score:F2}";
+
+        int p1ElapsedMinutes = Mathf.FloorToInt(p1Time / 60);
+        int p1ElapsedSeconds = Mathf.FloorToInt(p1Time % 60);
+        int p2ElapsedMinutes = Mathf.FloorToInt(p2Time / 60);
+        int p2ElapsedSeconds = Mathf.FloorToInt(p2Time % 60);
+
+        p1TimeText.text = $"Player 1 Time: {p1ElapsedMinutes:D2}:{p1ElapsedSeconds:D2}";
+        p2TimeText.text = $"Player 2 Time: {p2ElapsedMinutes:D2}:{p2ElapsedSeconds:D2}";
+
+        // Update the scores and times for the second display
+        p1ScoreText2.text = p1ScoreText.text;
+        p2ScoreText2.text = p2ScoreText.text;
+        p1TimeText2.text = p1TimeText.text;
+        p2TimeText2.text = p2TimeText.text;
     }
 
     // Reload the Scene and reset the round manager to play again
