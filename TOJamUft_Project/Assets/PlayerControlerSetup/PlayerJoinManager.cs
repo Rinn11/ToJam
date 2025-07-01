@@ -11,8 +11,8 @@ public class PlayerSlot
     public InputUser user;
     public bool occupied;
 
-    public Renderer highlightRenderer;
-    //public TMPro.TMP_Text deviceLabel;
+    // visuals used for debuging
+    //public Renderer highlightRenderer;
 }
 
 public class PlayerJoinManager : MonoBehaviour
@@ -52,26 +52,26 @@ public class PlayerJoinManager : MonoBehaviour
         var device = ctx.control.device;
         Debug.Log($"Join pressed by: {device.displayName}");
 
-        // ? Prevent joining if device already paired
+        // Prevent joining if device already paired
         if (InputUser.FindUserPairedToDevice(device).HasValue)
         {
             Debug.Log("Device is already in use.");
             return;
         }
 
-        // ? Only allow one keyboard/mouse player
+        // Only allow one keyboard/mouse player
         if ((device is Keyboard || device is Mouse) && keyboardMouseTaken)
         {
             Debug.Log("Keyboard & mouse already taken.");
             return;
         }
 
-        // ?? Find first available slot
+        // Finds first available slot
         foreach (var slot in playerSlots)
         {
             if (!slot.occupied && slot.input != null)
             {
-                // ? Match a control scheme to the device
+                // Match a control scheme to the device
                 var scheme = slot.input.actions.controlSchemes
                     .FirstOrDefault(s => s.SupportsDevice(device));
 
@@ -81,33 +81,33 @@ public class PlayerJoinManager : MonoBehaviour
                     return;
                 }
 
-                // ?? Assign the device + scheme to the PlayerInput
+                // Assign the device & scheme to the PlayerInput
                 slot.input.SwitchCurrentControlScheme(scheme.name, new[] { device });
                 slot.input.ActivateInput();
 
-                // ?? Set user reference and slot state
+                // Set user reference and slot state
                 slot.user = slot.input.user;
                 slot.occupied = true;
 
-                // ?? Track which device this user is supposed to have
+                // Tracks which device this user is supposed to have
                 assignedDevices[slot.user] = device;
 
-                // ? Set KB+M flag
                 if (device is Keyboard || device is Mouse)
                     keyboardMouseTaken = true;
 
-                // ?? Just in case: remove any extra devices from this user
+                // Makes sure unity does add a controler to the wrong object
                 EnforceSingleDevicePerUser(slot.user);
 
-                // ?? Visual feedback
+                // Visual feedback, used for debugging
+                /*
                 if (slot.highlightRenderer != null)
                     slot.highlightRenderer.material.color = Color.green;
+                */
 
-                // ?? Bind Leave action
-                var leaveAction = slot.input.actions.FindAction("Leave", true);
-                leaveAction.performed += ctx => LeavePlayer(slot);
+                // allows for deactivation of controler, currently inactive 
+                //var leaveAction = slot.input.actions.FindAction("Leave", true);
+                // leaveAction.performed += ctx => LeavePlayer(slot);
 
-                // ?? Debug log
                 LogAllPairings();
 
                 return;
@@ -130,11 +130,6 @@ public class PlayerJoinManager : MonoBehaviour
 
         if (slot.input.user.pairedDevices.Any(d => d is Keyboard || d is Mouse))
             keyboardMouseTaken = false;
-
-        if (slot.highlightRenderer != null)
-            slot.highlightRenderer.material.color = Color.white;
-        /*if (slot.deviceLabel != null)
-            slot.deviceLabel.text = "Press Start to Join";*/
 
         LogAllPairings();
     }
@@ -213,15 +208,13 @@ public class PlayerJoinManager : MonoBehaviour
         // Swap users in slots
         (slot1.user, slot2.user) = (slot2.user, slot1.user);
 
-        // ? Cleanup again
+        // Makes sure unity does add a controler to the wrong object
         EnforceSingleDevicePerUser(slot1.user);
         EnforceSingleDevicePerUser(slot2.user);
 
         Debug.Log("Players successfully swapped control.");
         LogAllPairings();
     }
-
-
 
     public void LogAllPairings()
     {
@@ -250,6 +243,7 @@ public class PlayerJoinManager : MonoBehaviour
         }
     }
 
+    // this is made to make sure that two devices cannot be paired to the same object
     private void EnforceSingleDevicePerUser(InputUser user)
     {
         var devices = user.pairedDevices.ToList();
