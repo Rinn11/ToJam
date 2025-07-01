@@ -65,6 +65,7 @@ public class lassoFire : MonoBehaviour
 
             if (!Physics.Raycast(ray, out hit, distance, obstacleMask))
             {
+                Debug.Log("Raycast" + hit);
                 // If target is visible
 
                 // Calculate the 2D screen position of the 3D target
