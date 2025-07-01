@@ -1,112 +1,193 @@
-using System.Collections;
+/*
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
-using Unity.Cinemachine;
+
+[System.Serializable]
+public class PlayerSlot
+{
+    public PlayerInput input;
+    public InputUser user;
+    public bool occupied;
+
+    public Renderer highlightRenderer;
+    public TMPro.TMP_Text deviceLabel;
+}
 
 public class PlayerJoinManager : MonoBehaviour
 {
-    public PlayerInputManager playerInputManager;
+    public List<PlayerSlot> playerSlots = new();
+    public InputAction joinAction;
 
-    [Header("Assigned at runtime")]
-    public PlayerInput drunkPlayerInput;
-    public PlayerInput copPlayerInput;
+    private bool keyboardMouseTaken = false;
 
-    [Header("Cinemachine Controls")]
-    public CinemachineInputAxisController drunkCameraController;
-    public CinemachineInputAxisController copCameraController;
-    public InputActionReference drunkCameraInputAction;
-    public InputActionReference copCameraInputAction;
-
-    private int joinedPlayers = 0;
-
-    void Update()
+    private void OnEnable()
     {
-        if (joinedPlayers >= 2) return;
+        joinAction.Enable();
+        joinAction.performed += OnJoinPressed;
+    }
 
-        foreach (var device in InputSystem.devices)
+    private void OnDisable()
+    {
+        joinAction.performed -= OnJoinPressed;
+        joinAction.Disable();
+    }
+
+    private void OnJoinPressed(InputAction.CallbackContext ctx)
+    {
+        var device = ctx.control.device;
+        Debug.Log($"Join pressed by: {device.displayName}");
+
+        if (InputUser.FindUserPairedToDevice(device).HasValue)
         {
-            if (device is Gamepad gamepad && !IsDevicePaired(gamepad))
-            {
-                if (gamepad.startButton.wasPressedThisFrame)
-                {
-                    var playerInput = playerInputManager.JoinPlayer(joinedPlayers, -1, null, gamepad);
-                    AssignPlayer(playerInput);
-                    joinedPlayers++;
+            Debug.Log("Device already in use.");
+            return;
+        }
 
-                    if (joinedPlayers >= 2)
-                        playerInputManager.enabled = false;
+        if ((device is Keyboard || device is Mouse) && keyboardMouseTaken)
+        {
+            Debug.Log("Keyboard & mouse already taken.");
+            return;
+        }
+
+        foreach (var slot in playerSlots)
+        {
+            if (!slot.occupied && slot.input != null)
+            {
+                var scheme = slot.input.actions.controlSchemes
+                    .FirstOrDefault(s => s.SupportsDevice(device));
+
+                if (scheme.name == null)
+                {
+                    Debug.LogError($"No scheme supports {device.displayName}");
+                    return;
                 }
+
+                slot.input.SwitchCurrentControlScheme(scheme.name, new[] { device });
+                slot.input.ActivateInput();
+
+                slot.user = slot.input.user;
+                slot.occupied = true;
+
+                if (device is Keyboard || device is Mouse)
+                    keyboardMouseTaken = true;
+
+                if (slot.highlightRenderer != null)
+                    slot.highlightRenderer.material.color = Color.green;
+                if (slot.deviceLabel != null)
+                    slot.deviceLabel.text = scheme.name;
+
+                var leaveAction = slot.input.actions.FindAction("Leave", true);
+                leaveAction.performed += ctx => LeavePlayer(slot);
+
+                LogAllPairings();
+                return;
             }
         }
+
+        Debug.Log("No available slots.");
     }
 
-    private bool IsDevicePaired(InputDevice device)
+    public void LeavePlayer(PlayerSlot slot)
     {
-        return PlayerInput.all.Any(p => p.devices.Contains(device));
-    }
+        if (!slot.occupied) return;
 
-    private void AssignPlayer(PlayerInput player)
-    {
-        if (drunkPlayerInput == null)
-        {
-            drunkPlayerInput = player;
-            drunkPlayerInput.gameObject.name = "DrunkPlayer";
-            drunkPlayerInput.SwitchCurrentActionMap("DDPlayer");
-            SetCameraInput(drunkCameraController, drunkCameraInputAction);
-        }
-        else
-        {
-            copPlayerInput = player;
-            copPlayerInput.gameObject.name = "CopPlayer";
-            copPlayerInput.SwitchCurrentActionMap("CopPlayer");
-            SetCameraInput(copCameraController, copCameraInputAction);
-        }
+        slot.input.DeactivateInput();
+        slot.user.UnpairDevicesAndRemoveUser();
+        slot.user = default;
+        slot.occupied = false;
+
+        if (slot.input.user.pairedDevices.Any(d => d is Keyboard || d is Mouse))
+            keyboardMouseTaken = false;
+
+        if (slot.highlightRenderer != null)
+            slot.highlightRenderer.material.color = Color.white;
+        if (slot.deviceLabel != null)
+            slot.deviceLabel.text = "Press Start to Join";
+
+        LogAllPairings();
     }
 
     public void SwapPlayers()
     {
-        Debug.Log("Reach");
-        if (drunkPlayerInput == null || copPlayerInput == null)
-            return;
-
-        Debug.Log("Reached Event");
-
-        var drunkDevice = drunkPlayerInput.devices.FirstOrDefault();
-        var copDevice = copPlayerInput.devices.FirstOrDefault();
-
-        if (drunkDevice == null || copDevice == null)
-            return;
-
-        Debug.Log("Reached 2ed Event");
-
-        Destroy(drunkPlayerInput.gameObject);
-        Destroy(copPlayerInput.gameObject);
-
-        StartCoroutine(RejoinPlayersAfterSwap(drunkDevice, copDevice));
-    }
-
-    private IEnumerator RejoinPlayersAfterSwap(InputDevice drunkDevice, InputDevice copDevice)
-    {
-        yield return null;
-
-        var newCop = playerInputManager.JoinPlayer(0, -1, "CopPlayer", drunkDevice);
-        var newDrunk = playerInputManager.JoinPlayer(1, -1, "DDPlayer", copDevice);
-
-        drunkPlayerInput = newDrunk;
-        copPlayerInput = newCop;
-
-        SetCameraInput(drunkCameraController, copCameraInputAction); // swapped
-        SetCameraInput(copCameraController, drunkCameraInputAction);
-    }
-
-    private void SetCameraInput(CinemachineInputAxisController controller, InputActionReference actionRef)
-    {
-        foreach (var c in controller.Controllers)
+        if (playerSlots.Count < 2)
         {
-            if (c.Name == "Look Orbit X" || c.Name == "Look Orbit Y")
-                c.Input.InputAction = actionRef;
+            Debug.LogWarning("Need 2 players to swap.");
+            return;
+        }
+
+        var slot1 = playerSlots[0];
+        var slot2 = playerSlots[1];
+
+        if (!slot1.occupied || !slot2.occupied)
+        {
+            Debug.LogWarning("Both players must be joined to swap.");
+            return;
+        }
+
+        Debug.Log("Swapping player control...");
+
+        var user1 = slot1.user;
+        var user2 = slot2.user;
+
+        var input1 = slot1.input;
+        var input2 = slot2.input;
+
+        var devices1 = user1.pairedDevices.ToArray();
+        var devices2 = user2.pairedDevices.ToArray();
+
+        input1.DeactivateInput();
+        input2.DeactivateInput();
+
+        user1.UnpairDevices();
+        user2.UnpairDevices();
+
+        // Rebind user1 to control input2
+        user1.AssociateActionsWithUser(input2.actions);
+        foreach (var device in devices1)
+            InputUser.PerformPairingWithDevice(device, user1);
+        input2.SwitchCurrentControlScheme(input2.currentControlScheme, devices1);
+        input2.ActivateInput();
+        slot2.user = user1;
+
+        // Rebind user2 to control input1
+        user2.AssociateActionsWithUser(input1.actions);
+        foreach (var device in devices2)
+            InputUser.PerformPairingWithDevice(device, user2);
+        input1.SwitchCurrentControlScheme(input1.currentControlScheme, devices2);
+        input1.ActivateInput();
+        slot1.user = user2;
+
+        Debug.Log("Players successfully swapped control.");
+        LogAllPairings();
+    }
+
+    public void LogAllPairings()
+    {
+        Debug.Log("=== InputUser Pairings ===");
+
+        foreach (var user in InputUser.all)
+        {
+            string devices = string.Join(", ", user.pairedDevices.Select(d => d.displayName));
+            Debug.Log($"User {user.id} paired with: {devices}");
+        }
+
+        Debug.Log("=== Player Slots ===");
+
+        for (int i = 0; i < playerSlots.Count; i++)
+        {
+            var slot = playerSlots[i];
+            if (slot.occupied)
+            {
+                var devices = string.Join(", ", slot.user.pairedDevices.Select(d => d.displayName));
+                Debug.Log($"Slot {i} ? User {slot.user.id} using: {devices}");
+            }
+            else
+            {
+                Debug.Log($"Slot {i} ? Open");
+            }
         }
     }
-}
+}*/

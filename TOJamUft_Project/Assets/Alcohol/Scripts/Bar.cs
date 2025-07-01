@@ -43,11 +43,11 @@ public class Bar : MonoBehaviour
             Debug.LogError("Missing OpenModel or ClosedModel in children!");
         }
 
-        rend = GetComponent<Renderer>();
+        //rend = GetComponent<Renderer>();
         if (player == null)
         {
             var found = GameObject.FindGameObjectWithTag("Player");
-            if (found != null) player = found.transform;
+            if (found != null) player = found;
         }
 
         var size = GetComponent<Collider>().bounds.size;
