@@ -25,6 +25,7 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
   public RawImage capacityRectangle; // this is the rectangle that fills up with alcohol supply
   public int capacityRectangleMaxHeight = 146; // the maximum height of the rectangle in pixels
   public RawImage bottle;
+  public GameObject DrinkToolTip;
   
   //UI text
   public TMP_Text alcoholCountUI;
@@ -69,6 +70,8 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     alcoholSupply = initialAlcoholSupply;
     alcoholCount = initialAlcoholCount;
     Shader.SetGlobalInt("GlobalAlcoholCount", initialAlcoholCount);
+    
+    DrinkToolTip.SetActive(false); // hide the drink tooltip at start
 
     if (blackoutPanel != null)
     {
@@ -171,6 +174,10 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     {
       withdrawalSymptom = true;  // player is experiencing withdrawal symptoms
       //Debug.Log("Withdrawal symptoms are kicking in!");
+      if (alcoholSupply > 0)
+      {
+        DrinkToolTip.SetActive(true); // show the drink tooltip
+      }
       // change colour of alcohol capacity rectangle to red
       if (capacityRectangle != null)
       {
@@ -215,6 +222,7 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     // reset withdrawal timer
     withdrawalTimer = 0;
     withdrawalSymptom = false;  // player is not experiencing withdrawal symptoms
+    DrinkToolTip.SetActive(false); // hide the drink tooltip
     // fix colour of alcohol capacity rectangle
     if (capacityRectangle != null)
     {
