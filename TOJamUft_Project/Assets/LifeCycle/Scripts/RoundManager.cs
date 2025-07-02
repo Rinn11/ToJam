@@ -65,6 +65,7 @@ public class RoundManager : MonoBehaviour
     {
         // Check which player is currently driving and swap controls and camera positions & UI by sending this event
         playerSwapEvent.Trigger(isP1Driving);
+        FindFirstObjectByType<PlayerJoinManager>().SwapPlayers();
 
         NewRoundEvent.Invoke();
         Debug.Log($"Cleaning up, new round will start soon...");
