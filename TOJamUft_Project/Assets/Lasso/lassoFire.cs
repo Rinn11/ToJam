@@ -49,16 +49,17 @@ public class lassoFire : MonoBehaviour
         particleSystem?.SetActive(false);
         lockOnIndicator?.SetActive(false);
 
-        CinemachineCore.CameraUpdatedEvent.AddListener(OnCinemachineUpdated);
+        Camera.onPreRender += OnCameraPreRender;
     }
 
     private void OnDestroy()
     {
-        CinemachineCore.CameraUpdatedEvent.RemoveListener(OnCinemachineUpdated);
+        Camera.onPreRender -= OnCameraPreRender;
     }
 
-    private void OnCinemachineUpdated(CinemachineBrain brain) {
-        if (brain != null && brain.OutputCamera == uiCamera)
+    private void OnCameraPreRender(Camera cam)
+    {
+        if (cam == uiCamera)
         {
             MainLoop();
         }
@@ -93,6 +94,7 @@ public class lassoFire : MonoBehaviour
 
                 // Avoid showing if behind camera
                 lockOnIndicator?.SetActive(screenPos.z > 0);
+
                 indicatorRectTransform.anchoredPosition = localPointerPos;
 
                 // Start pulling sequence if not already in one
