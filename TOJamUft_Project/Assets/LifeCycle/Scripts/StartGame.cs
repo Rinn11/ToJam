@@ -27,7 +27,7 @@ public class StartGame : MonoBehaviour
         audioSources = GetComponents<AudioSource>();
     }
 
-    /*
+    
     void Update()
     {
         if (Time.timeScale == 0)
@@ -40,7 +40,7 @@ public class StartGame : MonoBehaviour
                 ingameUI.SetActive(true);
             }
         }
-    } */
+    } 
 
     public void ReadyGame()
     {
