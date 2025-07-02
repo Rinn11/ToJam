@@ -1,8 +1,10 @@
 using System;
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements; // Not strictly needed for this specific UI positioning, but kept as it was in your original script.
+
+// NOTE: To account for execution order, we hook into cinemachine's camera update hook
 
 public class lassoFire : MonoBehaviour
 {
@@ -27,7 +29,10 @@ public class lassoFire : MonoBehaviour
     public TMP_Text cooldownTimerText;  // Timer text representing the number of seconds left before next use
 
     private bool currentlyPulling = false;
-    
+
+    public RectTransform indicatorRectTransform;
+    public RectTransform canvasRectTransform;
+
     public bool GetIsPulling()
     {
         return currentlyPulling;
@@ -43,9 +48,23 @@ public class lassoFire : MonoBehaviour
         // Initially hide the indicator and particle system
         particleSystem?.SetActive(false);
         lockOnIndicator?.SetActive(false);
+
+        CinemachineCore.CameraUpdatedEvent.AddListener(OnCinemachineUpdated);
     }
 
-    void Update()
+    private void OnDestroy()
+    {
+        CinemachineCore.CameraUpdatedEvent.RemoveListener(OnCinemachineUpdated);
+    }
+
+    private void OnCinemachineUpdated(CinemachineBrain brain) {
+        if (brain != null && brain.OutputCamera == uiCamera)
+        {
+            MainLoop();
+        }
+    }
+
+    void MainLoop()
     {
         if (target == null) return;
         if (playerInput == null) return;
@@ -65,23 +84,16 @@ public class lassoFire : MonoBehaviour
 
             if (!Physics.Raycast(ray, out hit, distance, obstacleMask))
             {
-                Debug.Log("Raycast" + hit);
-                // If target is visible
-
                 // Calculate the 2D screen position of the 3D target
                 Vector3 screenPos = uiCamera.WorldToScreenPoint(target.position);
 
-                RectTransform indicatorRectTransform = lockOnIndicator.GetComponent<RectTransform>();
-                RectTransform canvasRectTransform = lockOnIndicator.GetComponentInParent<Canvas>().GetComponent<RectTransform>();
-
                 // Adjust the 2D screen position to the parent canvas
                 Vector2 localPointerPos;
-                if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, screenPos, uiCamera, out localPointerPos))
-                {
-                    // Avoid showing if behind camera
-                    lockOnIndicator?.SetActive(screenPos.z > 0);
-                    indicatorRectTransform.anchoredPosition = localPointerPos;
-                }
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, screenPos, uiCamera, out localPointerPos);
+
+                // Avoid showing if behind camera
+                lockOnIndicator?.SetActive(screenPos.z > 0);
+                indicatorRectTransform.anchoredPosition = localPointerPos;
 
                 // Start pulling sequence if not already in one
                 float TimeSinceLastLoss = Time.time - lastLostTime;
