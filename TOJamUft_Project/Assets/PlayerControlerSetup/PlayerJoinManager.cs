@@ -20,7 +20,7 @@ public class PlayerJoinManager : MonoBehaviour
     public List<PlayerSlot> playerSlots = new();
     public InputAction joinAction;
     private Dictionary<InputUser, InputDevice> assignedDevices = new();
-
+    private StartGame startGame;
     private bool keyboardMouseTaken = false;
 
     private void OnEnable()
@@ -42,6 +42,8 @@ public class PlayerJoinManager : MonoBehaviour
             user.UnpairDevices();
         }
 
+        startGame = FindFirstObjectByType<StartGame>();
+
         // Clear KB/M flag
         keyboardMouseTaken = false;
     }
@@ -49,6 +51,8 @@ public class PlayerJoinManager : MonoBehaviour
 
     private void OnJoinPressed(InputAction.CallbackContext ctx)
     {
+        startGame.ReadyGame();
+
         var device = ctx.control.device;
         Debug.Log($"Join pressed by: {device.displayName}");
 
