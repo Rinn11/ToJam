@@ -13,6 +13,8 @@ using UnityEngine.Events;
 
 public class PlayerCollision : MonoBehaviour
 {
+    public GameObject objectToBlink;
+
   [Header("UI Related Settings")]
   public GameObject textUI;
 
@@ -40,29 +42,48 @@ public class PlayerCollision : MonoBehaviour
   public UnityEvent roundOverEvent;
 
   // Thanks to this video for the help for the iframe implementation even though it's for 2D Unity: https://www.youtube.com/watch?v=YSzmCf_L2cE
-  private IEnumerator iFrameCoroutine()
+  /* previous good code, due to the current object having several meshes I changed it to do this per object, but we should go back too the below if 
+   * we ever do optimizeation
+    private IEnumerator iFrameCoroutine()
   {
     acceptCollisions = false; // Disable further collisions and more behaviors during iframes
 
-    // Grab the mesh renderer of the player to flash it
-    MeshRenderer renderer = GetComponent<MeshRenderer>();
-    Color materialColor = renderer.material.color;
+        // Grab the mesh renderer of the player to flash it
+        MeshRenderer renderer = GetComponent<MeshRenderer>();
+        
+        Color materialColor = renderer.material.color;
 
-    for (int i = 0; i < numberOfIframeFlashes; i++)
-    {
-      materialColor.a = iframeOpacity; // Set the material color to semi-transparent
-      renderer.material.color = materialColor; // Apply the color change
-      yield return new WaitForSeconds(iframeDuration / (numberOfIframeFlashes * 2));
-      materialColor.a = 1f; // Reset to full opacity
-      renderer.material.color = materialColor; // Apply the color change
-      yield return new WaitForSeconds(iframeDuration / (numberOfIframeFlashes * 2));
-    }
+        for (int i = 0; i < numberOfIframeFlashes; i++)
+        {
+          materialColor.a = iframeOpacity; // Set the material color to semi-transparent
+          renderer.material.color = materialColor; // Apply the color change
+          yield return new WaitForSeconds(iframeDuration / (numberOfIframeFlashes * 2));
+          materialColor.a = 1f; // Reset to full opacity
+          renderer.material.color = materialColor; // Apply the color change
+          yield return new WaitForSeconds(iframeDuration / (numberOfIframeFlashes * 2));
+        }
 
     acceptCollisions = true; // Re-enable collisions after the iFrame duration
-  }
+  }*/
 
+    // temp i frame, check each object needed render (see above)
+    private IEnumerator iFrameCoroutine()
+    {
+        acceptCollisions = false; // Disable further collisions and more behaviors during iframes
 
-  private void OnCollisionEnter(Collision collision)
+        for (int i = 0; i < numberOfIframeFlashes; i++)
+        {
+            objectToBlink.SetActive(false);
+            yield return new WaitForSeconds(iframeDuration / (numberOfIframeFlashes * 2));
+
+            objectToBlink.SetActive(true);
+            yield return new WaitForSeconds(iframeDuration / (numberOfIframeFlashes * 2));
+        }
+
+        acceptCollisions = true; // Re-enable collisions after the iFrame duration
+    }
+
+    private void OnCollisionEnter(Collision collision)
   {
     if (lastCollisionExitTime != 0f)
     {

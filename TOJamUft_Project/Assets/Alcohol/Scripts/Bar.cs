@@ -33,6 +33,27 @@ public class Bar : MonoBehaviour
         activationRadiusSqr = Mathf.Pow(activationRadius, 2);
     }
 
+    public void FindDrunkPlayer()
+    {
+        openModel = transform.Find("OpenModel")?.gameObject;
+        closedModel = transform.Find("ClosedModel")?.gameObject;
+
+        if (openModel == null || closedModel == null)
+        {
+            Debug.LogError("Missing OpenModel or ClosedModel in children!");
+        }
+
+        //rend = GetComponent<Renderer>();
+        if (player == null)
+        {
+            var found = GameObject.FindGameObjectWithTag("Player");
+            if (found != null) player = found;
+        }
+
+        var size = GetComponent<Collider>().bounds.size;
+        activationRadiusSqr = Mathf.Pow(activationRadius, 2);
+    }
+
     void Update()
     {
         // get x and z distance only

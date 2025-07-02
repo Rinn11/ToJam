@@ -166,11 +166,11 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
   void Update()
   {
     withdrawalTimer += Time.deltaTime;  // increase withdrawal timer by the time since last frame
-    Debug.Log("Withdrawal timer: " + withdrawalTimer);
+    //Debug.Log("Withdrawal timer: " + withdrawalTimer);
     if (withdrawalTimer >= withdrawalThreshold)
     {
       withdrawalSymptom = true;  // player is experiencing withdrawal symptoms
-      Debug.Log("Withdrawal symptoms are kicking in!");
+      //Debug.Log("Withdrawal symptoms are kicking in!");
       // change colour of alcohol capacity rectangle to red
       if (capacityRectangle != null)
       {
@@ -178,10 +178,10 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
       }
       else
       {
-        Debug.LogError("CapacityRectangle not found!");
+        //Debug.LogError("CapacityRectangle not found!");
       }
       
-      Debug.Log("Withdrawal symptoms are kicking in!");
+      //Debug.Log("Withdrawal symptoms are kicking in!");
     }
     
     
