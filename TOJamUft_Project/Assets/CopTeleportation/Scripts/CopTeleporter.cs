@@ -18,6 +18,10 @@ public class CopTeleporter : MonoBehaviour
 
     [SerializeField] private PlayerInput playerInput;
 
+    public bool SpawnCopyOnTeleport = true;
+
+    public GameObject CopCarCopyPrefab;
+
     // Update is called once per frame
     Vector2 last = Vector2.zero;
 
@@ -59,6 +63,9 @@ public class CopTeleporter : MonoBehaviour
         float TempSpeed = RB.linearVelocity.magnitude;
 
         // Teleport to the new location
+        Vector3 StartPos = Cop.transform.position;
+        Quaternion StartRot = Cop.transform.rotation;
+
         RB.MovePosition(TeleportMarker.transform.position);
 
         Vector3 GroundDir = Vector3.zero;
@@ -80,32 +87,10 @@ public class CopTeleporter : MonoBehaviour
         // Reapply original speed at new direction
         RB.linearVelocity = GroundDir * TempSpeed;
 
+        if (SpawnCopyOnTeleport) {
+            Instantiate(CopCarCopyPrefab, StartPos, StartRot);
+        }
+
         AlertDDOfCopLocationEventSender.Trigger(new Vector2(CopCar.transform.position.x, CopCar.transform.position.z)); // Alert drunk driver of cop
-    }
-
-    // Swaps the locations, orientations, velocities and angular velocities of two objects
-    void Swap(GameObject Obj1, GameObject Obj2) {
-        Rigidbody RB1 = Obj1.GetComponent<Rigidbody>();
-        Rigidbody RB2 = Obj2.GetComponent<Rigidbody>();
-
-        // Swap positions
-        Vector3 TempPos = Obj1.transform.position;
-        Obj1.transform.position = Obj2.transform.position;
-        Obj2.transform.position = TempPos;
-
-        // Swap rotations
-        Quaternion TempRot = Obj1.transform.rotation;
-        Obj1.transform.rotation = Obj2.transform.rotation;
-        Obj2.transform.rotation = TempRot;
-
-        // Swap velocities
-        Vector3 TempVel = RB1.linearVelocity;
-        RB1.linearVelocity = RB2.linearVelocity;
-        RB2.linearVelocity = TempVel;
-
-        // Swap angular velocities
-        Vector3 TempAngVel = RB1.angularVelocity;
-        RB1.angularVelocity = RB2.angularVelocity;
-        RB2.angularVelocity = TempAngVel;
     }
 }
