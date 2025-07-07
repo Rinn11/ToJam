@@ -110543,7 +110543,7 @@ MonoBehaviour:
   fine: 0
   fineUI: {fileID: 614804861}
   alcoholFine: 100
-  alcoholDecayAlpha: 2
+  alcoholDecayAlpha: 1.5
   sendScoreEvent:
     m_PersistentCalls:
       m_Calls:
