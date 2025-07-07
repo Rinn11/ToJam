@@ -17,8 +17,12 @@ public class ScoreEvent : UnityEvent<float> { };
 
 public class FineManagerBehavior : MonoBehaviour
 {
-    public float fine;
+    [HideInInspector]
+    public float fine; // Current fine amount
     public TMP_Text  fineUI;
+
+    [Header("Fine Settings")] // Settings for each fine type not just alcohol fines. it could be property damage, speeding, etc.
+    public float alcoholFine;    
 
     // Events
     public ScoreEvent sendScoreEvent;

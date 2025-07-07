@@ -110542,6 +110542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fine: 0
   fineUI: {fileID: 614804861}
+  alcoholFine: 150
   sendScoreEvent:
     m_PersistentCalls:
       m_Calls:
@@ -159289,6 +159290,10 @@ PrefabInstance:
       propertyPath: DrinkToolTip
       value: 
       objectReference: {fileID: 823124341}
+    - target: {fileID: 7827123238498018388, guid: 5f580b0926ec7fd4d9a96eafe0de5b1a, type: 3}
+      propertyPath: roundManager
+      value: 
+      objectReference: {fileID: 1191153758}
     - target: {fileID: 7827123238498018388, guid: 5f580b0926ec7fd4d9a96eafe0de5b1a, type: 3}
       propertyPath: blackoutPanel
       value: 
