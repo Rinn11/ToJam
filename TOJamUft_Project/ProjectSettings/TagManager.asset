@@ -11,21 +11,22 @@ TagManager:
   - RoundManager
   - RoundScreenUI
   - MarkedCar
+  - Building
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Building
   - Water
   - UI
   - GUI
   - CarModels
-  - 
+  - parkedCars
   - DrunkOnly
   - CopOnly
-  - 
+  - sidewalk
   - Ground
-  - 
+  - decor
   - 
   - 
   - 
@@ -39,10 +40,10 @@ TagManager:
   - 
   - 
   - 
+  - bars
+  - street
   - 
-  - 
-  - 
-  - 
+  - MinimapExcluded
   - MinimapElements
   m_SortingLayers:
   - name: Default

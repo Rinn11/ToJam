@@ -6,14 +6,13 @@ public class Heads : MonoBehaviour
 {
 
   public AudioSource crashSource;
-  public GameObject endScreenUI;
   // public GameObject alcoholUI;
 
   public UnityEvent roundOverEvent = new UnityEvent();
 
   void Start()
   {
-    roundOverEvent.AddListener(GameObject.FindGameObjectWithTag("FineManager").GetComponent<FineManagerBehavior>().sendScoreInvoker);
+    roundOverEvent.AddListener(GameObject.FindGameObjectWithTag("RoundManager").GetComponent<RoundManager>().runEndRoundCoroutine);
   }
 
   private void OnTriggerEnter(Collider other)
@@ -25,7 +24,6 @@ public class Heads : MonoBehaviour
     {
       // Use a signal to end the round
       crashSource.Play();
-      endScreenUI.SetActive(true);
       roundOverEvent.Invoke();
       // alcoholUI.SetActive(false);
 

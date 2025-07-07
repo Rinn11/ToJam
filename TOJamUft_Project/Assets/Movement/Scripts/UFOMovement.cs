@@ -67,13 +67,12 @@ public class UFOMovement : MonoBehaviour, IMovementModel
 
         if (moveValue.x != 0)
         {
-            rb.AddTorque(Vector3.up * useTurnTorque * moveValue.x);
+            rb.AddTorque(Vector3.up * moveValue.x * useTurnTorque);
         }
 
         if (moveValue.y != 0)
         {
             rb.AddForce(transform.forward * moveValue.y * useAccelerationForce);
         }
-        
     }
 }

@@ -111,4 +111,12 @@ public class BarManager : MonoBehaviour
         OpenInitialSet();
         Debug.Log("Reassigned all bars.");
     }
+
+    public void FindAllUFOonReset()
+    {
+        foreach (var bar in bars)
+        {
+            bar.FindDrunkPlayer();
+        }
+    }
 }

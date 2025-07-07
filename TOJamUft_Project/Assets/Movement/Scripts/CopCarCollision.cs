@@ -16,14 +16,13 @@ public class CopCarCollision : MonoBehaviour
 {
 
     public AudioSource crashSource;
-    public GameObject endScreenUI;
     public GameObject alcoholUI;
     public UnityEvent roundOverEvent = new UnityEvent();
 
     void Start()
     {
-        // Register the event to send the score when the round ends
-        roundOverEvent.AddListener(GameObject.FindGameObjectWithTag("FineManager").GetComponent<FineManagerBehavior>().sendScoreInvoker);
+    // Register the event to send the score when the round ends
+    roundOverEvent.AddListener(GameObject.FindGameObjectWithTag("RoundManager").GetComponent<RoundManager>().runEndRoundCoroutine);
     }
 
     private void OnTriggerEnter(Collider other)

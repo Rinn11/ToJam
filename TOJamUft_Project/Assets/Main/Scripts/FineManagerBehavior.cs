@@ -6,19 +6,24 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using TMPro;
 
 [Serializable]
 public class ScoreEvent : UnityEvent<float> { };
 
 public class FineManagerBehavior : MonoBehaviour
 {
-    public float fine;
-    public AlcoholManager am;
-    private AlcoholManager alcoholManager;
-    public Text fineUI;
+    [HideInInspector]
+    public float fine; // Current fine amount
+    public TMP_Text  fineUI;
+
+    [Header("Fine Settings")] // Settings for each fine type not just alcohol fines. it could be property damage, speeding, etc.
+    public float alcoholFine;
+    public float alcoholDecayAlpha; // The alpha decay rate for the alcohol fine, this will be used to reduce the fine over time. 
 
     // Events
     public ScoreEvent sendScoreEvent;
@@ -26,17 +31,16 @@ public class FineManagerBehavior : MonoBehaviour
     void Start()
     {
         fine = 0.0f;
-        alcoholManager = am.GetComponent<AlcoholManager>();
     }
 
     public void increaseFine(int amount)
     {
         fine += amount;
-        fine = (float)Math.Round(fine, 2);
+        fine = (float) Math.Round(fine, 2);
 
         if (fineUI != null)
         {
-            fineUI.text = $"Fine: ${fine}";
+            fineUI.text = $"${fine}";
         }
     }
 
