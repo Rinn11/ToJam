@@ -22,7 +22,8 @@ public class FineManagerBehavior : MonoBehaviour
     public TMP_Text  fineUI;
 
     [Header("Fine Settings")] // Settings for each fine type not just alcohol fines. it could be property damage, speeding, etc.
-    public float alcoholFine;    
+    public float alcoholFine;
+    public float alcoholDecayAlpha; // The alpha decay rate for the alcohol fine, this will be used to reduce the fine over time. 
 
     // Events
     public ScoreEvent sendScoreEvent;
