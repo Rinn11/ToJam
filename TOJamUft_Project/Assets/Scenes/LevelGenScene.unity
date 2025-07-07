@@ -74737,6 +74737,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8026216081645158780, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
+      propertyPath: CopCarCopyPrefab
+      value: 
+      objectReference: {fileID: 4545340640652481854, guid: 23e51b4bfd76ec84db76c8463f5a53c3, type: 3}
+    - target: {fileID: 8026216081645158780, guid: ecc21a2c132fc8a47876b64ef844ea31, type: 3}
       propertyPath: CopMinimapCamera
       value: 
       objectReference: {fileID: 0}
@@ -184623,7 +184627,7 @@ RectTransform:
   m_GameObject: {fileID: 1929357678}
   m_LocalRotation: {x: -0, y: 0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.59999985, y: 0.59999996, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1841033641}
@@ -184631,7 +184635,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 199.99998}
+  m_AnchoredPosition: {x: 0, y: 25}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1929357680
