@@ -36,7 +36,7 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
   [SerializeField] private PlayerInput playerInput;
 
   [SerializeField]
-  private FineManagerBehavior fineManager;
+  private RoundManager roundManager;
 
   private int alcoholCount;                 // The number of alcohol bottles 
   private int alcoholSupply;              // The number of alcohol bottles available
@@ -115,7 +115,7 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
   public void increaseAlcoholCount(int amount = 1)
   {
     alcoholCount += amount;
-    fineManager.increaseFine(100);
+    roundManager.increaseAlcoholFine();
     Shader.SetGlobalInt("GlobalAlcoholCount", alcoholCount);
 
     if (alcoholCountUI != null)

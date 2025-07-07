@@ -51,7 +51,7 @@ public class RoundManager : MonoBehaviour
     public UnityEvent hideScoreBoardEvent = new UnityEvent();
     public UnityEvent showEndScreenEvent = new UnityEvent();
     public WinnerEvent winnerEvent;
-    public GameDataEvent sendGameDataEvent;    
+    public GameDataEvent sendGameDataEvent;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -77,7 +77,7 @@ public class RoundManager : MonoBehaviour
     {
         float score = fineManager.fine; // Get the score from the FineManager
         float time = roundTimer.elapsedTime; // Get the time from the RoundTimer
-        
+
         fineManager.sendScoreInvoker();
         roundTimer.sendTimeInvoker();
 
@@ -149,4 +149,12 @@ public class RoundManager : MonoBehaviour
         StartCoroutine(EndRound());
     }
 
+    public void increaseAlcoholFine()
+    {
+        // Utilize both the timer and the fine manager such that the fine gained from drinking from the beginning of the round is better than the fine gained from drinking at the end of the round.
+        float decay = Mathf.Exp(-roundTimer.elapsedTime / roundTimer.roundDuration);
+        float fineIncrease = fineManager.alcoholFine * decay;
+        fineManager.increaseFine((int) Mathf.Ceil(fineIncrease));
+
+    }
 }
