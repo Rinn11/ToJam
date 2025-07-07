@@ -110542,7 +110542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fine: 0
   fineUI: {fileID: 614804861}
-  alcoholFine: 150
+  alcoholFine: 100
   sendScoreEvent:
     m_PersistentCalls:
       m_Calls:
