@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -20,6 +21,12 @@ public class CopTeleporter : MonoBehaviour
 
     public bool SpawnCopyOnTeleport = true;
 
+    public float cooldown = 5f;
+    private float lastTeleportTime = -999;
+
+    public int maxCopies = 5;
+    private List<GameObject> CarCopies = new List<GameObject>();
+
     public GameObject CopCarCopyPrefab;
 
     // Update is called once per frame
@@ -32,6 +39,9 @@ public class CopTeleporter : MonoBehaviour
         var dpad = playerInput.actions["DPad"];
         Vector2 curr = dpad.ReadValue<Vector2>();
         //Debug.Log("DPAD" + curr);
+
+        bool CooledDown = (Time.time - lastTeleportTime) > cooldown;
+        if (!CooledDown) return;
 
         if (curr == Vector2.up && last != Vector2.up) {
             Debug.Log("Dpad_Up");
@@ -57,6 +67,8 @@ public class CopTeleporter : MonoBehaviour
 
     // Teleports the Cop to Location, looking towards Driver
     void Teleport(GameObject Cop, GameObject Driver, GameObject TeleportMarker) {
+        lastTeleportTime = Time.time;
+
         Rigidbody RB = Cop.GetComponent<Rigidbody>();
 
         // Store original speed
@@ -88,7 +100,15 @@ public class CopTeleporter : MonoBehaviour
         RB.linearVelocity = GroundDir * TempSpeed;
 
         if (SpawnCopyOnTeleport) {
-            Instantiate(CopCarCopyPrefab, StartPos, StartRot);
+            GameObject CopCopy = Instantiate(CopCarCopyPrefab, StartPos, StartRot);
+            CarCopies.Add(CopCopy);
+
+            if (CarCopies.Count >= maxCopies)
+            {
+                GameObject oldest = CarCopies[0];
+                CarCopies.RemoveAt(0);
+                Destroy(oldest);
+            }
         }
 
         AlertDDOfCopLocationEventSender.Trigger(new Vector2(CopCar.transform.position.x, CopCar.transform.position.z)); // Alert drunk driver of cop
