@@ -19,6 +19,7 @@ public class Heads : MonoBehaviour
   {
     // add magnitude check
 
+    /*
     if (other.gameObject.CompareTag("Player"))
     {
       // Use a signal to end the round
@@ -30,5 +31,6 @@ public class Heads : MonoBehaviour
       // Cursor.visible = true;
       // other.gameObject.SetActive(false);
     }
+    */
   }
 }
