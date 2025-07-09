@@ -68,7 +68,6 @@ public class Bar : MonoBehaviour
 
     internal void SetOpen()
     {
-        Debug.Log($"Bar {gameObject.name} set open");
         IsOpen = true;
         isVisited = false;
         openModel.SetActive(true);
@@ -78,7 +77,6 @@ public class Bar : MonoBehaviour
 
     internal void SetClosed()
     {
-        Debug.Log($"Bar {gameObject.name} set closed");
         IsOpen = false;
         isVisited = false;
         openModel.SetActive(false);
