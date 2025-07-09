@@ -153588,6 +153588,7 @@ GameObject:
   - component: {fileID: 1620153155}
   - component: {fileID: 1620153158}
   - component: {fileID: 1620153157}
+  - component: {fileID: 1620153159}
   m_Layer: 0
   m_Name: CopPlayer
   m_TagString: CopCar
@@ -153898,7 +153899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d482c098c3335484c94a40d69cd04769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accelerationForce: 2000
+  accelerationForce: 4000
   brakeForce: 3500
   speedUI: {fileID: 0}
   MovementManager: {fileID: 1726063258510371513}
@@ -154061,6 +154062,35 @@ MonoBehaviour:
   largestScale: 5
   smallestCollisionForce: 1
   largestCollisionForce: 35
+--- !u!114 &1620153159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620153143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d89ef1142fe043b448303d471d05305f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suspensionDistance: 0.3
+  wheelDampingRate: 0.25
+  forceAppPointDistance: 0
+  center: {x: 0, y: 0, z: 0}
+  spring: 35000
+  damper: 4500
+  targetPosition: 0.5
+  forwardExtremumSlip: 0.1
+  forwardExtremumValue: 1.5
+  forwardAsymptoteSlip: 0.2
+  forwardAsymptoteValue: 1
+  forwardStiffness: 4
+  sidewaysExtremumSlip: 0.05
+  sidewaysExtremumValue: 2
+  sidewaysAsymptoteSlip: 0.2
+  sidewaysAsymptoteValue: 1.5
+  sidewaysStiffness: 6
 --- !u!1001 &1620225541
 PrefabInstance:
   m_ObjectHideFlags: 0
