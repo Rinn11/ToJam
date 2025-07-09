@@ -14,13 +14,14 @@ public class ResetPlayerPosition : MonoBehaviour
 
     public void ResetPlayerPositions()  // can be invoked by RoundManagerBehavior.cs or any other script that needs to reset player positions
     {
+        Debug.Log("Resetting player positions...");
         if (player1 != null)
         {
-            player1.transform.position = player1StartPosition;
-            player1.transform.rotation = Quaternion.Euler(0, player1StartAngle, 0);
-            
             // set velocity and angular velocity to zero
             Rigidbody rb1 = player1.GetComponent<Rigidbody>();
+            rb1.MovePosition(player1StartPosition);
+            rb1.MoveRotation(Quaternion.Euler(0, player1StartAngle, 0));
+            
             if (rb1 != null)
             {
                 rb1.linearVelocity = Vector3.zero;
@@ -38,11 +39,10 @@ public class ResetPlayerPosition : MonoBehaviour
 
         if (player2 != null)
         {
-            player2.transform.position = player2StartPosition;
-            player2.transform.rotation = Quaternion.Euler(0, player2StartAngle, 0);
-            
             // set velocity and angular velocity to zero
             Rigidbody rb2 = player2.GetComponent<Rigidbody>();
+            rb2.MovePosition(player2StartPosition);
+            rb2.MoveRotation(Quaternion.Euler(0, player2StartAngle, 0));
             if (rb2 != null)
             {
                 rb2.linearVelocity = Vector3.zero;
