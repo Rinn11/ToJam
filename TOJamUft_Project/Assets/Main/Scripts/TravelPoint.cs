@@ -33,7 +33,7 @@ public class TravelPoint : MonoBehaviour
         CarAgent carAgent = other.GetComponent<CarAgent>();
         if (carAgent != null)
         {
-            if (carAgent.destination.pointName == pointName)
+            if (carAgent.destination != null && carAgent.destination.pointName == pointName)
             {
                 // Set the car's destination to this travel point's successor
                 TravelPoint successor = getSuccessor();
