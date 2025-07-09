@@ -50077,7 +50077,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToBlink: {fileID: 1904834894}
   textUI: {fileID: 0}
-  numberOfCollisions: 3
+  numberOfCollisions: 2
   iframeDuration: 2
   numberOfIframeFlashes: 3
   iframeOpacity: 0.3
