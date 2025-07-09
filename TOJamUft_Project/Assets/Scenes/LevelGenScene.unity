@@ -114133,7 +114133,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fine: 0
   fineUI: {fileID: 614804861}
-  alcoholFine: 100
+  minFine: 100
+  maxFine: 500
   alcoholDecayAlpha: 1.5
   sendScoreEvent:
     m_PersistentCalls:

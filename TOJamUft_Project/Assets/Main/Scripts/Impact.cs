@@ -21,7 +21,6 @@ public class Impact : MonoBehaviour
 
         // Get the collision force
         float collisionForce = collision.relativeVelocity.magnitude;
-        Debug.Log($"Collision Force: {collisionForce}");
 
         // Normalize the collision force so it works correctly
         float normalizedForce = Mathf.InverseLerp(smallestCollisionForce, largestCollisionForce, collisionForce);

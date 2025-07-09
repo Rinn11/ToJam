@@ -61,7 +61,6 @@ public class BarManager : MonoBehaviour
         GetComponentsInChildren(true, bars);          // cheap hierarchy scan
         
         //print to debug console
-        Debug.Log($"Found {bars.Count} bars in the scene.");
         foreach (var b in bars)
         {
             b.Manager = this;                         // back-reference
@@ -109,7 +108,6 @@ public class BarManager : MonoBehaviour
         closed.Clear();
         CollectBars();
         OpenInitialSet();
-        Debug.Log("Reassigned all bars.");
     }
 
     public void FindAllUFOonReset()
