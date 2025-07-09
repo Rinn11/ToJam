@@ -17,7 +17,8 @@ public class CarAgent : MonoBehaviour
             // Rotate the car to face the destination
             if (direction != Vector3.zero)
             {
-                Quaternion lookRotation = Quaternion.LookRotation(direction);
+                // For the rotation only change the y-axis
+                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * speed);
             }
         }

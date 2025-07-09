@@ -15,16 +15,40 @@ public class NPCCarSpawner : MonoBehaviour
     [Header("Optional Settings")]
     public Transform cloneParent; // Parent object for cloned cars (optional, can be used for organization)
 
+    List<int> GetShuffledIndices(int count)
+    {
+        List<int> indices = new List<int>();
+        for (int i = 0; i < count; i++)
+        {
+            indices.Add(i);
+        }
+
+        // Fisher–Yates shuffle
+        for (int i = 0; i < count; i++)
+        {
+            int j = Random.Range(i, count);
+            int temp = indices[i];
+            indices[i] = indices[j];
+            indices[j] = temp;
+        }
+
+        return indices;
+    }
+
     private void Start()
     {
         // Grab the children of the graph (this object) and randomly spawn a car at one of those nodes.
+        List<int> shuffledIndices = GetShuffledIndices(transform.childCount);
+
+        int j = 0;
         for (int i = 0; i < numberOfCarsToSpawn; i++)
         {
             // Randomly select a car prefab from the list
             GameObject carPrefab = carPrefabs[Random.Range(0, carPrefabs.Count)];
 
             // Randomly select a spawn point from the children of this object
-            Transform spawnPoint = transform.GetChild(Random.Range(0, transform.childCount));
+            Transform spawnPoint = transform.GetChild(shuffledIndices[j]);
+            j = (j + 1) % shuffledIndices.Count; // Cycle through the shuffled indices
 
             // Set the destination for the car to the next travel point
             TravelPoint travelPoint = spawnPoint.GetComponent<TravelPoint>();
