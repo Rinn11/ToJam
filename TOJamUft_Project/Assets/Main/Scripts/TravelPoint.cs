@@ -31,15 +31,18 @@ public class TravelPoint : MonoBehaviour
 
         // Check if the other object is a car agent
         CarAgent carAgent = other.GetComponent<CarAgent>();
-        if (carAgent != null && carAgent.destination.pointName == pointName)
+        if (carAgent != null)
         {
-
-            // Set the car's destination to this travel point's successor
-            TravelPoint successor = getSuccessor();
-            if (successor != null)
+            if (carAgent.destination.pointName == pointName)
             {
-                carAgent.destination = successor;
+                // Set the car's destination to this travel point's successor
+                TravelPoint successor = getSuccessor();
+                if (successor != null)
+                {
+                    carAgent.destination = successor;
+                }
             }
+
         }
     }
     
