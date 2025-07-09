@@ -22,7 +22,7 @@ public class RoundScreenUIBehavior : MonoBehaviour
     public void updateScoreText(float score)
     {
         Debug.Log($"Updating score text with score: {score}");
-        scoreText.text = $"Fine: ${score}";
+        scoreText.text = $"${score}";
         scoreText2.text = scoreText.text;
     }
 

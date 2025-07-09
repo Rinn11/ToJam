@@ -115,7 +115,11 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
   public void increaseAlcoholCount(int amount = 1)
   {
     alcoholCount += amount;
-    roundManager.increaseAlcoholFine();
+    if (alcoholCount > 1)
+    { 
+      roundManager.increaseAlcoholFine();  
+    }
+    
     Shader.SetGlobalInt("GlobalAlcoholCount", alcoholCount);
 
     if (alcoholCountUI != null)

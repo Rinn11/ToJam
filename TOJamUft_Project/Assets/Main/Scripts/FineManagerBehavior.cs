@@ -58,7 +58,7 @@ public class FineManagerBehavior : MonoBehaviour
         fine = 0.0f;
         if (fineUI != null)
         {
-            fineUI.text = $"Fine: ${fine}";
+            fineUI.text = $"${fine}";
         }
     }
 }
