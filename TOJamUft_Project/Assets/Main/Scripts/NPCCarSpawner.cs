@@ -35,8 +35,11 @@ public class NPCCarSpawner : MonoBehaviour
         return indices;
     }
 
-    private void Start()
-    {
+    // Spawn cars
+    private void spawnCars()
+    { 
+        Debug.Log("Spawning Cars");
+
         // Grab the children of the graph (this object) and randomly spawn a car at one of those nodes.
         List<int> shuffledIndices = GetShuffledIndices(transform.childCount);
 
@@ -44,7 +47,7 @@ public class NPCCarSpawner : MonoBehaviour
         numberOfCarsToSpawn = Mathf.Min(numberOfCarsToSpawn, transform.childCount);
 
         int j = 0;
-        for (int i = 0; i < numberOfCarsToSpawn; i++)
+        while (cloneParent.childCount < numberOfCarsToSpawn)
         {
             // Randomly select a car prefab from the list
             GameObject carPrefab = carPrefabs[Random.Range(0, carPrefabs.Count)];
@@ -67,6 +70,16 @@ public class NPCCarSpawner : MonoBehaviour
                     carAgent.destination = travelPoint; // Set the car's destination to the next travel point
                 }
             }
+        }
+    }
+
+    private void Update()
+    {
+        // Add any update logic here if needed, such as spawning new cars dynamically or managing existing ones.
+        if (cloneParent.childCount < numberOfCarsToSpawn)
+        {
+            // Logic to spawn more cars if needed
+            spawnCars();
         }
     }
 }
