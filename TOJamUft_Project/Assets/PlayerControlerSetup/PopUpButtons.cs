@@ -1,14 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.InputSystem.Utilities;
 
 public class PlayerUnmappedInputChecker : MonoBehaviour
 {
     
+
     public PlayerInput playerInput;
     private InputDevice device;
     private HashSet<string> mappedControlPaths;
@@ -18,12 +22,20 @@ public class PlayerUnmappedInputChecker : MonoBehaviour
     {
         if (control.device is Keyboard && control is KeyControl keyControl)
         {
-            Debug.Log(keyControl.keyCode)
+            Debug.Log(keyControl.keyCode);
         }
 
         if (control.device is Gamepad && control is ButtonControl buttonControl)
         {
-            Debug.Log(buttonControl.name);
+
+            Debug.Log("thisOption " + buttonControl);
+            InputAction buttonPressed = playerInput.currentActionMap.FindAction(buttonControl.path);
+
+            if (!playerInput.currentActionMap.Contains(buttonPressed) && !coroutineActive)
+                {
+                    Debug.Log($"{gameObject.name} pressed UNMAPPED button: {control.displayName} ({control.path})");
+                    StartCoroutine(ShowControls());
+                }
         }
     }
 
@@ -31,7 +43,7 @@ public class PlayerUnmappedInputChecker : MonoBehaviour
     {
         //playerInput = GetComponent<PlayerInput>();
         
-        device = playerInput.devices.FirstOrDefault(); // Only the paired device
+        //device = playerInput.devices.FirstOrDefault(); // Only the paired device
         
         Debug.Log("Reached P1");
 
@@ -55,9 +67,10 @@ public class PlayerUnmappedInputChecker : MonoBehaviour
         }*/
     }
 
+
+
     void Update()
     {
-
         if (device == null) { device = playerInput.devices.FirstOrDefault(); return; }
 
 
@@ -72,7 +85,7 @@ public class PlayerUnmappedInputChecker : MonoBehaviour
                 if (!playerInput.currentActionMap.Contains(buttonPressed) && !coroutineActive)
                 {
                     Debug.Log($"{gameObject.name} pressed UNMAPPED button: {control.displayName} ({control.path})");
-                    StartCoroutine(ShowControls());
+                    //StartCoroutine(ShowControls());
 
                 }
             }
@@ -98,5 +111,21 @@ public class PlayerUnmappedInputChecker : MonoBehaviour
         }
     }
 
+    // We want to remove the event listener we install through InputSystem.onAnyButtonPress
+    // after we're done so remember it here.
+    private IDisposable m_EventListener;
 
+    // When enabled, we install our button press listener.
+    void OnEnable()
+    {
+        // Start listening.
+        m_EventListener =
+            InputSystem.onAnyButtonPress.Call(AnyButtonPressed);
+    }
+
+    // When disabled, we remove our button press listener.
+    void OnDisable()
+    {
+        m_EventListener.Dispose();
+    }
 }
