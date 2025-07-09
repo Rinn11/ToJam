@@ -8,23 +8,40 @@ using UnityEngine.InputSystem.Controls;
 
 public class PlayerUnmappedInputChecker : MonoBehaviour
 {
-    public GameObject theVecical;
-
-    private PlayerInput playerInput;
+    
+    public PlayerInput playerInput;
     private InputDevice device;
     private HashSet<string> mappedControlPaths;
     private bool coroutineActive;
 
-    void Awake()
+    private void AnyButtonPressed(InputControl control)
     {
-        playerInput = theVecical.GetComponent<PlayerInput>();
+        if (control.device is Keyboard && control is KeyControl keyControl)
+        {
+            Debug.Log(keyControl.keyCode)
+        }
+
+        if (control.device is Gamepad && control is ButtonControl buttonControl)
+        {
+            Debug.Log(buttonControl.name);
+        }
+    }
+
+    void Start()
+    {
+        //playerInput = GetComponent<PlayerInput>();
+        
         device = playerInput.devices.FirstOrDefault(); // Only the paired device
+        
+        Debug.Log("Reached P1");
+
 
         if (device == null)
         {
-            Debug.LogWarning($"No device paired with {gameObject.name}");
+            Debug.LogWarning("No device paired with {gameObject.name}");
         }
 
+        /*
         mappedControlPaths = new HashSet<string>();
 
         // Collect all used control paths in the player's current action map
@@ -35,18 +52,24 @@ public class PlayerUnmappedInputChecker : MonoBehaviour
                 if (!string.IsNullOrEmpty(binding.effectivePath))
                     mappedControlPaths.Add(binding.effectivePath);
             }
-        }
+        }*/
     }
 
     void Update()
     {
-        if (device == null) return;
+
+        if (device == null) { device = playerInput.devices.FirstOrDefault(); return; }
+
 
         foreach (var control in device.allControls)
         {
             if (control is ButtonControl button && button.wasPressedThisFrame)
             {
-                if (!mappedControlPaths.Contains(control.path) && !coroutineActive)
+                InputAction buttonPressed = playerInput.currentActionMap.FindAction(control.path);
+
+                Debug.Log("Button Was Pressed "+buttonPressed);
+
+                if (!playerInput.currentActionMap.Contains(buttonPressed) && !coroutineActive)
                 {
                     Debug.Log($"{gameObject.name} pressed UNMAPPED button: {control.displayName} ({control.path})");
                     StartCoroutine(ShowControls());
@@ -74,4 +97,6 @@ public class PlayerUnmappedInputChecker : MonoBehaviour
             child.gameObject.SetActive(false);
         }
     }
+
+
 }
