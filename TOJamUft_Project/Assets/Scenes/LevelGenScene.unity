@@ -156202,7 +156202,7 @@ MonoBehaviour:
   - {fileID: 4020867319201235334, guid: d1438e78aa30f404d890d775cac85787, type: 3}
   - {fileID: 2413277459699762110, guid: c203251f6d16bda4c9b3e111bf8bf2dd, type: 3}
   - {fileID: 8875133210516627639, guid: 14a58c631da33c64a816999ef627a86a, type: 3}
-  numberOfCarsToSpawn: 5
+  numberOfCarsToSpawn: 20
   initialCarSpeed: 20
   cloneParent: {fileID: 1114012542}
 --- !u!1 &1593232789

@@ -169,4 +169,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
   speed: 0
-  yOffset: 0
