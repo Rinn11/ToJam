@@ -13,7 +13,7 @@ using UnityEngine.UI;
 public class PlayerMove : MonoBehaviour, IMovementModel
 {
   [Header("Movement Settings")]
-  public float accelerationForce, brakeForce, maxSpeed, maxTurnSpeed;
+  public float accelerationForce, brakeForce;
   // recommended default 50, 50, 50, 20, 10
 
   private Rigidbody rb;
@@ -92,14 +92,14 @@ public class PlayerMove : MonoBehaviour, IMovementModel
 
       if (moveValue.y > 0)
       {
-        if (currentForwardSpeed < -0.1f)
+        if (currentForwardSpeed < -0.01f)
           w.Brake(Mathf.Abs(moveValue.y) * useBrakeForce);
         else
           w.Accelerate(moveValue.y * useAccelerationForce);
       }
       else if (moveValue.y < 0)
       {
-        if (currentForwardSpeed > 0.1f)
+        if (currentForwardSpeed > 0.01f)
           w.Brake(Mathf.Abs(moveValue.y) * useBrakeForce);
         else
           w.Accelerate(moveValue.y * useAccelerationForce);
