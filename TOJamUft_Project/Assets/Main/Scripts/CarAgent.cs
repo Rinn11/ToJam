@@ -4,7 +4,6 @@ public class CarAgent : MonoBehaviour
 {
     public TravelPoint destination; // The destination point the car should move towards
     public float speed; // Speed of the car
-    public float yOffset; // In case the direction needs to be adjusted.
 
     private void Update()
     {

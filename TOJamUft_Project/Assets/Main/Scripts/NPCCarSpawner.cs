@@ -40,6 +40,9 @@ public class NPCCarSpawner : MonoBehaviour
         // Grab the children of the graph (this object) and randomly spawn a car at one of those nodes.
         List<int> shuffledIndices = GetShuffledIndices(transform.childCount);
 
+        // numberOfCarsToSpawn should not exceed the number of available spawn points
+        numberOfCarsToSpawn = Mathf.Min(numberOfCarsToSpawn, transform.childCount);
+
         int j = 0;
         for (int i = 0; i < numberOfCarsToSpawn; i++)
         {
