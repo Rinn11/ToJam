@@ -14,6 +14,8 @@ public class NPCCarSpawner : MonoBehaviour
 
     [Header("Optional Settings")]
     public Transform cloneParent; // Parent object for cloned cars (optional, can be used for organization)
+    [SerializeField]
+    private int maxIterations; // Maximum iterations to prevent infinite loops
 
     List<int> GetShuffledIndices(int count)
     {
@@ -47,8 +49,14 @@ public class NPCCarSpawner : MonoBehaviour
         numberOfCarsToSpawn = Mathf.Min(numberOfCarsToSpawn, transform.childCount);
 
         int j = 0;
+        int k = 0;
         while (cloneParent.childCount < numberOfCarsToSpawn)
         {
+            if (k >= maxIterations)
+            {
+                Debug.LogWarning("Max iterations reached while trying to spawn cars. Stopping to prevent infinite loop.");
+                break;
+            }
             // Randomly select a car prefab from the list
             GameObject carPrefab = carPrefabs[Random.Range(0, carPrefabs.Count)];
 
@@ -70,6 +78,7 @@ public class NPCCarSpawner : MonoBehaviour
                     carAgent.destination = travelPoint; // Set the car's destination to the next travel point
                 }
             }
+            k++;
         }
     }
 
