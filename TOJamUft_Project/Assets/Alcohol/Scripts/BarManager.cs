@@ -6,11 +6,19 @@ public class BarManager : MonoBehaviour
 {
     [Tooltip("How many bars may be open simultaneously. " +
              "If <= 0, defaults to half the total (rounded up).")]
-    public float simultaneousOpenPercent = 50.0f;
+    public float simultaneousOpenPercent = 100.0f;
 
     private readonly List<Bar> bars = new();
     private readonly List<Bar> closed = new();
     private readonly List<Bar> open = new();
+    
+    private bool isVisitingBar = false;
+
+    public GameObject alertMinimapIcon;
+    private alertMinimapMarker alertManager;
+    
+    public float closingDuration = 10.0f; // seconds till bar closes after being visited
+
 
     public GameObject AlcoholManager;
     private AlcoholManager alcoholManager;
@@ -26,28 +34,62 @@ public class BarManager : MonoBehaviour
             Debug.LogError("AlcoholManager not found!");
         }
         alcoholManager = AlcoholManager.GetComponent<AlcoholManager>();
+
+        if (alertMinimapIcon == null)
+        {
+            Debug.LogError("alertMinimapIcon not found!");
+        }
+
+        alertManager = alertMinimapIcon.GetComponent<alertMinimapMarker>();
         
         CollectBars();
-        OpenInitialSet();
+        OpenInitialSet(true);
     }
 
-    /* Called by a Bar that has just been visited. */
-    public void NotifyBarVisited(Bar bar)
+    // /* Called by a Bar that has just been visited. */
+    // public void NotifyBarVisited(Bar bar)
+    // {
+    //     // Defensive check in case the bar wasn’t tracked.
+    //     if (!open.Contains(bar)) return;
+    //
+    //     bar.SetClosed();
+    //     open.Remove(bar);
+    //     
+    //     //play sound (use audio source)
+    //     collectSound.Play();
+    //     
+    //     alcoholManager.changeAlcoholSupply(1);  // increase alcohol supply by 1
+    //     alertCopOfDDLocationEventSender.Trigger(new Vector2(bar.transform.position.x, bar.transform.position.z)); // Alert cop of drunk driver
+    //
+    //     AssignReplacementBar();
+    //     closed.Add(bar);
+    // }
+
+    public void NotifyBarDoneVisit(Bar bar, bool completed)
     {
-        // Defensive check in case the bar wasn’t tracked.
-        if (!open.Contains(bar)) return;
+        isVisitingBar = false;
+        if (completed)
+        {
+            open.Remove(bar);
+            closed.Add(bar);
+            bar.SetClosed(closingDuration);
+            collectSound.Play();
+            alcoholManager.changeAlcoholSupply(1);
+        }
+        alertManager?.RecieveAlert(1.0f, true);
+    }
+    
+    public void NotifyBarBeginVisit(Bar bar)
+    {
+        isVisitingBar = true;
+        alertManager?.RecieveAlert(bar.visitTimeLimit, true);
+    }
 
-        bar.SetClosed();
-        open.Remove(bar);
-        
-        //play sound (use audio source)
-        collectSound.Play();
-        
-        alcoholManager.changeAlcoholSupply(1);  // increase alcohol supply by 1
-        alertCopOfDDLocationEventSender.Trigger(new Vector2(bar.transform.position.x, bar.transform.position.z)); // Alert cop of drunk driver
-
-        AssignReplacementBar();
-        closed.Add(bar);
+    public void NotifyBarReopen(Bar bar)
+    {
+        bar.SetOpen();
+        open.Add(bar);
+        closed.Remove(bar);
     }
 
     /* ---------- internal helpers ---------- */
@@ -64,21 +106,34 @@ public class BarManager : MonoBehaviour
         foreach (var b in bars)
         {
             b.Manager = this;                         // back-reference
-            b.SetClosed();
+            b.SetClosed(0.0f); // set all bars to closed initially
             closed.Add(b);
         }
     }
 
-    private void OpenInitialSet()
+    private void OpenInitialSet(bool openAll)
     {
-        var targetOpen = simultaneousOpenPercent > 0
-            ? Mathf.CeilToInt(bars.Count * (simultaneousOpenPercent / 100f))
-            : Mathf.CeilToInt(bars.Count / 2f);  // default to half
-
-        for (var i = 0; i < targetOpen && closed.Count > 0; i++)
+        if (openAll)
         {
-            PromoteRandomClosedBar();
+            foreach (var bar in closed)
+            {
+                bar.SetOpen();
+                open.Add(bar);
+            }
+            closed.Clear();
         }
+        else
+        {
+            var targetOpen = simultaneousOpenPercent > 0
+                ? Mathf.CeilToInt(bars.Count * (simultaneousOpenPercent / 100f))
+                : Mathf.CeilToInt(bars.Count / 2f);  // default to half
+
+            for (var i = 0; i < targetOpen && closed.Count > 0; i++)
+            {
+                PromoteRandomClosedBar();
+            }
+        }
+        
     }
 
     private void AssignReplacementBar()
@@ -102,12 +157,12 @@ public class BarManager : MonoBehaviour
         // set all bars to closed then open 2 bars
         foreach (var bar in bars)
         {
-            bar.SetClosed();
+            bar.SetClosed(0.0f);
         }
         open.Clear();
         closed.Clear();
         CollectBars();
-        OpenInitialSet();
+        OpenInitialSet(true);
     }
 
     public void FindAllUFOonReset()

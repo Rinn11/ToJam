@@ -13,7 +13,7 @@ public class CarAgent : MonoBehaviour
     public int numberOfIframeFlashes; // Number of times to flash the car during iFrames
 
     private bool acceptCollisions = true;
-
+    
     private void Update()
     {
         if (destination != null)

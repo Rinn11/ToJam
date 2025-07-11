@@ -9,8 +9,7 @@ using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
-using TMPro;
+
 
 [Serializable]
 public class ScoreEvent : UnityEvent<float> { };
@@ -24,6 +23,7 @@ public class FineManagerBehavior : MonoBehaviour
     [Header("Fine Settings")] // Settings for each fine type not just alcohol fines. it could be property damage, speeding, etc.
     public float minFine; //100
     public float maxFine; //500
+    public float collisionFineAmount = 10.0f;  //10
     public float alcoholDecayAlpha; // The alpha decay rate for the alcohol fine, this will be used to reduce the fine over time. 
 
     // Events

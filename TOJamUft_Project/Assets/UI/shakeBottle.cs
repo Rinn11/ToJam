@@ -25,10 +25,10 @@ public class shakeBottle : MonoBehaviour
     {
         shakeTimer = shakeDuration; // Set the shake timer to the specified duration
         // Activate the DD icon when shaking starts'
-        if (COPsDDicon != null)
-        {
-            COPsDDicon.gameObject.SetActive(true);
-        }
+        // if (COPsDDicon != null)
+        // {
+        //     COPsDDicon.gameObject.SetActive(true);
+        // }
     }
     
     public bool GetIsShaking()
@@ -53,10 +53,10 @@ public class shakeBottle : MonoBehaviour
                 transform.localRotation = Quaternion.identity; // Reset to original rotation
                 
                 // set the DDdicon inaactive
-                if (COPsDDicon != null)
-                {
-                    COPsDDicon.gameObject.SetActive(false); // Deactivate the DD icon when shaking ends
-                }
+                // if (COPsDDicon != null)
+                // {
+                //     COPsDDicon.gameObject.SetActive(false); // Deactivate the DD icon when shaking ends
+                // }
             }
         }
         else
