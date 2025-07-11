@@ -9,8 +9,7 @@ using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
-using TMPro;
+
 
 [Serializable]
 public class ScoreEvent : UnityEvent<float> { };
