@@ -23,7 +23,9 @@ public class PlayerCollision : MonoBehaviour
   private int numberOfCollisions;
   private int currentCollisions = 0;
   private bool acceptCollisions = true; // Flag to control whether collisions are accepted for certain behaviors to trigger
-
+  
+  public collisionScoreManager collisionScore;
+  
   [Header("IFrame Settings")]
   [SerializeField]
   private float iframeDuration; // Duration of invincibility frames (in seconds)
@@ -114,6 +116,10 @@ public class PlayerCollision : MonoBehaviour
 
       // Use an iFrame period to give the player a chance to recover.
       StartCoroutine(iFrameCoroutine());
+    } else if (collision.gameObject.CompareTag("civilianCar"))
+    { 
+      collisionScore.increaseCollisionFine();
+      Debug.Log("Collision with civilian car detected.");
     }
 
   }
