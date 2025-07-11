@@ -183511,8 +183511,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 509149363}
+  Cop: {fileID: 0}
   maxDistance: 100
-  forceMult: 1
+  forceMult: 0.75
   obstacleMask:
     serializedVersion: 2
     m_Bits: 8
