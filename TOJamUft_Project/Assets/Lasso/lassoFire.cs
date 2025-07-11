@@ -23,7 +23,7 @@ public class lassoFire : MonoBehaviour
     public GameObject lockOnIndicator;  // Indicator that tells cop when they can use their ability
     public Camera uiCamera;             // Camera the HUD's parent canvas is tied to
 
-    public float cooldown = 5f;         // Minimum Time after target was lost to use the ability again
+    public float cooldown = 10f;         // Minimum Time after target was lost to use the ability again
     private float lastLostTime = -999;  // Timestamp of time when target was lost
 
     public TMP_Text cooldownTimerText;  // Timer text representing the number of seconds left before next use
@@ -71,8 +71,8 @@ public class lassoFire : MonoBehaviour
         if (playerInput == null) return;
         if (uiCamera == null) return;
 
-        InputAction ability2Action = playerInput.actions["Ability2"];
-        if (ability2Action == null) return;
+        InputAction abilityAction = playerInput.actions["Ability"];
+        if (abilityAction == null) return;
 
         Vector3 direction = target.position - transform.position;
         float distance = direction.magnitude;
@@ -104,7 +104,7 @@ public class lassoFire : MonoBehaviour
                 bool hasCooledDown = TimeSinceLastLoss >= cooldown;
                 cooldownTimerText.color = hasCooledDown ? Color.green : Color.red;
 
-                if (ability2Action.WasPressedThisFrame() && !currentlyPulling && hasCooledDown)
+                if (abilityAction.WasPressedThisFrame() && !currentlyPulling && hasCooledDown)
                 {
                     currentlyPulling = true;
                 }
@@ -136,6 +136,10 @@ public class lassoFire : MonoBehaviour
         {
             // Once target collides with cop, stop pulling
             OnTargetLost();
+
+            // Additionally, halve the cop's velocity after this.
+            Rigidbody CopRB = GetComponent<Rigidbody>();
+            CopRB.linearVelocity = CopRB.linearVelocity / 2.0f;
             return;
         }
     }
