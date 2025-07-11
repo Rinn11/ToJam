@@ -11,6 +11,8 @@ public class lassoFire : MonoBehaviour
     public Transform target;            // Target to check
     private Rigidbody TarRB;
 
+    public GameObject Cop;
+
     public float maxDistance = 10f;     // Max distance force applicable
     public float forceMult = 1f;        // Linear multiplier for force
 
@@ -33,6 +35,8 @@ public class lassoFire : MonoBehaviour
     public RectTransform indicatorRectTransform;
     public RectTransform canvasRectTransform;
 
+    private float originalCopAccelForce;
+
     public bool GetIsPulling()
     {
         return currentlyPulling;
@@ -48,6 +52,8 @@ public class lassoFire : MonoBehaviour
         // Initially hide the indicator and particle system
         particleSystem?.SetActive(false);
         lockOnIndicator?.SetActive(false);
+
+        originalCopAccelForce = GetComponent<PlayerMove>().accelerationForce;
 
         Camera.onPreRender += OnCameraPreRender;
     }
@@ -112,8 +118,14 @@ public class lassoFire : MonoBehaviour
                 // Main looping logic
                 if (currentlyPulling)
                 {
+                    // Visuals
                     particleSystem.SetActive(true);
                     Debug.DrawRay(transform.position, direction, Color.green);
+
+                    // Halve cop's engine power from original
+                    GetComponent<PlayerMove>().accelerationForce = originalCopAccelForce / 2.0f;
+                    
+                    // Attract the DDoriginalCopAccelForce
                     TarRB.AddForce(-direction.normalized * forceMult * 1000000 / (distance * distance));
                 }
             }
@@ -136,10 +148,6 @@ public class lassoFire : MonoBehaviour
         {
             // Once target collides with cop, stop pulling
             OnTargetLost();
-
-            // Additionally, halve the cop's velocity after this.
-            Rigidbody CopRB = GetComponent<Rigidbody>();
-            CopRB.linearVelocity = CopRB.linearVelocity / 2.0f;
             return;
         }
     }
