@@ -56,29 +56,6 @@ public class DestructibleObject : MonoBehaviour
             yield return new WaitForSeconds(destructibilityDuration / (numberOfIframeFlashes * 2));
         }
 
-        // for (int i = 0; i < numberOfIframeFlashes; i++)
-        // {
-        //     for (int j = 0; j < rends.Length; j++)
-        //     {
-        //         rendererToMaterial[rends[j]] = new Material[rends[j].materials.Length];
-        //         for (int k = 0; k < rends[j].materials.Length; k++)
-        //         {
-        //             rendererToMaterial[rends[j]][k] = rends[j].materials[k];
-        //             rends[j].materials[k] = invisibleMaterial;
-        //         }
-        //     }
-        //     yield return new WaitForSeconds(destructibilityDuration / (numberOfIframeFlashes * 2));
-
-        //     for (int j = 0; j < rends.Length; j++)
-        //     {
-        //         for (int k = 0; k < rends[j].materials.Length; k++)
-        //         {
-        //             rends[j].materials[k] = rendererToMaterial[rends[j]][k];
-        //         }
-        //     }
-        //     yield return new WaitForSeconds(destructibilityDuration / (numberOfIframeFlashes * 2));
-        // }
-
         // And reset the position and velocities
         transform.position = originalPosition;
         transform.rotation = originalRotation;
@@ -91,18 +68,6 @@ public class DestructibleObject : MonoBehaviour
 
         // Wait for a duration to respawn the object
         yield return new WaitForSeconds(respawnDelay);
-
-        // Proceed to check if the original location is obstructed
-        // while (!Physics.CheckBox(
-        //     originalPosition,
-        //     transform.localScale * 0.5f,
-        //     originalRotation,
-        //     LayerMask.GetMask("Default")
-        // ))
-        // {
-        //     Debug.Log($"Hi");
-        //     yield return new WaitForSeconds(0.5f);
-        // }
 
         // Re enable everything.
         acceptCollisions = true;
