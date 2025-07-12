@@ -157,4 +157,8 @@ public class RoundManager : MonoBehaviour
         fineManager.increaseFine((int) Mathf.Ceil(fineIncrease));
 
     }
+    public void CollisionFine()
+    {
+        fineManager.increaseFine((int) fineManager.collisionFineAmount);
+    }
 }

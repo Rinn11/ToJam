@@ -17,6 +17,10 @@ public class Bar : MonoBehaviour
     public float activationRadius = 70.0f;
     private float activationRadiusSqr;
     
+    private float visitTime = 0.0f;
+    public float visitTimeLimit = 2.0f; // seconds to get the fill up at bar 
+    private float timeTillOpen = 0.0f; // time till bar opens after being closed
+    
     internal BarManager Manager { get; set; }
 
     void Awake()
@@ -62,7 +66,29 @@ public class Bar : MonoBehaviour
         if (IsOpen && !isVisited && player != null && dist < Mathf.Sqrt(activationRadiusSqr))
         {
             isVisited = true;
-            Manager?.NotifyBarVisited(this);
+            Manager?.NotifyBarBeginVisit(this); // notify the manager that the bar visit has begun
+        }
+        if (isVisited && IsOpen)
+        {
+            visitTime += Time.deltaTime;
+            if (visitTime >= visitTimeLimit)
+            {
+                exitedBar(true);
+            }
+            else if (dist > Mathf.Sqrt(activationRadiusSqr))
+            {  // if you exit before the time reaches full
+                exitedBar(false);
+            }
+        }
+
+        if (!IsOpen && timeTillOpen > 0.0f && !isVisited)
+        {
+            timeTillOpen -= Time.deltaTime;
+            if (timeTillOpen <= 0.0f)
+            {
+                timeTillOpen = 0.0f;
+                Manager?.NotifyBarReopen(this);
+            }
         }
     }
 
@@ -75,12 +101,20 @@ public class Bar : MonoBehaviour
         mapIcon.color = Color.yellowNice;
     }
 
-    internal void SetClosed()
+    internal void SetClosed(float closingDuration)
     {
         IsOpen = false;
         isVisited = false;
         openModel.SetActive(false);
         closedModel.SetActive(true);
         mapIcon.color = Color.grey;
+        timeTillOpen = closingDuration;
+    }
+
+    internal void exitedBar(bool completed)
+    {
+        visitTime = 0.0f; // reset visit time
+        isVisited = false; // reset visited state
+        Manager?.NotifyBarDoneVisit(this, completed); // notify the manager that the bar visit is done
     }
 }

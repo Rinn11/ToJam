@@ -41,7 +41,6 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
   private int alcoholCount;                 // The number of alcohol bottles 
   private int alcoholSupply;              // The number of alcohol bottles available
   
-  
   private bool withdrawalSymptom = false;  // If true, the player is experiencing withdrawal symptoms and can't drink alcohol
   private float withdrawalTimer = 0.0f;  // when this reaches a threshold, the player will experience withdrawal symptoms
   public int withdrawalThreshold = 20; // how many seconds of not drinking alcohol before withdrawal symptoms kick in

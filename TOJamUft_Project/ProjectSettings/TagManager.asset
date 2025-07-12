@@ -12,6 +12,7 @@ TagManager:
   - RoundScreenUI
   - MarkedCar
   - Building
+  - civilianCar
   layers:
   - Default
   - TransparentFX

@@ -166,6 +166,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4816e0510b104f849823c8b42643a56f, type: 3}
+      propertyPath: m_TagString
+      value: civilianCar
+      objectReference: {fileID: 0}
     - target: {fileID: 2397621468118695034, guid: 4816e0510b104f849823c8b42643a56f, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -272,3 +276,4 @@ MonoBehaviour:
   invisibleBody: {fileID: 5178372336780267221}
   iframeDuration: 3
   numberOfIframeFlashes: 4
+  collisionScore: {fileID: 5337738718307957177, guid: ac538001723ede44db1f0534acfc810b, type: 3}
