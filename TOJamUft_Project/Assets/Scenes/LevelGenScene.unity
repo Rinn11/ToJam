@@ -66525,7 +66525,7 @@ MonoBehaviour:
   maxSpeed: 50
   maxTurnSpeed: 20
   dragForce: 2
-  angularDragForce: 2
+  angularDragForce: 4
   speedUI: {fileID: 0}
   MovementManager: {fileID: 357555600}
   onAccelerate:
