@@ -43675,6 +43675,81 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3223596219571706986, guid: ecae16c7986dc4b4295adbd16d49d0a6, type: 3}
+--- !u!1 &320414339
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 320414340}
+  - component: {fileID: 320414341}
+  - component: {fileID: 320414342}
+  m_Layer: 5
+  m_Name: visitLoadIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &320414340
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320414339}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 859217804}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -3}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &320414341
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320414339}
+  m_CullTransparentMesh: 1
+--- !u!114 &320414342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320414339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0.5684409, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 0
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1001 &321362037
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -114200,6 +114275,7 @@ RectTransform:
   - {fileID: 986504561}
   - {fileID: 1675557392}
   - {fileID: 823124342}
+  - {fileID: 320414340}
   m_Father: {fileID: 672776105}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -123225,7 +123301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapIcon: {fileID: 667969707}
   player: {fileID: 509149359}
-  activationRadius: 36
+  activationRadius: 55
   visitTimeLimit: 2
 --- !u!23 &930076277
 MeshRenderer:
@@ -145376,6 +145452,10 @@ PrefabInstance:
       propertyPath: alertMinimapIcon
       value: 
       objectReference: {fileID: 1339387348}
+    - target: {fileID: 1481097000912831690, guid: 23a16898dab35674da63a5d74acdfef3, type: 3}
+      propertyPath: barVisitProgress
+      value: 
+      objectReference: {fileID: 320414342}
     - target: {fileID: 1481097000912831690, guid: 23a16898dab35674da63a5d74acdfef3, type: 3}
       propertyPath: simultaneousOpenPercent
       value: 50
@@ -210288,7 +210368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapIcon: {fileID: 1167839628}
   player: {fileID: 509149359}
-  activationRadius: 36
+  activationRadius: 55
   visitTimeLimit: 2
 --- !u!23 &1593232792
 MeshRenderer:
@@ -233423,7 +233503,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapIcon: {fileID: 809589978}
   player: {fileID: 509149359}
-  activationRadius: 36
+  activationRadius: 55
   visitTimeLimit: 2
 --- !u!23 &1769189289
 MeshRenderer:
@@ -240102,7 +240182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapIcon: {fileID: 35773022}
   player: {fileID: 509149359}
-  activationRadius: 36
+  activationRadius: 55
   visitTimeLimit: 2
 --- !u!23 &1829461185
 MeshRenderer:
@@ -258616,7 +258696,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapIcon: {fileID: 1117504171}
   player: {fileID: 509149359}
-  activationRadius: 36
+  activationRadius: 55
   visitTimeLimit: 2
 --- !u!23 &1975641232
 MeshRenderer:
@@ -270413,7 +270493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapIcon: {fileID: 1726837920}
   player: {fileID: 509149359}
-  activationRadius: 36
+  activationRadius: 55
   visitTimeLimit: 2
 --- !u!23 &2067931611
 MeshRenderer:
@@ -272007,7 +272087,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapIcon: {fileID: 423049779}
   player: {fileID: 509149359}
-  activationRadius: 36
+  activationRadius: 55
   visitTimeLimit: 2
 --- !u!23 &2077320761
 MeshRenderer:

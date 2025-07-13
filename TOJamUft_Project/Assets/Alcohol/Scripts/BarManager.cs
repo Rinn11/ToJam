@@ -1,6 +1,7 @@
 // BarManager.cs
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BarManager : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class BarManager : MonoBehaviour
     private readonly List<Bar> open = new();
     
     private bool isVisitingBar = false;
+    private float visitTimeLimit = 2.0f;
+    public Image barVisitProgress; // UI element to show bar visit progress
+    private float timeSpentVisiting = 0.0f; // Time spent visiting the bar
 
     public GameObject alertMinimapIcon;
     private alertMinimapMarker alertManager;
@@ -77,12 +81,22 @@ public class BarManager : MonoBehaviour
             alcoholManager.changeAlcoholSupply(1);
         }
         alertManager?.RecieveAlert(1.0f, true);
+        barVisitProgress.fillAmount = 0.0f; // reset the progress bar
+        timeSpentVisiting = 0.0f; // reset the time spent visiting
     }
     
     public void NotifyBarBeginVisit(Bar bar)
     {
+        if (isVisitingBar)
+        {
+            Debug.LogWarning("Already visiting a bar. Cannot start a new visit.");
+            return;
+        }
         isVisitingBar = true;
         alertManager?.RecieveAlert(bar.visitTimeLimit, true);
+        barVisitProgress.fillAmount = 0.0f; // reset the progress bar
+        timeSpentVisiting = 0.0f; // reset the time spent visiting
+        visitTimeLimit = bar.visitTimeLimit; // set the visit time limit from the bar
     }
 
     public void NotifyBarReopen(Bar bar)
@@ -90,6 +104,15 @@ public class BarManager : MonoBehaviour
         bar.SetOpen();
         open.Add(bar);
         closed.Remove(bar);
+    }
+    
+    void Update()
+    {
+        if (isVisitingBar)
+        {
+            timeSpentVisiting += Time.deltaTime;
+            barVisitProgress.fillAmount = Mathf.Min(1.0f, timeSpentVisiting / visitTimeLimit);
+        }
     }
 
     /* ---------- internal helpers ---------- */
