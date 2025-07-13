@@ -214286,7 +214286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d482c098c3335484c94a40d69cd04769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accelerationForce: 4000
+  accelerationForce: 8000
   brakeForce: 3500
   speedUI: {fileID: 0}
   MovementManager: {fileID: 1726063258510371513}
