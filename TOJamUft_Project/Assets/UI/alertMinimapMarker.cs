@@ -4,6 +4,7 @@ public class alertMinimapMarker : MonoBehaviour
 {
     private float alertTime = 0.0f;
     public GameObject minimapIcon;
+    public GameObject minimapPingField;
     
     
     // Update is called once per frame
@@ -15,12 +16,12 @@ public class alertMinimapMarker : MonoBehaviour
             if (alertTime <= 0.0f)
             {
                 alertTime = 0.0f; // Ensure it does not go negative
-                minimapIcon.SetActive(false); // Deactivate the minimap marker when alert time is over
+                SetElementsActive(false); // Deactivate the minimap icon and ping field when alert time is zero
             }
         }
         else
         {
-            minimapIcon.SetActive(false); // Ensure the marker is inactive when not alerting
+            SetElementsActive(false); // Deactivate the minimap icon and ping field if alert time is zero
         }
     }
 
@@ -31,6 +32,12 @@ public class alertMinimapMarker : MonoBehaviour
             return; // If not overriding and already alerting, do nothing
         }
         alertTime = duration; // Set the alert time to the specified duration
-        minimapIcon.SetActive(true); // Activate the minimap marker
+        SetElementsActive(true); // Activate the minimap icon and ping field
+    }
+    
+    internal void SetElementsActive(bool active)
+    {
+        minimapIcon.SetActive(active);
+        minimapPingField.SetActive(active);
     }
 }
