@@ -7,6 +7,8 @@ public class Bar : MonoBehaviour
     private GameObject openModel;
     private GameObject closedModel;
 
+    public ParticleSystem greenEffect;
+
     public RawImage mapIcon;
 
     public bool IsOpen { get; private set; }
@@ -35,6 +37,7 @@ public class Bar : MonoBehaviour
         playerTransform = player?.transform;
         
         activationRadiusSqr = Mathf.Pow(activationRadius, 2);
+        greenEffect.startSize = activationRadiusSqr * 5;
     }
 
     public void FindDrunkPlayer()
