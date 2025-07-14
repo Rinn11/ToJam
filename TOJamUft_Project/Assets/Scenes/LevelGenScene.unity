@@ -214287,7 +214287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accelerationForce: 8000
-  brakeForce: 8000
+  brakeForce: 20000
   speedUI: {fileID: 0}
   MovementManager: {fileID: 1726063258510371513}
   wheels:
