@@ -19,15 +19,16 @@ public class ParticleXFade : MonoBehaviour
     {
         if (referenceObject == null) return;
 
-        int count = ps.GetParticles(particles);
-        //float refX = referenceObject.position.x;
-        float distence = Vector3.Distance(referenceObject.position, transform.position);
+        // int count = ps.GetParticles(particles);
+        // //float refX = referenceObject.position.x;
+        // float distence = Vector3.Distance(referenceObject.position, transform.position);
+        Vector3 diff = referenceObject.position - transform.position;
+        float distence = Mathf.Sqrt(diff.x * diff.x + diff.z * diff.z);
         Debug.Log(distence + " dis");
 
         if (distence > maxDistance)
         {
             ps.Stop();
-            return;
         }
         else
         {
