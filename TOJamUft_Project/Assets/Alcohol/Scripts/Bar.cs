@@ -37,7 +37,10 @@ public class Bar : MonoBehaviour
         playerTransform = player?.transform;
         
         activationRadiusSqr = Mathf.Pow(activationRadius, 2);
-        greenEffect.startSize = activationRadiusSqr * 5;
+        greenEffect.startSize = activationRadiusSqr * 3.8f;
+        //change particle effect play speeed
+        var main = greenEffect.main;
+        main.simulationSpeed = 2.0f;
     }
 
     public void FindDrunkPlayer()
@@ -66,7 +69,7 @@ public class Bar : MonoBehaviour
         // get x and z distance only
         Vector3 diff = playerTransform.position - mapIcon.transform.position;
         float dist = Mathf.Sqrt(diff.x * diff.x + diff.z * diff.z);
-        if (IsOpen && !isVisited && player != null && dist < Mathf.Sqrt(activationRadiusSqr))
+        if (IsOpen && !isVisited && player != null && dist < activationRadius)
         {
             isVisited = true;
             Manager?.NotifyBarBeginVisit(this); // notify the manager that the bar visit has begun
