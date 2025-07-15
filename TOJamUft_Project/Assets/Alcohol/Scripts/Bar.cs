@@ -37,7 +37,10 @@ public class Bar : MonoBehaviour
         playerTransform = player?.transform;
         
         activationRadiusSqr = Mathf.Pow(activationRadius, 2);
-        greenEffect.startSize = activationRadiusSqr * 4.3f;
+        greenEffect.startSize = activationRadiusSqr * 3.8f;
+        //change particle effect play speeed
+        var main = greenEffect.main;
+        main.simulationSpeed = 2.0f;
     }
 
     public void FindDrunkPlayer()
