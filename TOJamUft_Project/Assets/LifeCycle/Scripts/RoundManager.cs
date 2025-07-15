@@ -161,4 +161,10 @@ public class RoundManager : MonoBehaviour
     {
         fineManager.increaseFine((int) fineManager.collisionFineAmount);
     }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(0);
+    }
+    
 }

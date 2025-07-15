@@ -68,9 +68,7 @@ public class EndScreenBehavior : MonoBehaviour
     // Reload the Scene and reset the round manager to play again
     public void playAgain()
     {
-        // Reload the current scene
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name);
+        SceneManager.LoadScene(0);
     }
 
     // Quit the game
