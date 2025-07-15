@@ -18025,39 +18025,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99bbe0d5584439a4497756a2acbd47a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScanRecursively: 1
-  SuppressInputWhileBlending: 1
-  IgnoreTimeScale: 0
-  m_ControllerManager:
-    Controllers:
-    - Name: Look Orbit X
-      Owner: {fileID: 141957783}
-      Enabled: 1
-      Input: {Input: {fileID: 0}, m_Value: {x: 0, y: 0}}
-      InputValue: 0
-      Driver:
-        m_CurrentSpeed: 0
-        AccelTime: 0
-        DecelTime: 0
-    - Name: Look Orbit Y
-      Owner: {fileID: 141957783}
-      Enabled: 1
-      Input: {Input: {fileID: 0}, m_Value: {x: 0, y: 0}}
-      InputValue: 0
-      Driver:
-        m_CurrentSpeed: 0
-        AccelTime: 0
-        DecelTime: 0
-    - Name: Orbit Scale
-      Owner: {fileID: 141957783}
-      Enabled: 1
-      Input: {Input: {fileID: 0}, m_Value: {x: 0, y: 0}}
-      InputValue: 0
-      Driver:
-        m_CurrentSpeed: 0
-        AccelTime: 0
-        DecelTime: 0
-  PlayerInput: {fileID: 0}
 --- !u!1001 &143734133
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48379,8 +48346,24 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1447993195}
     m_Modifications:
+    - target: {fileID: 1221082370052961094, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2503293098269832914, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: stopAction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
@@ -48388,16 +48371,28 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: InitialModule.maxNumParticles
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 126
       objectReference: {fileID: 0}
+    - target: {fileID: 4172160396410127188, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 7634400487978114234, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_Name
       value: MagicCircleSimpleGreen (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634400487978114234, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8865824144277803872, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_LocalScale.x
@@ -56733,7 +56728,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1476409855
+    m_Bits: 1476475391
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -79534,8 +79529,24 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1604140912}
     m_Modifications:
+    - target: {fileID: 1221082370052961094, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2503293098269832914, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: stopAction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
@@ -79543,16 +79554,28 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: InitialModule.maxNumParticles
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 126
       objectReference: {fileID: 0}
+    - target: {fileID: 4172160396410127188, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 7634400487978114234, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_Name
       value: MagicCircleSimpleGreen (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634400487978114234, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8865824144277803872, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_LocalScale.x
@@ -116491,8 +116514,24 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1536472163}
     m_Modifications:
+    - target: {fileID: 1221082370052961094, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2503293098269832914, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: stopAction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
@@ -116500,8 +116539,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: InitialModule.maxNumParticles
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: InitialModule.startSize.scalar
@@ -116511,9 +116554,17 @@ PrefabInstance:
       propertyPath: InitialModule.startLifetime.scalar
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4172160396410127188, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 7634400487978114234, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_Name
       value: MagicCircleSimpleGreen (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634400487978114234, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8865824144277803872, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_LocalScale.x
@@ -116529,11 +116580,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8865824144277803872, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0638
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8865824144277803872, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0038
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8865824144277803872, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -131872,8 +131923,24 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 293065846}
     m_Modifications:
+    - target: {fileID: 1221082370052961094, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2503293098269832914, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: stopAction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
@@ -131881,16 +131948,28 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: InitialModule.maxNumParticles
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 126
       objectReference: {fileID: 0}
+    - target: {fileID: 4172160396410127188, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 7634400487978114234, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_Name
       value: MagicCircleSimpleGreen (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634400487978114234, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8865824144277803872, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_LocalScale.x
@@ -165173,8 +165252,24 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 606001964}
     m_Modifications:
+    - target: {fileID: 1221082370052961094, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2503293098269832914, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: stopAction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
@@ -165182,16 +165277,28 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: InitialModule.maxNumParticles
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 126
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172160396410127188, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7634400487978114234, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_Name
       value: MagicCircleSimpleGreen (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634400487978114234, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8865824144277803872, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_LocalScale.x
@@ -199371,8 +199478,24 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 218156692}
     m_Modifications:
+    - target: {fileID: 1221082370052961094, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2503293098269832914, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: stopAction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
@@ -199380,16 +199503,28 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: InitialModule.maxNumParticles
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 126
       objectReference: {fileID: 0}
+    - target: {fileID: 4172160396410127188, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 7634400487978114234, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_Name
       value: MagicCircleSimpleGreen (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634400487978114234, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8865824144277803872, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_LocalScale.x
@@ -205323,8 +205458,24 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1276869795}
     m_Modifications:
+    - target: {fileID: 1221082370052961094, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2503293098269832914, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: stopAction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
@@ -205332,16 +205483,28 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: InitialModule.maxNumParticles
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 126
       objectReference: {fileID: 0}
+    - target: {fileID: 4172160396410127188, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 7634400487978114234, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_Name
       value: MagicCircleSimpleGreen (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634400487978114234, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8865824144277803872, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_LocalScale.x
@@ -209480,8 +209643,24 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1936510990}
     m_Modifications:
+    - target: {fileID: 1221082370052961094, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2503293098269832914, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: stopAction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
@@ -209489,16 +209668,28 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: InitialModule.maxNumParticles
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2950847828916922747, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 126
       objectReference: {fileID: 0}
+    - target: {fileID: 4172160396410127188, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 7634400487978114234, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_Name
       value: MagicCircleSimpleGreen (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634400487978114234, guid: daabc9ae9062ea540b453269194a553a, type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8865824144277803872, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_LocalScale.x

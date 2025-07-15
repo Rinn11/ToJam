@@ -33,18 +33,5 @@ public class ParticleXFade : MonoBehaviour
         {
             ps.Play();
         }
-
-        for (int i = 0; i < count; i++)
-        { 
-            float alpha = Mathf.Clamp01(1f - (distence / maxDistance));
-
-            
-
-            Color col = particles[i].startColor;
-            col.a = alpha;
-            particles[i].startColor = col;
-        }
-
-        ps.SetParticles(particles);
     }
 }
