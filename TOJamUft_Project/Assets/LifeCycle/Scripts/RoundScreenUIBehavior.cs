@@ -7,22 +7,23 @@ using UnityEngine;
 using UnityEngine.InputSystem.Utilities;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class RoundScreenUIBehavior : MonoBehaviour
 {
     [Header("Display 1 UI")]
-    public Text scoreText;
-    public Text timeText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI timeText;
 
     [Header("Display 2 UI")]
-    public Text scoreText2;
-    public Text timeText2;
+    public TextMeshProUGUI scoreText2;
+    public TextMeshProUGUI timeText2;
 
     // Count and update the score.
     public void updateScoreText(float score)
     {
         Debug.Log($"Updating score text with score: {score}");
-        scoreText.text = $"${score}";
+        scoreText.text = $"Fine: ${score}";
         scoreText2.text = scoreText.text;
     }
 
