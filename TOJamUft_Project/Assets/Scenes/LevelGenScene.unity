@@ -216038,8 +216038,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d482c098c3335484c94a40d69cd04769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accelerationForce: 8000
-  brakeForce: 20000
+  accelerationForce: 4000
+  brakeForce: 4000
   speedUI: {fileID: 0}
   MovementManager: {fileID: 1726063258510371513}
   wheels:
@@ -216081,7 +216081,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 2
 --- !u!33 &1620153152
 MeshFilter:
