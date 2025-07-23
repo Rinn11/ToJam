@@ -75,4 +75,13 @@ public class UFOMovement : MonoBehaviour, IMovementModel
             rb.AddForce(transform.forward * moveValue.y * useAccelerationForce);
         }
     }
+    
+        
+    public void speedBoost(float boost)
+    {
+        // this function gets called once a frame if boost is being held, so apply a large force
+        if (rb == null) return;
+        // shoould move at consistent velocity
+        rb.AddForce(transform.forward * boost * accelerationForce, ForceMode.Acceleration);
+    }
 }
