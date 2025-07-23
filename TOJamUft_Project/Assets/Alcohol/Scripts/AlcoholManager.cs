@@ -270,7 +270,7 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
 
       if (alcoholSupply < 1.0f)
       {
-        alcoholSupply = 0; // prevent negative supply
+        changeAlcoholSupply(-1.0f * alcoholSupply); // draing alcohol supply by the remaining amount
       }
       capacityRectangle.color = new Color(0.529f, 0.337f, 0.325f); // brownish color
     }
