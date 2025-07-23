@@ -28,6 +28,8 @@ public class BarManager : MonoBehaviour
 
     public GameObject AlcoholManager;
     private AlcoholManager alcoholManager;
+    
+    public RoundManager roundManager;
 
     public AlertCopOfDDLocationEventSender alertCopOfDDLocationEventSender;
 
@@ -91,6 +93,7 @@ public class BarManager : MonoBehaviour
             bar.SetClosed(closingDuration);
             collectSound.Play();
             alcoholManager.changeAlcoholSupply(1);
+            roundManager.increaseAlcoholFine();
         }
         alertManager?.RecieveAlert(1.0f, true);
         barVisitProgress.fillAmount = 0.0f; // reset the progress bar
