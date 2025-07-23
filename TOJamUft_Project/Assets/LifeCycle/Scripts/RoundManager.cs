@@ -151,15 +151,15 @@ public class RoundManager : MonoBehaviour
 
     public void increaseAlcoholFine()
     {
-        // Utilize both the timer and the fine manager such that the fine gained from drinking from the beginning of the round is better than the fine gained from drinking at the end of the round.
-        float decay = Mathf.Exp(-roundTimer.elapsedTime / roundTimer.roundDuration * fineManager.alcoholDecayAlpha);
-        float fineIncrease = fineManager.minFine + (fineManager.maxFine - fineManager.minFine) * decay;
-        fineManager.increaseFine((int) Mathf.Ceil(fineIncrease));
-
+        // // Utilize both the timer and the fine manager such that the fine gained from drinking from the beginning of the round is better than the fine gained from drinking at the end of the round.
+        // float decay = Mathf.Exp(-roundTimer.elapsedTime / roundTimer.roundDuration * fineManager.alcoholDecayAlpha);
+        // float fineIncrease = fineManager.minFine + (fineManager.maxFine - fineManager.minFine) * decay;
+        // fineManager.increaseFine((int) Mathf.Ceil(fineIncrease));
+        fineManager.increaseFine(500);
     }
-    public void CollisionFine()
+    public void CollisionFine(int amount)
     {
-        fineManager.increaseFine((int) fineManager.collisionFineAmount);
+        fineManager.increaseFine(amount);
     }
 
     public void RestartGame()
