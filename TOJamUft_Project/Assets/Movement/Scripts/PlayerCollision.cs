@@ -118,7 +118,7 @@ public class PlayerCollision : MonoBehaviour
       StartCoroutine(iFrameCoroutine());
     } else if (collision.gameObject.CompareTag("civilianCar"))
     { 
-      collisionScore.increaseCollisionFine(50, true);
+      collisionScore.increaseCollisionFine(25, true);
       Debug.Log("Collision with civilian car detected.");
     } else if (collision.gameObject.CompareTag("destructibles"))
     {
