@@ -15,6 +15,9 @@ public class DestructibleObject : MonoBehaviour
     [HideInInspector]
     public bool beingDestroyed = false;
 
+    [Header("Physics Settings")]
+    public float impactReduction; // How much the impact velocity is reduced when the object is hit
+
     Vector3 originalPosition;
     Quaternion originalRotation;
     Rigidbody rb;
@@ -36,7 +39,6 @@ public class DestructibleObject : MonoBehaviour
 
     public IEnumerator destructionCoroutine()
     {
-        rb.isKinematic = false;
         acceptCollisions = false;
         beingDestroyed = true;
 
@@ -85,6 +87,13 @@ public class DestructibleObject : MonoBehaviour
 
         if (acceptCollisions && (collision.gameObject.CompareTag("CopCar") || collision.gameObject.CompareTag("Player") || (otherDestructible != null && otherDestructible.beingDestroyed)))
         {
+            rb.isKinematic = false; // Set the rigidbody to non-kinematic to allow physics interactions
+
+            Vector3 impactVelocity = collision.relativeVelocity;
+            rb.linearVelocity = impactVelocity * impactReduction;
+
+            collision.rigidbody.linearVelocity = impactVelocity * impactReduction; // maintain the velocity of the colliding object
+
             StartCoroutine(destructionCoroutine());
         }
     }
