@@ -38,8 +38,8 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
   [SerializeField]
   private RoundManager roundManager;
 
-  private int alcoholCount;                 // The number of alcohol bottles 
-  private int alcoholSupply;              // The number of alcohol bottles available
+  private float alcoholCount;                 // The number of alcohol bottles 
+  private float alcoholSupply;              // The number of alcohol bottles available
   
   private bool withdrawalSymptom = false;  // If true, the player is experiencing withdrawal symptoms and can't drink alcohol
   private float withdrawalTimer = 0.0f;  // when this reaches a threshold, the player will experience withdrawal symptoms
@@ -52,6 +52,11 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
   // public float bottlex, bottley, bottlez;   // Controls the angle the bottle is tilted to during the drinking animations
 
   private InputAction abilityAction;
+
+  public GameObject DrunkDriverPLayer;
+  private UFOMovement playerMovement; // reference to the player's movement script
+
+  private bool wasDrinking = false;
 
   private bool canDrink = true;  // when blacking out, you can't drink
 
@@ -68,7 +73,7 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
   {
     alcoholSupply = initialAlcoholSupply;
     alcoholCount = initialAlcoholCount;
-    Shader.SetGlobalInt("GlobalAlcoholCount", initialAlcoholCount);
+    Shader.SetGlobalFloat("GlobalAlcoholCount", initialAlcoholCount);
     
     DrinkToolTip.SetActive(false); // hide the drink tooltip at start
 
@@ -99,9 +104,23 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     {
       StartCoroutine(DrinkAlcohol());
     }
+
+    // get UFOMovement component from the player
+    if (DrunkDriverPLayer != null)
+    {
+      playerMovement = DrunkDriverPLayer.GetComponent<UFOMovement>();
+      if (playerMovement == null)
+      {
+        Debug.LogError("UFOMovement component not found on the DrunkDriverPLayer GameObject!");
+      }
+    }
+    else
+    {
+      Debug.LogError("DrunkDriverPLayer GameObject not assigned in the AlcoholManager!");
+    }
   }
 
-  public int GetAlcoholCount()
+  public float GetAlcoholCount()
   {
     return alcoholCount;
   }
@@ -111,15 +130,15 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     return !canDrink;
   }
   
-  public void increaseAlcoholCount(int amount = 1)
+  public void increaseAlcoholCount(float amount = 1)
   {
     alcoholCount += amount;
-    if (alcoholCount > 1)
-    { 
-      roundManager.increaseAlcoholFine();  
-    }
+    // if (alcoholCount > 1)
+    // { 
+    //   roundManager.increaseAlcoholFine();  
+    // }
     
-    Shader.SetGlobalInt("GlobalAlcoholCount", alcoholCount);
+    Shader.SetGlobalFloat("GlobalAlcoholCount", alcoholCount);
 
     if (alcoholCountUI != null)
     {
@@ -137,12 +156,12 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     // alcohol multiplier is ((alcoholCount - 1) / 10) + 1
     return ((alcoholCount - 1) / 10f) + 1;
   }
-  public int GetAlcoholSupply()
+  public float GetAlcoholSupply()
   {
     return alcoholSupply;
   }
 
-  public void changeAlcoholSupply(int amount = 1) // use -1 to decrease
+  public void changeAlcoholSupply(float amount = 1) // use -1 to decrease
   {
     alcoholSupply += amount;
 
@@ -173,7 +192,7 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
   {
     withdrawalTimer += Time.deltaTime;  // increase withdrawal timer by the time since last frame
     //Debug.Log("Withdrawal timer: " + withdrawalTimer);
-    if (withdrawalTimer >= withdrawalThreshold)
+    if (withdrawalTimer >= withdrawalThreshold && !wasDrinking)
     {
       withdrawalSymptom = true;  // player is experiencing withdrawal symptoms
       //Debug.Log("Withdrawal symptoms are kicking in!");
@@ -200,21 +219,64 @@ public class AlcoholManager : MonoBehaviour, IMovementModifier
     if (abilityAction == null) return;
 
     // press space to initiate drink alcohol routine
-    if (abilityAction.WasPressedThisFrame())
+    // if (abilityAction.WasPressedThisFrame())
+    // {
+    //   if (alcoholSupply > 0 && canDrink)
+    //   {
+    //     StartCoroutine(DrinkAlcohol());
+    //   }
+    //   else if (alcoholSupply <= 0)
+    //   {
+    //     Debug.Log("No alcohol supply left!");
+    //   }
+    //   else if (!canDrink)
+    //   {
+    //     Debug.Log("Can't drink while blacking out!");
+    //   }
+    //
+    // }
+    if (alcoholSupply > 0  && abilityAction.IsPressed())
     {
-      if (alcoholSupply > 0 && canDrink)
+      if (!wasDrinking)
       {
-        StartCoroutine(DrinkAlcohol());
+        withdrawalTimer = 0;
+        withdrawalSymptom = false;  // player is not experiencing withdrawal symptoms
+        DrinkToolTip.SetActive(false); // hide the drink tooltip
+        capacityRectangle.color = new Color(0, 0, 200);
       }
-      else if (alcoholSupply <= 0)
+      wasDrinking = true;
+      // change colour of alcohol capacity rectangle to blue
+     
+      // apply large force to the player (speed boost)
+      playerMovement.speedBoost(1000 * GetAlcoholMultiplier());
+      // so, alcohol bottle fills up with a logarithmic function with x being the alcohol supply
+      // we want to deplete the alcohol supply so that the bottle will decrease linearlu, i.e. reverse log for supply depletion, but we still must track supply decreasing so we know to take a 1 to 1 increase of alcohol blood percentage per supply depleted
+      increaseAlcoholCount(0.25f);
+      changeAlcoholSupply(-0.25f); // decrease alcohol supply by 0.25
+
+      if (!audioSources[0].isPlaying)
       {
-        Debug.Log("No alcohol supply left!");
+        audioSources[0].Play();
       }
-      else if (!canDrink)
+    }
+    else if (wasDrinking && !abilityAction.WasReleasedThisFrame())
+    {
+      wasDrinking = false;
+      // blackout
+      if (alcoholCount >= 3 && UnityEngine.Random.Range(0, 100) < 40 + (Math.Pow(2, GetAlcoholMultiplier())))
       {
-        Debug.Log("Can't drink while blacking out!");
+        TriggerBlackout();
       }
 
+      if (alcoholSupply < 1.0f)
+      {
+        alcoholSupply = 0; // prevent negative supply
+      }
+      capacityRectangle.color = new Color(0.529f, 0.337f, 0.325f); // brownish color
+    }
+    else
+    {
+      
     }
   }
 
