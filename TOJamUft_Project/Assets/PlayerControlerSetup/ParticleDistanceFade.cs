@@ -24,7 +24,7 @@ public class ParticleXFade : MonoBehaviour
         // float distence = Vector3.Distance(referenceObject.position, transform.position);
         Vector3 diff = referenceObject.position - transform.position;
         float distence = Mathf.Sqrt(diff.x * diff.x + diff.z * diff.z);
-        Debug.Log("distance: " + distence + "from bar " + referenceObject.name);
+        // Debug.Log("distance: " + distence + "from bar " + referenceObject.name);
 
         if (distence > maxDistance)
         {

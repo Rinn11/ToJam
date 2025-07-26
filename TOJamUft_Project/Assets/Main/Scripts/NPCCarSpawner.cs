@@ -40,8 +40,6 @@ public class NPCCarSpawner : MonoBehaviour
     // Spawn cars
     private void spawnCars()
     { 
-        Debug.Log("Spawning Cars");
-
         // Grab the children of the graph (this object) and randomly spawn a car at one of those nodes.
         List<int> shuffledIndices = GetShuffledIndices(transform.childCount);
 

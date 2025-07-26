@@ -117804,7 +117804,7 @@ MonoBehaviour:
   mapIcon: {fileID: 1992059004}
   player: {fileID: 509149359}
   activationRadius: 36
-  visitTimeLimit: 2
+  visitTimeLimit: 3.5
 --- !u!23 &867137017
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -125565,7 +125565,7 @@ MonoBehaviour:
   mapIcon: {fileID: 667969707}
   player: {fileID: 509149359}
   activationRadius: 50
-  visitTimeLimit: 2
+  visitTimeLimit: 3.5
 --- !u!23 &930076277
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -215080,7 +215080,7 @@ MonoBehaviour:
   mapIcon: {fileID: 1167839628}
   player: {fileID: 509149359}
   activationRadius: 50
-  visitTimeLimit: 2
+  visitTimeLimit: 3.5
 --- !u!23 &1593232792
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -239802,7 +239802,7 @@ MonoBehaviour:
   mapIcon: {fileID: 809589978}
   player: {fileID: 509149359}
   activationRadius: 50
-  visitTimeLimit: 2
+  visitTimeLimit: 3.5
 --- !u!23 &1769189289
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -247159,7 +247159,7 @@ MonoBehaviour:
   mapIcon: {fileID: 35773022}
   player: {fileID: 509149359}
   activationRadius: 50
-  visitTimeLimit: 2
+  visitTimeLimit: 3.5
 --- !u!23 &1829461185
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -265774,7 +265774,7 @@ MonoBehaviour:
   mapIcon: {fileID: 1117504171}
   player: {fileID: 509149359}
   activationRadius: 50
-  visitTimeLimit: 2
+  visitTimeLimit: 3.5
 --- !u!23 &1975641232
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -277883,7 +277883,7 @@ MonoBehaviour:
   mapIcon: {fileID: 1726837920}
   player: {fileID: 509149359}
   activationRadius: 50
-  visitTimeLimit: 2
+  visitTimeLimit: 3.5
 --- !u!23 &2067931611
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -279390,7 +279390,7 @@ MonoBehaviour:
   mapIcon: {fileID: 423049779}
   player: {fileID: 509149359}
   activationRadius: 50
-  visitTimeLimit: 2
+  visitTimeLimit: 3.5
 --- !u!23 &2077320761
 MeshRenderer:
   m_ObjectHideFlags: 0
