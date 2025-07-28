@@ -49,7 +49,6 @@ public class FineManagerBehavior : MonoBehaviour
     public void sendScoreInvoker()
     {
         // Fine manager will not persist across rounds, so we send the score to the RoundManager so that the data can be stored.
-        Debug.Log("Sending score to round manager");
         sendScoreEvent.Invoke(fine);
     }
     

@@ -109,7 +109,6 @@ public class RoundTimer : MonoBehaviour
     {
         // This method can be used to send the elapsed time to other components if needed.
         // For now, we will just log it.
-        Debug.Log($"Elapsed Time: {elapsedTime:F2} seconds");
         sendTimeEvent.Invoke(elapsedTime);
     }
 }

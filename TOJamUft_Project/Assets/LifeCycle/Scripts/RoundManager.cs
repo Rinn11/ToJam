@@ -57,8 +57,8 @@ public class RoundManager : MonoBehaviour
     void Start()
     {
         // Checkout the scores
-        Debug.Log($"RoundManager initialized. Current round: {currentRound}, Current game: {currentGame}");
-        Debug.Log($"Player {(isP1Driving ? '1' : '2')} is currently driving.");
+        // Debug.Log($"RoundManager initialized. Current round: {currentRound}, Current game: {currentGame}");
+        // Debug.Log($"Player {(isP1Driving ? '1' : '2')} is currently driving.");
     }
 
     public void startRound()
@@ -145,7 +145,6 @@ public class RoundManager : MonoBehaviour
     {
         // This method is a placeholder for running a coroutine to end the round.
         // It can be used to delay the end of the round or perform any other actions before ending the round.
-        Debug.Log("Running end round coroutine...");
         StartCoroutine(EndRound());
     }
 

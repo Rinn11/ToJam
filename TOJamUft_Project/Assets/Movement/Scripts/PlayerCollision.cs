@@ -103,7 +103,6 @@ public class PlayerCollision : MonoBehaviour
     if (collision.gameObject.CompareTag("CopCar") && acceptCollisions)
     {
       currentCollisions++;
-      Debug.Log("Collision with cop car detected. Current collisions: " + currentCollisions);
 
       // Just crashing won't do. you need feedback. add visual and audio feedback here.
       crashSource.Play();
@@ -119,7 +118,6 @@ public class PlayerCollision : MonoBehaviour
     } else if (collision.gameObject.CompareTag("civilianCar"))
     { 
       collisionScore.increaseCollisionFine(25, true);
-      Debug.Log("Collision with civilian car detected.");
     } else if (collision.gameObject.CompareTag("destructibles"))
     {
       // If the player collides with terrain, we can give them a fine or some other feedback.

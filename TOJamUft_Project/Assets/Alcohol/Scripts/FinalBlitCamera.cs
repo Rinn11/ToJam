@@ -39,7 +39,7 @@ public class FinalBlitCamera : MonoBehaviour
 
         if (isDualMonitor)
         {
-            Debug.Log("Multi monitor setup detected. Initializing cameras for dual monitor mode.");
+            // Debug.Log("Multi monitor setup detected. Initializing cameras for dual monitor mode.");
             // set letterboxing canv unactive
             if (letterboxing != null)
             {
@@ -49,7 +49,7 @@ public class FinalBlitCamera : MonoBehaviour
         }
         else
         {
-            Debug.Log("Single monitor setup detected. Initializing cameras for splitscreen mode.");
+            // Debug.Log("Single monitor setup detected. Initializing cameras for splitscreen mode.");
             blurredSource = new RenderTexture(Screen.width / 2, Screen.height / 2, 0);
             blurredSource.Create();
             // set letterboxing canvas active
