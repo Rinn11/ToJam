@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{a7e35af6-f8c5-450d-85f2-fb6c61019aa2}">
+		<property name="assetPath">
+			<value>WoodSFX-006.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.28264583333333332</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{5508a804-84a4-420b-98c0-a5f6d7dae518}</destination>
+		</relationship>
+	</object>
+</objects>

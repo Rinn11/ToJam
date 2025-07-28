@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{7c39214c-78e0-411d-8ed5-da557147b3bb}">
+		<property name="assetPath">
+			<value>MetalSFX-003.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.8923541666666666</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{5508a804-84a4-420b-98c0-a5f6d7dae518}</destination>
+		</relationship>
+	</object>
+</objects>
