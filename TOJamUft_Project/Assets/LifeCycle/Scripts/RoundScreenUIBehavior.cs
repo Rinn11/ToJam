@@ -30,7 +30,6 @@ public class RoundScreenUIBehavior : MonoBehaviour
     // Update the timer text
     public void updateTimeText(float elapsedTime)
     {
-        Debug.Log($"Police car caught the drunk driver in {elapsedTime}");
 
         // Format elapsed time as a string of Minutes:Seconds
         int minutes = Mathf.FloorToInt(elapsedTime / 60);
