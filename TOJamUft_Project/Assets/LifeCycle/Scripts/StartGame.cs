@@ -23,6 +23,7 @@ public class StartGame : MonoBehaviour
     private Vector3 rotationVector;
 
     [Header("Display2 Settings")]
+    public GameObject titleScreenUI2;
     public GameObject titleScreenCamera2;
     public RawImage player1Img2, player2Img2;
     private bool isDualMonitor = false;
@@ -49,6 +50,11 @@ public class StartGame : MonoBehaviour
             Display.displays[i].Activate();
         isDualMonitor = displayCount >= 2;
 
+        if (isDualMonitor)
+        {
+            titleScreenUI2.SetActive(true);
+            titleScreenCamera2.SetActive(true);
+        }
     }
 
 

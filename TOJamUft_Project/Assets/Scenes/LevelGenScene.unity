@@ -207585,7 +207585,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1490413483
 RectTransform:
   m_ObjectHideFlags: 0
@@ -298011,6 +298011,7 @@ MonoBehaviour:
   player2Img: {fileID: 1949521943}
   titleScreenCamera: {fileID: 989006531}
   rotationSpeed: 10
+  titleScreenUI2: {fileID: 1490413482}
   titleScreenCamera2: {fileID: 2121616142}
   player1Img2: {fileID: 2120836157}
   player2Img2: {fileID: 1252954830}
@@ -298898,7 +298899,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2121616143
 Transform:
   m_ObjectHideFlags: 0
