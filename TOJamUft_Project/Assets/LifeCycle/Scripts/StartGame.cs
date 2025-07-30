@@ -33,8 +33,6 @@ public class StartGame : MonoBehaviour
 
     void Start()
     {
-        // Time.timeScale = 0;
-
         ingameUI.SetActive(false);
         titleScreen.SetActive(true);
 
