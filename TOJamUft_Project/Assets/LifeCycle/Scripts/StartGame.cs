@@ -5,6 +5,7 @@
  */
 
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -16,10 +17,11 @@ public class StartGame : MonoBehaviour
 
     public Image player1Img, player2Img;
     private bool player1Active, player2Active;
+    public UnityEvent StartGameEvent;
         
     void Start()
     {
-        Time.timeScale = 0;
+        // Time.timeScale = 0;
         
         ingameUI.SetActive(false);
         titleScreen.SetActive(true);
@@ -40,7 +42,7 @@ public class StartGame : MonoBehaviour
                 ingameUI.SetActive(true);
             }
         }
-    } 
+    }
 
     public void ReadyGame()
     {
@@ -48,7 +50,8 @@ public class StartGame : MonoBehaviour
         {
             player1Active = true;
             player1Img.color = Color.green;
-        } else if (!player2Active)
+        }
+        else if (!player2Active)
         {
             player2Active = true;
             player2Img.color = Color.green;
@@ -60,6 +63,7 @@ public class StartGame : MonoBehaviour
             audioSources[0].Play();         // TODO: audioSources doesn't seem to be used?
             titleScreen.SetActive(false);
             ingameUI.SetActive(true);
+            StartGameEvent.Invoke();
         }
     }
 }
