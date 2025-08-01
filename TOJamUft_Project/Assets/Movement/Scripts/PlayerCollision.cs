@@ -15,6 +15,8 @@ public class PlayerCollision : MonoBehaviour
 {
     public GameObject objectToBlink;
 
+    public GameObject hitIcon;
+    
   [Header("UI Related Settings")]
   public GameObject textUI;
 
@@ -42,6 +44,12 @@ public class PlayerCollision : MonoBehaviour
 
   [Header("Events")]
   public UnityEvent roundOverEvent;
+  
+    private void Start()
+    {
+        // Initialize the hit icon to be inactive at the start
+        hitIcon.SetActive(false);
+    }
 
   // Thanks to this video for the help for the iframe implementation even though it's for 2D Unity: https://www.youtube.com/watch?v=YSzmCf_L2cE
   /* previous good code, due to the current object having several meshes I changed it to do this per object, but we should go back too the below if 
@@ -103,6 +111,7 @@ public class PlayerCollision : MonoBehaviour
     if (collision.gameObject.CompareTag("CopCar") && acceptCollisions)
     {
       currentCollisions++;
+      hitIcon.SetActive(true); // Show the hit icon when colliding with the cop car
 
       // Just crashing won't do. you need feedback. add visual and audio feedback here.
       crashSource.Play();
@@ -135,5 +144,11 @@ public class PlayerCollision : MonoBehaviour
   {
     currentCollisions = 0; // Reset the collision count
     acceptCollisions = true; // Re-enable collisions
+    hitIcon.SetActive(false); // Hide the hit icon
+  }
+  
+  public int getCurrentCollisions()
+  {
+    return currentCollisions;
   }
 }
