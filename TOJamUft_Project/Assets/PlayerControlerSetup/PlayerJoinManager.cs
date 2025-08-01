@@ -85,13 +85,6 @@ public class PlayerJoinManager : MonoBehaviour
                     return;
                 }
 
-                // Check if enabled first
-                if (!slot.input.isActiveAndEnabled)
-                {
-                    Debug.LogWarning($"PlayerInput for slot is not active: {slot.input.name}");
-                    return;
-                }
-
                 // Assign the device & scheme to the PlayerInput
                 slot.input.SwitchCurrentControlScheme(scheme.name, new[] { device });
                 slot.input.ActivateInput();
