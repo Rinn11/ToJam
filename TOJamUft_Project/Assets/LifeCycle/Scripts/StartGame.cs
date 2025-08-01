@@ -60,16 +60,16 @@ public class StartGame : MonoBehaviour
 
     void Update()
     {
-        if (Time.timeScale == 0)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Time.timeScale = 1;
-                audioSources[0].Play();         // TODO: audioSources doesn't seem to be used?
-                titleScreen.SetActive(false);
-                ingameUI.SetActive(true);
-            }
-        }
+        //if (Time.timeScale == 0)
+        //{
+        //    if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //        Time.timeScale = 1;
+        //        audioSources[0].Play();         // TODO: audioSources doesn't seem to be used?
+        //        titleScreen.SetActive(false);
+        //        ingameUI.SetActive(true);
+        //    }
+        //}
 
         // Add perturbation to the rotation vector
         rotationVector += new Vector3(Random.Range(-0.01f, 0.01f), Random.Range(-0.01f, 0.01f), Random.Range(-0.01f, 0.01f));

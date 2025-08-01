@@ -20387,8 +20387,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Drink
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
+  m_sharedMaterial: {fileID: 472978858994428329, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -31806,8 +31806,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
+  m_sharedMaterial: {fileID: 472978858994428329, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -40008,6 +40008,10 @@ PrefabInstance:
     - target: {fileID: 6202632630050464019, guid: 23941a8de0ad4a848a3408145aa694c9, type: 3}
       propertyPath: m_Name
       value: TPTunnelEast
+      objectReference: {fileID: 0}
+    - target: {fileID: 6202632630050464019, guid: 23941a8de0ad4a848a3408145aa694c9, type: 3}
+      propertyPath: m_Layer
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 6831935823837607533, guid: 23941a8de0ad4a848a3408145aa694c9, type: 3}
       propertyPath: ExitTunnel
@@ -77921,6 +77925,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TPTunnelNorth
       objectReference: {fileID: 0}
+    - target: {fileID: 6202632630050464019, guid: 23941a8de0ad4a848a3408145aa694c9, type: 3}
+      propertyPath: m_Layer
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 6831935823837607533, guid: 23941a8de0ad4a848a3408145aa694c9, type: 3}
       propertyPath: ExitTunnel
       value: 
@@ -85321,8 +85329,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
+  m_sharedMaterial: {fileID: 472978858994428329, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -85616,15 +85624,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 873b21bcc0dab4b4eae674285d42e12c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -200.11432
+      value: -200.11447
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 873b21bcc0dab4b4eae674285d42e12c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.346246
+      value: -8.346245
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 873b21bcc0dab4b4eae674285d42e12c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 21.900894
+      value: 21.90091
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 873b21bcc0dab4b4eae674285d42e12c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -113209,8 +113217,8 @@ MonoBehaviour:
 
     to join'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
+  m_sharedMaterial: {fileID: 472978858994428329, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -113272,7 +113280,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -11.108093, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -114310,7 +114318,7 @@ GameObject:
   - component: {fileID: 812352439}
   - component: {fileID: 812352441}
   - component: {fileID: 812352440}
-  m_Layer: 31
+  m_Layer: 21
   m_Name: tpicon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115658,7 +115666,7 @@ GameObject:
   - component: {fileID: 822670034}
   - component: {fileID: 822670036}
   - component: {fileID: 822670035}
-  m_Layer: 31
+  m_Layer: 21
   m_Name: tpicon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118689,8 +118697,8 @@ MonoBehaviour:
 
     to join'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
+  m_sharedMaterial: {fileID: 472978858994428329, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -118752,7 +118760,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -11.176758, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -122471,8 +122479,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1752752025}
-  - {fileID: 615819818}
   - {fileID: 240492412}
+  - {fileID: 615819818}
   m_Father: {fileID: 183000314}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &867137016
@@ -122490,8 +122498,8 @@ MonoBehaviour:
   greenEffect: {fileID: 170737301}
   mapIcon: {fileID: 1992059004}
   player: {fileID: 509149359}
-  activationRadius: 36
-  visitTimeLimit: 3.5
+  activationRadius: 40
+  visitTimeLimit: 2.5
 --- !u!23 &867137017
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -130819,7 +130827,7 @@ MonoBehaviour:
   mapIcon: {fileID: 667969707}
   player: {fileID: 509149359}
   activationRadius: 50
-  visitTimeLimit: 3.5
+  visitTimeLimit: 2.5
 --- !u!23 &930076277
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -133335,7 +133343,7 @@ GameObject:
   - component: {fileID: 948819762}
   - component: {fileID: 948819764}
   - component: {fileID: 948819763}
-  m_Layer: 31
+  m_Layer: 21
   m_Name: tpicon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133759,8 +133767,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0.00%
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
+  m_sharedMaterial: {fileID: 472978858994428329, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -160349,7 +160357,7 @@ GameObject:
   - component: {fileID: 1168270724}
   - component: {fileID: 1168270723}
   - component: {fileID: 1168270722}
-  m_Layer: 31
+  m_Layer: 21
   m_Name: tpCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168402,8 +168410,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
+  m_sharedMaterial: {fileID: 472978858994428329, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -172480,8 +172488,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Visiting Bar...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
+  m_sharedMaterial: {fileID: 472978858994428329, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -178273,7 +178281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1283028275}
-  m_Layer: 31
+  m_Layer: 21
   m_Name: TPCanvases
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184422,7 +184430,7 @@ GameObject:
   - component: {fileID: 1319321267}
   - component: {fileID: 1319321266}
   - component: {fileID: 1319321265}
-  m_Layer: 31
+  m_Layer: 21
   m_Name: tpCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188170,7 +188178,7 @@ GameObject:
   - component: {fileID: 1339519285}
   - component: {fileID: 1339519287}
   - component: {fileID: 1339519286}
-  m_Layer: 31
+  m_Layer: 21
   m_Name: tpicon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207170,15 +207178,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8865824144277803872, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.6093717
+      value: 0.0457
       objectReference: {fileID: 0}
     - target: {fileID: 8865824144277803872, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.92961276
+      value: 0.0424
       objectReference: {fileID: 0}
     - target: {fileID: 8865824144277803872, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.051904507
+      value: -0.118
       objectReference: {fileID: 0}
     - target: {fileID: 8865824144277803872, guid: daabc9ae9062ea540b453269194a553a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -222340,7 +222348,7 @@ MonoBehaviour:
   mapIcon: {fileID: 1167839628}
   player: {fileID: 509149359}
   activationRadius: 50
-  visitTimeLimit: 3.5
+  visitTimeLimit: 2.5
 --- !u!23 &1593232792
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -234321,8 +234329,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
+  m_sharedMaterial: {fileID: 472978858994428329, guid: 78570cd798ee3d240a39ab248506a830, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -238951,7 +238959,7 @@ GameObject:
   - component: {fileID: 1711924253}
   - component: {fileID: 1711924252}
   - component: {fileID: 1711924251}
-  m_Layer: 31
+  m_Layer: 21
   m_Name: tpCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239379,7 +239387,7 @@ GameObject:
   - component: {fileID: 1714646626}
   - component: {fileID: 1714646625}
   - component: {fileID: 1714646624}
-  m_Layer: 31
+  m_Layer: 21
   m_Name: tpCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241004,6 +241012,10 @@ PrefabInstance:
     - target: {fileID: 6202632630050464019, guid: 23941a8de0ad4a848a3408145aa694c9, type: 3}
       propertyPath: m_Name
       value: TPTunnelSouth
+      objectReference: {fileID: 0}
+    - target: {fileID: 6202632630050464019, guid: 23941a8de0ad4a848a3408145aa694c9, type: 3}
+      propertyPath: m_Layer
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 6831935823837607533, guid: 23941a8de0ad4a848a3408145aa694c9, type: 3}
       propertyPath: ExitTunnel
@@ -247969,7 +247981,7 @@ MonoBehaviour:
   mapIcon: {fileID: 809589978}
   player: {fileID: 509149359}
   activationRadius: 50
-  visitTimeLimit: 3.5
+  visitTimeLimit: 2.5
 --- !u!23 &1769189289
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -255930,7 +255942,7 @@ MonoBehaviour:
   mapIcon: {fileID: 35773022}
   player: {fileID: 509149359}
   activationRadius: 50
-  visitTimeLimit: 3.5
+  visitTimeLimit: 2.5
 --- !u!23 &1829461185
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -275480,7 +275492,7 @@ MonoBehaviour:
   mapIcon: {fileID: 1117504171}
   player: {fileID: 509149359}
   activationRadius: 50
-  visitTimeLimit: 3.5
+  visitTimeLimit: 2.5
 --- !u!23 &1975641232
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -286830,6 +286842,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TPTunnelWest
       objectReference: {fileID: 0}
+    - target: {fileID: 6202632630050464019, guid: 23941a8de0ad4a848a3408145aa694c9, type: 3}
+      propertyPath: m_Layer
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 6831935823837607533, guid: 23941a8de0ad4a848a3408145aa694c9, type: 3}
       propertyPath: ExitTunnel
       value: 
@@ -287583,7 +287599,7 @@ MonoBehaviour:
   mapIcon: {fileID: 1726837920}
   player: {fileID: 509149359}
   activationRadius: 50
-  visitTimeLimit: 3.5
+  visitTimeLimit: 2.5
 --- !u!23 &2067931611
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -289091,7 +289107,7 @@ MonoBehaviour:
   mapIcon: {fileID: 423049779}
   player: {fileID: 509149359}
   activationRadius: 50
-  visitTimeLimit: 3.5
+  visitTimeLimit: 2.5
 --- !u!23 &2077320761
 MeshRenderer:
   m_ObjectHideFlags: 0
