@@ -26,10 +26,6 @@ public class FinalBlitCamera : MonoBehaviour
     {
         int displayCount = Display.displays.Length;
 
-        // Activate all displays
-        for (int i = 1; i < displayCount; i++)
-            Display.displays[i].Activate();
-
         isDualMonitor = displayCount >= 2;
         
         drunkDriverCanvas.renderMode   = RenderMode.ScreenSpaceCamera;

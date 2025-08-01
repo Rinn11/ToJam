@@ -24,6 +24,8 @@ public class RoundTimer : MonoBehaviour
     [HideInInspector]
     public float elapsedTime; // Time elapsed since the round started
 
+    private bool running = false; // Flag to indicate if the timer is running
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -33,6 +35,7 @@ public class RoundTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!running) return; 
         // Update both private variables with the delta time provided by each frame
         elapsedTime = Mathf.Min(elapsedTime + Time.deltaTime, roundDuration);
         timeRemaining = Mathf.Max(timeRemaining - Time.deltaTime, 0f);
@@ -81,6 +84,7 @@ public class RoundTimer : MonoBehaviour
     // Method to reset the timer to the initial round duration
     public void ResetTimer()
     {
+        running = false;
         timeRemaining = roundDuration;
         elapsedTime = 0f;
 
@@ -103,6 +107,17 @@ public class RoundTimer : MonoBehaviour
             }
         }
     }
+
+    public void StartTimer()
+    {
+        running = true;
+    }
+
+    public void StopTimer()
+    {
+        running = false;
+    }
+
 
     // Method to send the elapsed time to other components as a event invokation.
     public void sendTimeInvoker()
