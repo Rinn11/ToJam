@@ -71331,6 +71331,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  speedParticles: {fileID: 0}
   idleClip: {fileID: 8300000, guid: f29a50d5f5d23924dad2728b1be119a5, type: 3}
   accelerateClip: {fileID: 8300000, guid: b147b399a5bb8fc439cbda5346f32a7a, type: 3}
   moveClip: {fileID: 8300000, guid: 2b24253184845be41b6717115d740c02, type: 3}
@@ -112492,7 +112493,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &804027054
 AudioSource:
   m_ObjectHideFlags: 0

@@ -117,9 +117,9 @@ public class UFOMovement : MonoBehaviour, IMovementModel
         // shoould move at consistent velocity
         rb.AddForce(transform.forward * boost * accelerationForce, ForceMode.Acceleration);
 
-        speedParticles.SetActive(true);
+        //speedParticles.SetActive(true);
 
-        if (boost >= 0) { speedParticles.SetActive(false); }
+        //if (boost >= 0) { speedParticles.SetActive(false); }
     }
 
     public AudioClip idleClip;
