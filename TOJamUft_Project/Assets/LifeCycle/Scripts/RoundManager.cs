@@ -20,6 +20,8 @@ public class RoundManager : MonoBehaviour
     public int numberOfGames;
     public float scoreBoardShowDelay;
 
+    public FinePopupManager popupManager;
+
     private int currentRound = 0;
     private int currentGame = 0;
 
@@ -159,6 +161,7 @@ public class RoundManager : MonoBehaviour
     public void CollisionFine(int amount)
     {
         fineManager.increaseFine(amount);
+        popupManager.ShowFine(amount);
     }
 
     public void RestartGame()
