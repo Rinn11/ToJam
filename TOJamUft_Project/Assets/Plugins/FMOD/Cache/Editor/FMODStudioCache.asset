@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7844665864935208078
+--- !u!114 &-8507751079840640970
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,24 +9,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Alien/BeerPulling
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/UFOActions/VelicleStates
   m_EditorClassIdentifier: 
-  Path: event:/Alien/BeerPulling
-  Guid:
-    Data1: 566391330
-    Data2: 1183492027
-    Data3: -1413065554
-    Data4: 131122374
-  Banks:
-  - {fileID: 346324259312824374}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
+  Name: VelicleStates
+  StudioPath: 
+  Min: 0
+  Max: 3
+  Default: 0
+  ID:
+    data1: 2580348874
+    data2: 1346533040
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Accel
+  - Move
+  - Decel
+  - Idel
+  Exists: 1
 --- !u!114 &-6038367623254621412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,6 +55,62 @@ MonoBehaviour:
   - Wood
   - Stone
   Exists: 1
+--- !u!114 &-5897991200579672537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Alien/UFOActions
+  m_EditorClassIdentifier: 
+  Path: event:/Alien/UFOActions
+  Guid:
+    Data1: -1573722215
+    Data2: 1214365426
+    Data3: 1786506427
+    Data4: -228303494
+  Banks:
+  - {fileID: 346324259312824374}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -8507751079840640970}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-5641228118139090460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/AlieanEvents/VelicleStates
+  m_EditorClassIdentifier: 
+  Name: VelicleStates
+  StudioPath: 
+  Min: 0
+  Max: 3
+  Default: 0
+  ID:
+    data1: 2580348874
+    data2: 1346533040
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Accel
+  - Move
+  - Decel
+  - Idel
+  Exists: 1
 --- !u!114 &-2649677522961353905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,65 +126,11 @@ MonoBehaviour:
   Path: Assets/Plugins/2Drunk2DriveFmodEditer/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638893050347920442
+  lastModified: 638898959161014953
   FileSizes:
   - Name: Desktop
-    Value: 968
+    Value: 986
   Exists: 1
---- !u!114 &-1757521623338727923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Alien/Moving
-  m_EditorClassIdentifier: 
-  Path: event:/Alien/Moving
-  Guid:
-    Data1: 149448048
-    Data2: 1223754762
-    Data3: 1401730953
-    Data4: 250751140
-  Banks:
-  - {fileID: 346324259312824374}
-  IsStream: 1
-  Is3D: 1
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &-1048911998103605084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Alien/Accelerating
-  m_EditorClassIdentifier: 
-  Path: event:/Alien/Accelerating
-  Guid:
-    Data1: -86224219
-    Data2: 1134050042
-    Data3: -1713696365
-    Data4: -2133301709
-  Banks:
-  - {fileID: 346324259312824374}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,16 +147,15 @@ MonoBehaviour:
   - {fileID: -2649677522961353905}
   - {fileID: 346324259312824374}
   EditorEvents:
-  - {fileID: -7844665864935208078}
-  - {fileID: -1757521623338727923}
   - {fileID: 3807700808837189236}
-  - {fileID: -1048911998103605084}
+  - {fileID: 7121126362388080427}
+  - {fileID: -5897991200579672537}
   EditorParameters: []
   MasterBanks:
   - {fileID: 346324259312824374}
   StringsBanks:
   - {fileID: -2649677522961353905}
-  cacheTime: 638893050347920442
+  cacheTime: 638898959161014953
   cacheVersion: 131624
 --- !u!114 &346324259312824374
 MonoBehaviour:
@@ -170,10 +172,10 @@ MonoBehaviour:
   Path: Assets/Plugins/2Drunk2DriveFmodEditer/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638893050347854883
+  lastModified: 638898959160894659
   FileSizes:
   - Name: Desktop
-    Value: 402240
+    Value: 915744
   Exists: 1
 --- !u!114 &3807700808837189236
 MonoBehaviour:
@@ -200,6 +202,34 @@ MonoBehaviour:
   IsOneShot: 1
   Parameters:
   - {fileID: -6038367623254621412}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &7121126362388080427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Alien/AlieanEvents
+  m_EditorClassIdentifier: 
+  Path: event:/Alien/AlieanEvents
+  Guid:
+    Data1: -1685881909
+    Data2: 1313210499
+    Data3: 2019532954
+    Data4: -1852678115
+  Banks:
+  - {fileID: 346324259312824374}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -5641228118139090460}
   MinDistance: 1
   MaxDistance: 20
   Length: 0
