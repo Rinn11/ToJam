@@ -12,6 +12,8 @@ public class lassoFire : MonoBehaviour
     private Rigidbody TarRB;
 
     public GameObject Cop;
+    
+    public GameObject ddUIcopWarning; // UI warning
 
     public float maxDistance = 10f;     // Max distance force applicable
     public float forceMult = 1f;        // Linear multiplier for force
@@ -56,6 +58,8 @@ public class lassoFire : MonoBehaviour
         originalCopAccelForce = GetComponent<PlayerMove>().accelerationForce;
 
         Camera.onPreRender += OnCameraPreRender;
+        
+        ddUIcopWarning?.SetActive(false);
     }
 
     private void OnDestroy()
@@ -86,6 +90,8 @@ public class lassoFire : MonoBehaviour
         if (distance <= maxDistance)
         {
             // If target is within range
+            ddUIcopWarning?.SetActive(true);
+            
             Ray ray = new Ray(transform.position, direction.normalized);
             RaycastHit hit;
 
@@ -137,6 +143,7 @@ public class lassoFire : MonoBehaviour
         }
         else
         {
+            ddUIcopWarning?.SetActive(false);
             // Target out of range
             OnTargetLost();
         }

@@ -87,12 +87,12 @@ public class RoundManager : MonoBehaviour
             p1PoliceCarScores.Add(time);
             p2DrunkDriverScores.Add(score);
 
-            if (p2DrunkDriverScores[currentGame] > p1DrunkDriverScores[currentGame])
+            if (p2DrunkDriverScores[currentGame] > p1DrunkDriverScores[currentGame] || (p1DrunkDriverScores[currentGame] == p2DrunkDriverScores[currentGame] && p1PoliceCarScores[currentGame] > p2PoliceCarScores[currentGame]))
             {
                 Debug.Log("Player 2 wins this game!");
                 winnerEvent.Invoke(1); // Invoke the winner event with Player 2 as the winner
             }
-            else if (p2DrunkDriverScores[currentGame] < p1DrunkDriverScores[currentGame])
+            else if (p2DrunkDriverScores[currentGame] < p1DrunkDriverScores[currentGame] || (p1DrunkDriverScores[currentGame] == p2DrunkDriverScores[currentGame] && p1PoliceCarScores[currentGame] < p2PoliceCarScores[currentGame]))
             {
                 Debug.Log("Player 1 wins this game!");
                 winnerEvent.Invoke(0); // Invoke the winner event with Player 1 as the winner
