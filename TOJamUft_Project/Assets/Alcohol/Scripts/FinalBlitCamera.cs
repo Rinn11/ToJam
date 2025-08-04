@@ -115,7 +115,7 @@ public class FinalBlitCamera : MonoBehaviour
     void UpdateCameraViewportsDualMonitor()
     {
         // Assign cameras to displays
-        if (IsPlayer1DrunkDriver)
+        if (!IsPlayer1DrunkDriver) // originally IsPlayer1DrunkDriver
         {
             drunkDriverCamera.targetDisplay = 0;
             copPlayerCamera.targetDisplay = 1;

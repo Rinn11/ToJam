@@ -106,6 +106,7 @@ public class StartGame : MonoBehaviour
             titleScreen.SetActive(false);
             ingameUI.SetActive(true);
             StartGameEvent.Invoke();
+            Destroy(gameObject);
         }
     }
 }
