@@ -20,19 +20,36 @@ public class PFreeCamState : PlayerState
         if (playerTransf.parent != null) playerTransf.SetParent(null);
     }
 
-    public override void playerInput() 
+    public override void playerInput()
     {
         //keyboard inputs
         pMove.horizontalInput = Input.GetAxisRaw("Horizontal");
         pMove.verticalInput = Input.GetAxisRaw("Vertical");
 
         // Fly up is space
-        if (Input.GetKey(pMove.jumpKey)) {
+        if (Input.GetKey(pMove.jumpKey))
+        {
             // We use time.deltatime because it could be held down constantly...
             pMove.rb.AddForce(pMove.transform.up * pMove.flyForce * Time.deltaTime, ForceMode.Force);
-        } else if (Input.GetKey(pMove.ctrlKey)) {
+        }
+        else if (Input.GetKey(pMove.ctrlKey))
+        {
             // Fly down is LCtrl
             pMove.rb.AddForce(-pMove.transform.up * pMove.flyForce * Time.deltaTime, ForceMode.Force);
+        }
+
+        // Add speed
+        if (Input.GetKeyDown(pMove.addSpeedKey))
+        {
+            pMove.moveSpeed += 5f;
+            // Debug.Log("Speed: " + pMove.moveSpeed.ToString("F2"));
+        }
+        // Subtract speed
+        else if (Input.GetKeyDown(pMove.subSpeedKey))   
+        {
+            pMove.moveSpeed -= 5f;
+            if (pMove.moveSpeed < 0f) pMove.moveSpeed = 0f; // Prevent negative speed
+            // Debug.Log("Speed: " + pMove.moveSpeed.ToString("F2"));
         }
     }
 

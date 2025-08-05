@@ -25,8 +25,10 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask whatIsGround;
 
     [Header("Keybinds")]
-    public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode ctrlKey = KeyCode.LeftControl;
+    public KeyCode jumpKey;
+    public KeyCode ctrlKey;
+    public KeyCode addSpeedKey;
+    public KeyCode subSpeedKey;
 
     public Transform orientation;
 

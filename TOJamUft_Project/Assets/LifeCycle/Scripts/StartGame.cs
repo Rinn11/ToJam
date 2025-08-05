@@ -104,7 +104,7 @@ public class StartGame : MonoBehaviour
             Time.timeScale = 1;
             audioSources[0].Play();         // TODO: audioSources doesn't seem to be used?
             titleScreen.SetActive(false);
-            ingameUI.SetActive(true);
+            ingameUI.SetActive(true); // Only disable for cop
             StartGameEvent.Invoke();
             Destroy(gameObject);
         }
