@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{051b93c1-c8a1-4210-bb6e-c98f78576abf}">
+		<property name="assetPath">
+			<value>UFOMove.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>9.5</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{5508a804-84a4-420b-98c0-a5f6d7dae518}</destination>
+		</relationship>
+	</object>
+</objects>
