@@ -14,9 +14,6 @@ TagManager:
   - Building
   - civilianCar
   - destructibles
-  - Stone
-  - Wood
-  - Metal
   layers:
   - Default
   - TransparentFX
