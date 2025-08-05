@@ -127,7 +127,7 @@ public class PlayerCollision : MonoBehaviour
     } else if (collision.gameObject.CompareTag("civilianCar"))
     { 
       collisionScore.increaseCollisionFine(25, true);
-    } else if (collision.gameObject.transform.parent.gameObject.CompareTag("destructibles"))
+    } else if (collision.gameObject.CompareTag("destructibles"))
     {
       // If the player collides with terrain, we can give them a fine or some other feedback.
       collisionScore.increaseCollisionFine(10, false);
