@@ -70656,7 +70656,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &509149361
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -71385,6 +71385,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  startGame: {fileID: 2117924559}
 --- !u!135 &509149375
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -226643,7 +226644,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &1620153145
 AudioSource:
   m_ObjectHideFlags: 0
@@ -299109,6 +299110,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  copCam: {fileID: 1626257984}
+  ddCam: {fileID: 429325092}
 --- !u!82 &2117924560
 AudioSource:
   m_ObjectHideFlags: 0
