@@ -17,7 +17,10 @@ public class RoundTimer : MonoBehaviour
     public float roundDuration; // Max duration of the round in seconds
     public TimeEvent sendTimeEvent; // Event to send the elapsed time to other components
     public UnityEvent roundEndEvent; // Event to invoke when the round ends.
-
+    
+    public GameObject copControlTip;
+    public GameObject ddControlTip;
+    
     // Keep both time remaining and elapsed time to calculate the timer, in case we want to utilize both in the future
     [HideInInspector]
     public float timeRemaining; // Time remaining in the current round
@@ -48,6 +51,12 @@ public class RoundTimer : MonoBehaviour
             roundEndEvent.Invoke();
             ResetTimer();
             Debug.Log("Round ended due to time running out.");
+        }
+        // check if ten seconds have passed since round started
+        if (elapsedTime > 10f)
+        {
+            copControlTip.SetActive(false);
+            ddControlTip.SetActive(false);
         }
 
         // Seperate into minutes and seconds for display purposes.

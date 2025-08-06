@@ -84,6 +84,15 @@ public class PlayerJoinManager : MonoBehaviour
                     Debug.LogError($"No control scheme supports device: {device.displayName}");
                     return;
                 }
+                
+                
+                // hmmm
+                if (!slot.input.isActiveAndEnabled)
+                {
+                    Debug.LogWarning($"PlayerInput for slot is not active: {slot.input.name}");
+                    return;
+                }
+                
 
                 // Check if enabled first
                 if (!slot.input.isActiveAndEnabled)
