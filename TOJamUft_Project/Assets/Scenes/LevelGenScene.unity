@@ -71385,6 +71385,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  startGame: {fileID: 0}
 --- !u!135 &509149375
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -138915,7 +138916,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1476476927
+    m_Bits: 1476475391
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -299133,6 +299134,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  copCam: {fileID: 0}
+  ddCam: {fileID: 0}
 --- !u!82 &2117924560
 AudioSource:
   m_ObjectHideFlags: 0
@@ -300046,7 +300049,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1476476927
+    m_Bits: 1476475391
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 1
