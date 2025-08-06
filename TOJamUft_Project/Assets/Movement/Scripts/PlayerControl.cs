@@ -7,12 +7,12 @@ public class PlayerControl : MonoBehaviour
     private IMovementModel movementModel;
 
     [SerializeField] private PlayerInput playerInput;
-
     private bool locked = false;
 
     private void Start()
     {
         movementModel = movementScript as IMovementModel;
+        locked = true;
     }
 
     public void SetLocked(bool newLocked)
@@ -22,6 +22,8 @@ public class PlayerControl : MonoBehaviour
 
     private void Update()
     {
+        if (locked) return;
+
         // Always pull from current action map
         if (playerInput == null) return;
         InputAction steerAction = playerInput.actions["Steer"];
@@ -36,12 +38,6 @@ public class PlayerControl : MonoBehaviour
         Vector2 steer = steerAction.ReadValue<Vector2>();
         float accelerate = accelerateAction.ReadValue<float>();
         float decelerate = deccelerateAction.ReadValue<float>();
-
-        if (locked)
-        {
-            steer = Vector2.zero;
-            accelerate = 0;
-        }
 
         movementModel.ProcessInputs(steer.x, accelerate - decelerate);
     }
