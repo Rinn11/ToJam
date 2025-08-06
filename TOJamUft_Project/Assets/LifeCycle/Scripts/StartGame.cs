@@ -31,9 +31,14 @@ public class StartGame : MonoBehaviour
     [Header("Events")]
     public UnityEvent StartGameEvent;
 
+    private bool canMove;
+    public GameObject copCam;
+    public GameObject ddCam;
 
     void Start()
     {
+        copCam.SetActive(false); ddCam.SetActive(false);
+
         ingameUI.SetActive(false);
         titleScreen.SetActive(true);
 
@@ -49,6 +54,8 @@ public class StartGame : MonoBehaviour
         for (int i = 1; i < displayCount; i++)
             Display.displays[i].Activate();
         isDualMonitor = displayCount >= 2;
+
+        canMove = false;
 
         if (isDualMonitor)
         {
@@ -106,6 +113,16 @@ public class StartGame : MonoBehaviour
             titleScreen.SetActive(false);
             ingameUI.SetActive(true);
             StartGameEvent.Invoke();
+
+            copCam.SetActive(true); ddCam.SetActive(true);
+
+            canMove = true;
         }
+    }
+
+    public bool GetCanMove()
+    {
+
+        return canMove;
     }
 }

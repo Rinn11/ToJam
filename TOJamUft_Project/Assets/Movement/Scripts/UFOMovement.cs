@@ -26,6 +26,8 @@ public class UFOMovement : MonoBehaviour, IMovementModel
     public UnityEvent onBrake;
     public UnityEvent onIdle;
 
+    public StartGame startGame;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -49,6 +51,7 @@ public class UFOMovement : MonoBehaviour, IMovementModel
 
     void FixedUpdate()
     {
+        if (!startGame.GetCanMove()) return;
         if (rb == null) return;
 
         // --- Acceleration and Braking ---
